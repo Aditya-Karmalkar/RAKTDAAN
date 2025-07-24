@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaktDaan - Dashboard</title>
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .dashboard { padding: 2rem 0; }
+    .dashboard-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .dashboard-card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 1.5rem; }
+    .card-title { color: #1a365d; font-size: 1.25rem; margin-top: 0; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-control { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; }
+    .btn { background: #3182ce; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; width: 100%; }
+    .btn:hover { background: #2c5282; }
+    .alert { padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; }
+    .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body id="top">
+  <header class="header">
+    <div class="header-bottom" data-header>
+      <div class="container">
+        <a href="/" class="logo">RaktDaan</a>
+        <nav class="navbar container" data-navbar>
+          <ul class="navbar-list">
+            <li><a href="/" class="navbar-link" data-nav-link>Home</a></li>
+            <li><a href="#service" class="navbar-link" data-nav-link>Find donor</a></li>
+            <li><a href="about.html" class="navbar-link" data-nav-link>About Us</a></li>
+            <li><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+          </ul>
+        </nav>
+        <button id="logoutBtn" class="btn">Logout</button>
+        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+          <ion-icon name="menu-sharp" class="menu-icon"></ion-icon>
+          <ion-icon name="close-sharp" class="close-icon"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <div class="dashboard-container">
+      <h1>Welcome to Your Dashboard</h1>
+      <div id="alertContainer"></div>
+      
+      <div class="dashboard-grid">
+        <!-- Profile Card -->
+        <div class="dashboard-card">
+          <h2 class="card-title">Profile Information</h2>
+          <form id="profileForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="email" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" id="phone" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Blood Group</label>
+              <select id="bloodgroup" name="bloodgroup" class="form-control">
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+            <button type="submit" class="btn">Update Profile</button>
+          </form>
+        </div>
+
+        <!-- Password Update Card -->
+        <div class="dashboard-card">
+          <h2 class="card-title">Change Password</h2>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="currentPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="newPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" id="confirmPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Fetch user data
+        const response = await fetch('/api/user', {
+          credentials: 'same-origin'
+        });
+        
+        if (response.status === 401) {
+          window.location.href = '/login.html';
+          return;
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Populate form fields
+          const user = data.user;
+          document.getElementById('name').value = user.name || '';
+          document.getElementById('email').value = user.email || '';
+          document.getElementById('phone').value = user.phone || '';
+          
+          if (user.bloodgroup) {
+            document.getElementById('bloodgroup').value = user.bloodgroup;
+          }
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        showAlert('Error loading user data. Please try again.', 'danger');
+      }
+      
+      // Setup form submission
+      document.getElementById('profileForm').addEventListener('submit', handleProfileUpdate);
+      document.getElementById('passwordForm').addEventListener('submit', handlePasswordChange);
+      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    });
+    
+    async function handleProfileUpdate(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        bloodgroup: document.getElementById('bloodgroup').value
+      };
+      
+      try {
+        const response = await fetch('/api/user/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+          credentials: 'same-origin'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showAlert('Profile updated successfully!', 'success');
+        } else {
+          showAlert(result.message || 'Failed to update profile', 'danger');
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        showAlert('Error updating profile. Please try again.', 'danger');
+      }
+    }
+    
+    async function handlePasswordChange(e) {
+      e.preventDefault();
+      
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (newPassword !== confirmPassword) {
+        showAlert('New passwords do not match', 'danger');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/user/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
+          credentials: 'same-origin'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          showAlert('Password updated successfully!', 'success');
+          document.getElementById('passwordForm').reset();
+        } else {
+          showAlert(result.message || 'Failed to update password', 'danger');
+        }
+      } catch (error) {
+        console.error('Error changing password:', error);
+        showAlert('Error changing password. Please try again.', 'danger');
+      }
+    }
+    
+    function handleLogout() {
+      fetch('/logout', {
+        method: 'GET',
+        credentials: 'same-origin'
+      }).then(() => {
+        window.location.href = '/login.html';
+      });
+    }
+    
+    function showAlert(message, type) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.textContent = message;
+      
+      const container = document.getElementById('alertContainer');
+      container.innerHTML = '';
+      container.appendChild(alertDiv);
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 5000);
+    }
+  </script>
+  
+  <!-- Ion Icons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+  <!-- Custom Scripts -->
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>

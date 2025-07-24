@@ -550,10 +550,10 @@ button.btn:hover {
 /* === HERO ICON FIX === */
 
 .hero-icon {
-  width: 100px;
-  height: auto;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   z-index: 3;
 }
 

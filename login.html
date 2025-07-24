@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaktDaan - Connect the Donors</title>
+
+  <!-- favicon-->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!--css-->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #c5c7c9;
+      margin: 20px 0;
+    }
+
+    /* Form Styles */
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      color: var(--oxford-blue-1);
+      font-family: var(--ff-poppins);
+      font-size: 3.4rem;
+      font-weight: var(--fw-800);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      color: var(--oxford-blue-1);
+      font-family: var(--ff-roboto);
+      font-size: 1.4rem;
+      font-weight: var(--fw-500);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: var(--ff-roboto);
+      font-size: 1.4rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--bright-navy-blue);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-input {
+      margin-right: 8px;
+    }
+
+    .checkbox-label {
+      color: var(--oxford-blue-1);
+      font-family: var(--ff-roboto);
+      font-size: 1.4rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--bright-navy-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--ff-poppins);
+      font-size: 1.6rem;
+      font-weight: var(--fw-600);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--oxford-blue-1);
+    }
+
+    .submit-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-family: var(--ff-roboto);
+      font-size: 1.4rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success-message {
+      color: #27ae60;
+      font-family: var(--ff-roboto);
+      font-size: 1.4rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-top">
+      <div class="container">
+        <ul class="contact-list">
+          <li class="contact-item">
+            <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+            <a href="mailto:info@raktdaan.com" class="contact-link">info@raktdaan.com</a>
+          </li>
+          <li class="contact-item">
+            <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+            <a href="tel:+917052101786" class="contact-link">+91-7052-101-786</a>
+          </li>
+        </ul>
+        <ul class="social-list">
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-pinterest"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="header-bottom" data-header>
+      <div class="container">
+        <a href="#" class="logo">RaktDaan</a>
+        <nav class="navbar container" data-navbar>
+          <ul class="navbar-list">
+            <li>
+              <a href="#home" class="navbar-link" data-nav-link>Home</a>
+            </li>
+            <li>
+              <a href="#service" class="navbar-link" data-nav-link>Find donor</a>
+            </li>
+            <li>
+              <a href="#about" class="navbar-link" data-nav-link>About</a>
+            </li>
+            <li>
+              <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+            </li>
+            <li>
+              <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
+            </li>
+          </ul>
+        </nav>
+        <a href="#" class="btn">Appointment</a>
+        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
+          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <section class="section hero" id="home" aria-label="hero">
+        <div class="container">
+          <div class="hero-content">
+            <div class="form-container">
+              <h2 class="form-title">Login</h2>
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="email" class="form-label">Email:</label>
+                  <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="form-label">Password:</label>
+                  <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="remember_me" name="remember_me" value="1" class="checkbox-input">
+                  <label for="remember_me" class="checkbox-label">Remember Me</label>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Login</button>
+                <div id="message"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top section">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="#" class="logo">RaktDaan</a>
+          <p class="footer-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.
+          </p>
+          <div class="schedule">
+            <div class="schedule-icon">
+              <ion-icon name="time-outline"></ion-icon>
+            </div>
+            <span class="span">
+              Mon - Sat:<time datetime="07:00">7.00</time> - <time datetime="22:00">22.00</time>
+            </span>
+          </div>
+        </div>
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Other Links</p>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Find donor</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">About us</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Blog</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Contact</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Blood Donation</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Health Check</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Blood Bank</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Donate Process</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+              <span class="span">Blood Info</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <address class="item-text">
+              2416 Mapleview Drive <br>
+              Tampa, FL 33634
+            </address>
+          </li>
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="call-outline"></ion-icon>
+            </div>
+            <a href="tel:+917052101786" class="footer-link">+91-7052-101-786</a>
+          </li>
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <a href="mailto:info@raktdaan.com" class="footer-link">info@raktdaan.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2024 All Rights Reserved by RaktDaan
+        </p>
+        <ul class="social-list">
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-pinterest"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!--BACK TO TOP-->
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!--custom js link-->
+  <script src="./assets/js/script.js"></script>
+
+  <!--ionicon link-->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Login JavaScript -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const messageDiv = document.getElementById('message');
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+      messageDiv.innerHTML = '';
+      
+      // Get form data
+      const formData = new FormData(this);
+      const loginData = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        remember_me: formData.get('remember_me') || '0'
+      };
+      
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          messageDiv.innerHTML = `<div class="success-message">${result.message}</div>`;
+          // Redirect to dashboard after a short delay
+          setTimeout(() => {
+            window.location.href = result.redirect || '/dashboard';
+          }, 1000);
+        } else {
+          messageDiv.innerHTML = `<div class="error-message">${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        messageDiv.innerHTML = '<div class="error-message">An error occurred. Please try again.</div>';
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login';
+      }
+    });
+  </script>
+</body>
+
+</html>
