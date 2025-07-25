@@ -22,24 +22,111 @@
     .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
   </style>
+
+  <style>
+    /* Navbar Styling */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 20px 0;
+    }
+
+    .navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo a {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e63946;
+      text-decoration: none;
+    }
+
+    .navbar-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 30px;
+    }
+
+    .navbar-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-link:hover {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .glass-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-btn:hover {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+      transform: translateY(-1px);
+    }
+  </style>
 </head>
 <body id="top">
   <header class="header">
     <div class="header-bottom" data-header>
       <div class="container">
-        <a href="/" class="logo">RaktDaan</a>
+        <a href="#" class="logo">RaktDaan</a>
         <nav class="navbar container" data-navbar>
           <ul class="navbar-list">
-            <li><a href="/" class="navbar-link" data-nav-link>Home</a></li>
-            <li><a href="#service" class="navbar-link" data-nav-link>Find donor</a></li>
-            <li><a href="about.html" class="navbar-link" data-nav-link>About Us</a></li>
-            <li><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+            <li>
+              <a href="index.html" class="navbar-link" data-nav-link>Home</a>
+            </li>
+            <li>
+              <a href="#service" class="navbar-link" data-nav-link>Find Donor</a>
+            </li>
+            <li>
+              <a href="#about" class="navbar-link" data-nav-link>About Us</a>
+            </li>
+            <li>
+              <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+            </li>
+            <li>
+              <a href="contact.html" class="navbar-link" data-nav-link>Contact</a>
+            </li>
           </ul>
         </nav>
         <button id="logoutBtn" class="btn">Logout</button>
         <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
-          <ion-icon name="menu-sharp" class="menu-icon"></ion-icon>
-          <ion-icon name="close-sharp" class="close-icon"></ion-icon>
+          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
+          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
         </button>
       </div>
     </div>
@@ -240,6 +327,68 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   
   <!-- Custom Scripts -->
+  <footer class="simple-footer" style="background-color: white; color: black; padding: 40px 0; margin-top: 60px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
+        
+        <div>
+          <h3 style="color: black; margin-bottom: 15px; font-size: 18px; font-weight: 600;">RaktDaan</h3>
+          <p style="color: #333; line-height: 1.6; font-size: 14px;">
+            We are passionate about connecting blood donors with recipients and bridging the gap in the healthcare industry.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Quick Links</h4>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">Home</a></li>
+            <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">Find Donor</a></li>
+            <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">About Us</a></li>
+            <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Contact Info</h4>
+          <div style="color: #333; font-size: 14px; line-height: 1.8;">
+            <p><strong>Location:</strong> India</p>
+            <p><strong>Phone:</strong> <a href="tel:+918xxx-xxx-xxx" style="color: #333;">+91-8xxx-xxx-xxx</a></p>
+            <p><strong>Email:</strong> <a href="mailto:raktdaan@gmail.com" style="color: #333;">raktdaan@gmail.com</a></p>
+            <p><strong>Hours:</strong> 24 X 7 : 365 Days</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Follow Us</h4>
+          <div style="display: flex; gap: 15px; margin-top: 10px;">
+            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+            <a href="https://www.instagram.com/whxitte" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a href="https://twitter.com/Annabel07785340" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </div>
+        </div>
+
+      </div>
+      
+      <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          &copy; 2024 All Rights Reserved by RaktDaan
+        </p>
+      </div>
+    </div>
+  </footer>
+  
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
+  </a>
+
   <script src="./assets/js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

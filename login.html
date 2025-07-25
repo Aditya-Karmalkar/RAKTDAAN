@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="demo-client-id">
   <title>RaktDaan - Connect the Donors</title>
 
   <!-- favicon-->
@@ -16,419 +17,1133 @@
   <!-- google font link-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap"
+    rel="stylesheet">
 
   <style>
-    hr {
-      border: none;
-      height: 1px;
-      background-color: #c5c7c9;
-      margin: 20px 0;
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* Form Styles */
-    .form-container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f8fbff;
+      min-height: 100vh;
     }
 
-    .form-title {
-      color: var(--oxford-blue-1);
-      font-family: var(--ff-poppins);
-      font-size: 3.4rem;
-      font-weight: var(--fw-800);
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
-      display: block;
-      color: var(--oxford-blue-1);
-      font-family: var(--ff-roboto);
-      font-size: 1.4rem;
-      font-weight: var(--fw-500);
-      margin-bottom: 8px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-family: var(--ff-roboto);
-      font-size: 1.4rem;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: var(--bright-navy-blue);
-    }
-
-    .checkbox-group {
+    /* Modern login form styles */
+    .page-center {
+      min-height: 100vh;
       display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 180px 20px 40px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .login-container {
+      background: #fff;
+      width: 400px;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-container h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .account-selector {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .account-type {
+      flex: 1;
+      margin: 0 8px;
+      padding: 15px 0;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+    }
+
+    .account-type img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+    }
+
+    .account-type.selected {
+      border-color: #00aaff;
+      background-color: #e6f9ff;
+    }
+
+    .greeting {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .input-field {
+      position: relative;
       margin-bottom: 20px;
+      text-align: left;
     }
 
-    .checkbox-input {
-      margin-right: 8px;
+    .input-field label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: block;
+      color: #333;
+      font-weight: 500;
     }
 
-    .checkbox-label {
-      color: var(--oxford-blue-1);
-      font-family: var(--ff-roboto);
-      font-size: 1.4rem;
-    }
-
-    .submit-btn {
+    .input-field input {
       width: 100%;
-      padding: 14px;
-      background-color: var(--bright-navy-blue);
-      color: white;
+      padding: 14px 18px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: border 0.3s ease;
+    }
+
+    .input-field input:focus {
+      outline: none;
+      border-color: #00aaff;
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .forgot-password a {
+      font-size: 13px;
+      color: #00aaff;
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #00aaff;
+      color: #fff;
       border: none;
-      border-radius: 8px;
-      font-family: var(--ff-poppins);
-      font-size: 1.6rem;
-      font-weight: var(--fw-600);
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    .submit-btn:hover {
-      background-color: var(--oxford-blue-1);
+    .login-btn:hover {
+      background-color: #0088cc;
     }
 
-    .submit-btn:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
+    /* Modern Form Styles */
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: #ffffff;
+      padding: 30px;
+      width: 450px;
+      border-radius: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
-    .error-message {
-      color: #e74c3c;
-      font-family: var(--ff-roboto);
-      font-size: 1.4rem;
-      margin-top: 10px;
+    ::placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .form button {
+      align-self: flex-end;
+    }
+
+    .flex-column>label {
+      color: #151717;
+      font-weight: 600;
+    }
+
+    .inputForm {
+      border: 1.5px solid #ecedec;
+      border-radius: 10px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .input {
+      margin-left: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .input:focus {
+      outline: none;
+    }
+
+    .inputForm:focus-within {
+      border: 1.5px solid #2d79f3;
+    }
+
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .flex-row>div>label {
+      font-size: 14px;
+      color: black;
+      font-weight: 400;
+    }
+
+    .span {
+      font-size: 14px;
+      margin-left: 5px;
+      color: #2d79f3;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .button-submit {
+      margin: 20px 0 10px 0;
+      background-color: #151717;
+      border: none;
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 10px;
+      height: 50px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .p {
       text-align: center;
+      color: black;
+      font-size: 14px;
+      margin: 5px 0;
     }
 
-    .success-message {
-      color: #27ae60;
-      font-family: var(--ff-roboto);
-      font-size: 1.4rem;
+    .btn {
       margin-top: 10px;
-      text-align: center;
+      width: 100%;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      gap: 10px;
+      border: 1px solid #ededef;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      border: 1px solid #2d79f3;
+    }
+
+    .line {
+      position: relative;
+      height: 1px;
+      width: 100%;
+      background-color: #e0e0e0;
+      margin: 20px 0;
+    }
+
+    .line::before {
+      content: "Or With";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      padding: 0 10px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 20px 0;
+    }
+
+    .navbar .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo a {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e63946;
+    }
+
+    .navbar .logo a:hover {
+      color: #2b9df5;
+    }
+
+    .glass-radio-group {
+      --bg: rgba(255, 255, 255, 0.06);
+      --text: #222;
+
+      display: flex;
+      position: relative;
+      background: var(--bg);
+      border-radius: 1rem;
+      backdrop-filter: blur(14px);
+      box-shadow:
+        inset 1px 1px 4px rgba(255, 255, 255, 0.2),
+        inset -1px -1px 6px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .glass-radio-group input {
+      display: none;
+    }
+
+    .glass-radio-group label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      font-size: 14px;
+      padding: 0.8rem 1.6rem;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text);
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .glass-radio-group label:hover {
+      color: #ee6060;
+    }
+
+    .glass-radio-group input:checked+label {
+      color: #2b9df5;
+    }
+
+    .glass-glider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: calc(100% / 4);
+      /* 4 items */
+      border-radius: 1rem;
+      z-index: 1;
+      transition:
+        transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+        background 0.4s ease-in-out,
+        box-shadow 0.4s ease-in-out;
+    }
+
+    /* Glider movement styles */
+    #nav-home:checked~.glass-glider {
+      transform: translateX(0%);
+      background: linear-gradient(135deg, #ff6a6a55, #ff9e9e);
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+    }
+
+    #nav-donors:checked~.glass-glider {
+      transform: translateX(100%);
+      background: linear-gradient(135deg, #ffd70055, #ffcc00);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+
+    #nav-login:checked~.glass-glider {
+      transform: translateX(200%);
+      background: linear-gradient(135deg, #a8edea55, #fed6e3);
+      box-shadow: 0 0 15px rgba(168, 237, 234, 0.4);
+    }
+
+    #nav-register:checked~.glass-glider {
+      transform: translateX(300%);
+      background: linear-gradient(135deg, #d0e7ff55, #a0d8ff);
+      box-shadow: 0 0 15px rgba(160, 216, 255, 0.4);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .glass-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-btn:hover {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .signup-link {
+      font-size: 14px;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .signup-link a {
+      color: #00aaff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 
 <body>
   <header class="header">
-    <div class="header-top">
-      <div class="container">
-        <ul class="contact-list">
-          <li class="contact-item">
-            <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-            <a href="mailto:info@raktdaan.com" class="contact-link">info@raktdaan.com</a>
-          </li>
-          <li class="contact-item">
-            <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
-            <a href="tel:+917052101786" class="contact-link">+91-7052-101-786</a>
-          </li>
-        </ul>
-        <ul class="social-list">
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-pinterest"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="header-bottom" data-header>
       <div class="container">
-        <a href="#" class="logo">RaktDaan</a>
-        <nav class="navbar container" data-navbar>
+        <nav class="navbar">
+          <div class="container">
+            <div class="logo"><a href="index.html">RAKTDAAN</a></div>
+
+            <div class="glass-radio-group" id="navGlass">
+              <input type="radio" name="nav" id="nav-home" checked />
+              <label for="nav-home" onclick="window.location.href='index.html'">Home</label>
+
+              <input type="radio" name="nav" id="nav-donors" />
+              <label for="nav-donors" onclick="window.location.href='donors.html'">Find Donor</label>
+
+              <input type="radio" name="nav" id="nav-login" />
+              <label for="nav-login" onclick="window.location.href='about.html'">About Us</label>
+
+              <input type="radio" name="nav" id="nav-register" />
+              <label for="nav-register" onclick="window.location.href='index.html'">Blog</label>
+
+              <input type="radio" name="nav" id="nav-register" />
+              <label for="nav-register" onclick="window.location.href='contact.html'">Contact Us</label>
+              <div class="glass-glider"></div>
+            </div>
+          </div>
+        </nav>
+        <!-- <a href="#" class="logo">RaktDaan</a> -->
+        <!-- <nav class="navbar container" data-navbar>
           <ul class="navbar-list">
             <li>
-              <a href="#home" class="navbar-link" data-nav-link>Home</a>
+              <a href="index.html" class="navbar-link" data-nav-link>Home</a>
             </li>
             <li>
-              <a href="#service" class="navbar-link" data-nav-link>Find donor</a>
+              <a href="#service" class="navbar-link" data-nav-link>Find Donor</a>
             </li>
             <li>
-              <a href="#about" class="navbar-link" data-nav-link>About</a>
+              <a href="#about" class="navbar-link" data-nav-link>About Us</a>
             </li>
             <li>
               <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
             </li>
             <li>
-              <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
+              <a href="contact.html" class="navbar-link" data-nav-link>Contact</a>
             </li>
           </ul>
-        </nav>
-        <a href="#" class="btn">Appointment</a>
-        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
-          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
-          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
-        </button>
+        </nav> -->
       </div>
     </div>
   </header>
 
   <main>
-    <article>
-      <section class="section hero" id="home" aria-label="hero">
-        <div class="container">
-          <div class="hero-content">
-            <div class="form-container">
-              <h2 class="form-title">Login</h2>
-              <form id="loginForm">
-                <div class="form-group">
-                  <label for="email" class="form-label">Email:</label>
-                  <input type="email" id="email" name="email" class="form-input" required>
-                </div>
-                <div class="form-group">
-                  <label for="password" class="form-label">Password:</label>
-                  <input type="password" id="password" name="password" class="form-input" required>
-                </div>
-                <div class="checkbox-group">
-                  <input type="checkbox" id="remember_me" name="remember_me" value="1" class="checkbox-input">
-                  <label for="remember_me" class="checkbox-label">Remember Me</label>
-                </div>
-                <button type="submit" class="submit-btn" id="submitBtn">Login</button>
-                <div id="message"></div>
-              </form>
-            </div>
+    <div class="page-center">
+      <div class="register-container">
+        <h2 class="register-title">Register Account</h2>
+
+        <div class="account-selector">
+          <div class="account-type selected" id="doctorBtn" onclick="selectAccount('Doctor')">
+            <img src="https://img.icons8.com/ios-filled/50/000000/doctor-male.png" alt="Doctor"
+              style='align-items: center;' />
+            <span>Doctor</span>
+          </div>
+          <div class="account-type" id="patientBtn" onclick="selectAccount('Patient')">
+            <img src="https://img.icons8.com/ios-filled/50/000000/patient-oxygen-mask.png" alt="Patient"
+              style='align-items: center;' />
+            <span style="align-items: center; color: rgb(9, 2, 111);">Patient</span>
           </div>
         </div>
-      </section>
-    </article>
+
+        <div id="greeting" class="greeting">
+          Hello doctor! Please fill out the form below to get started
+        </div>
+
+        <div class="flex-column">
+          <label>Email</label>
+        </div>
+        <div class="inputForm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32" height="20">
+            <g data-name="Layer 3" id="Layer_3">
+              <path
+                d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
+              </path>
+            </g>
+          </svg>
+          <input placeholder="Enter your Email" class="input" type="email" id="email" name="email" required>
+        </div>
+
+        <div class="flex-column">
+          <label>Password</label>
+        </div>
+        <div class="inputForm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
+            <path
+              d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
+            </path>
+            <path
+              d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
+            </path>
+          </svg>
+          <input placeholder="Enter your Password" class="input" type="password" id="password" name="password" required>
+        </div>
+
+        <div class="flex-row">
+          <div>
+            <input type="checkbox" id="rememberMe" name="rememberMe">
+            <label for="rememberMe">Remember me</label>
+          </div>
+          <span class="span">Forgot password?</span>
+        </div>
+
+        <button type="submit" class="button-submit">Sign In</button>
+        <div id="message"></div>
+
+        <p class="p">Don't have an account? <span class="span"><a href="register.html">Sign Up</a></span></p>
+        <p class="p line"></p>
+
+        <div class="flex-row">
+          <button class="btn google" type="button">
+            <svg xml:space="preserve" style="enable-background:new 0 0 512 512;" viewBox="0 0 512 512" y="0px" x="0px"
+              xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Layer_1" width="20"
+              version="1.1">
+              <path
+                d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256 c0-42.451,10.324-82.483,28.624-117.732h0.014l57.992,10.632l25.404,57.644c-5.317,15.501-8.215,32.141-8.215,49.456 C103.821,274.792,107.225,292.797,113.47,309.408z"
+                style="fill:#FBBB00;"></path>
+              <path
+                d="M507.527,208.176C510.467,223.662,512,239.655,512,256c0,18.328-1.927,36.206-5.598,53.451 c-12.462,58.683-45.025,109.925-90.134,146.187l-0.014-0.014l-73.044-3.727l-10.338-64.535 c29.932-17.554,53.324-45.025,65.646-77.911h-136.89V208.176h138.887L507.527,208.176L507.527,208.176z"
+                style="fill:#518EF8;"></path>
+              <path
+                d="M416.253,455.624l0.014,0.014C372.396,490.901,316.666,512,256,512 c-97.491,0-182.252-54.491-225.491-134.681l82.961-67.91c21.619,57.698,77.278,98.771,142.53,98.771 c28.047,0,54.323-7.582,76.87-20.818L416.253,455.624z"
+                style="fill:#28B446;"></path>
+              <path
+                d="M419.404,58.936l-82.933,67.896c-23.335-14.586-50.919-23.012-80.471-23.012 c-66.729,0-123.429,42.957-143.965,102.724l-83.397-68.276h-0.014C71.23,56.123,157.06,0,256,0 C318.115,0,375.068,22.126,419.404,58.936z"
+                style="fill:#F14336;"></path>
+            </svg>
+            Continue with Google
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
   </main>
-
-  <footer class="footer">
-    <div class="footer-top section">
-      <div class="container">
-        <div class="footer-brand">
-          <a href="#" class="logo">RaktDaan</a>
-          <p class="footer-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </p>
-          <div class="schedule">
-            <div class="schedule-icon">
-              <ion-icon name="time-outline"></ion-icon>
-            </div>
-            <span class="span">
-              Mon - Sat:<time datetime="07:00">7.00</time> - <time datetime="22:00">22.00</time>
-            </span>
-          </div>
-        </div>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Other Links</p>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Home</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Find donor</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">About us</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Contact</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Our Services</p>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Blood Donation</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Health Check</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Blood Bank</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Donate Process</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Blood Info</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Contact Us</p>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-            <address class="item-text">
-              2416 Mapleview Drive <br>
-              Tampa, FL 33634
-            </address>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="call-outline"></ion-icon>
-            </div>
-            <a href="tel:+917052101786" class="footer-link">+91-7052-101-786</a>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-            <a href="mailto:info@raktdaan.com" class="footer-link">info@raktdaan.com</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">
-          &copy; 2024 All Rights Reserved by RaktDaan
-        </p>
-        <ul class="social-list">
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-pinterest"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-
-  <!--BACK TO TOP-->
-  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-    <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
   </a>
+  </li>
+  <li>
+    <a href="https://www.instagram.com/" class="social-link">
+      <ion-icon name="logo-instagram"></ion-icon>
+      <a href="https://twitter.com/" class="social-link">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <style>
+          /* Account Selector Styles */
+          .account-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+          }
 
-  <!--custom js link-->
-  <script src="./assets/js/script.js"></script>
+          .account-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #ecedec;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            min-width: 120px;
+          }
 
-  <!--ionicon link-->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+          .account-type:hover {
+            border-color: #2d79f3;
+            transform: translateY(-2px);
+          }
 
-  <!-- Login JavaScript -->
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const submitBtn = document.getElementById('submitBtn');
-      const messageDiv = document.getElementById('message');
-      
-      // Disable submit button and show loading state
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Logging in...';
-      messageDiv.innerHTML = '';
-      
-      // Get form data
-      const formData = new FormData(this);
-      const loginData = {
-        email: formData.get('email'),
-        password: formData.get('password'),
-        remember_me: formData.get('remember_me') || '0'
-      };
-      
-      try {
-        const response = await fetch('/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(loginData)
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          messageDiv.innerHTML = `<div class="success-message">${result.message}</div>`;
-          // Redirect to dashboard after a short delay
-          setTimeout(() => {
-            window.location.href = result.redirect || '/dashboard';
-          }, 1000);
-        } else {
-          messageDiv.innerHTML = `<div class="error-message">${result.message}</div>`;
-        }
-      } catch (error) {
-        console.error('Login error:', error);
-        messageDiv.innerHTML = '<div class="error-message">An error occurred. Please try again.</div>';
-      } finally {
-        // Re-enable submit button
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Login';
-      }
-    });
-  </script>
+          .account-type.selected {
+            border-color: #2d79f3;
+            background-color: #f0f8ff;
+          }
+
+          .account-type img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+          }
+
+          .account-type span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+          }
+
+          .greeting {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+          }
+
+          /* Modern Form Styles */
+          .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #ffffff;
+            padding: 30px;
+            width: 450px;
+            border-radius: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+
+          .inputForm {
+            border: 1.5px solid #ecedec;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            transition: 0.2s ease-in-out;
+          }
+
+          .inputForm:focus-within {
+            border: 1.5px solid #2d79f3;
+          }
+
+          .input {
+            margin-left: 10px;
+            border-radius: 10px;
+            border: none;
+            width: 85%;
+            height: 100%;
+          }
+
+          .input:focus {
+            outline: none;
+          }
+
+          .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+          }
+
+          .flex-row div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .flex-column {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+          }
+
+          .button-submit {
+            margin: 20px 0 10px 0;
+            background-color: #151717;
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+          }
+
+          .button-submit:hover {
+            background-color: #252727;
+          }
+
+          .btn {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            gap: 10px;
+            border: 1px solid #ededef;
+            background-color: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+          }
+
+          .btn:hover {
+            border: 1px solid #2d79f3;
+          }
+
+          .p {
+            text-align: center;
+            color: black;
+            font-size: 14px;
+            margin: 5px 0;
+          }
+
+          .span {
+            cursor: pointer;
+            font-size: 14px;
+            color: #2d79f3;
+          }
+
+          .line {
+            position: relative;
+            height: 1px;
+            width: 100%;
+            margin: 15px 0;
+            background-color: #d4d4d4;
+          }
+
+          .line::before {
+            content: 'Or';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: #8b8b8b;
+            padding: 0 15px;
+          }
+
+          /* Responsive Design */
+          @media (max-width: 480px) {
+            .form {
+              width: 90%;
+              padding: 20px;
+            }
+
+            .account-selector {
+              flex-direction: column;
+              gap: 10px;
+            }
+
+            .account-type {
+              flex-direction: row;
+              justify-content: center;
+              min-width: auto;
+              padding: 10px 15px;
+            }
+
+            .account-type img {
+              margin-bottom: 0;
+              margin-right: 10px;
+              width: 30px;
+              height: 30px;
+            }
+          }
+        </style>
+        </div>
+        </div>
+        </footer> -->
+
+        <!-- Google Identity Services -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+        <!--BACK TO TOP-->
+        <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+          <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
+        </a>
+
+        <!--custom js link-->
+        <script src="./assets/js/script.js"></script>
+
+        <!--ionicon link-->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <!-- Login JavaScript -->
+        <script>
+          // Account Selection Functionality
+          let selectedAccount = 'Doctor';
+
+          function selectAccount(type) {
+            selectedAccount = type;
+
+            // Update visual selection
+            document.getElementById('doctorBtn').classList.remove('selected');
+            document.getElementById('patientBtn').classList.remove('selected');
+
+            if (type === 'Doctor') {
+              document.getElementById('doctorBtn').classList.add('selected');
+              document.getElementById('greeting').innerHTML = 'Hello doctor! Please fill out the form below to get started';
+            } else {
+              document.getElementById('patientBtn').classList.add('selected');
+              document.getElementById('greeting').innerHTML = 'Hello patient! Please fill out the form below to get started';
+            }
+          }
+
+          // Form submission handling
+          document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const accountType = selectedAccount;
+
+            const messageDiv = document.getElementById('message');
+
+            try {
+              const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: email,
+                  password: password,
+                  rememberMe: rememberMe,
+                  accountType: accountType
+                })
+              });
+
+              const data = await response.json();
+
+              if (data.success) {
+                messageDiv.innerHTML = '<p style="color: green;">Login successful! Redirecting...</p>';
+                setTimeout(() => {
+                  window.location.href = data.redirect || '/dashboard.html';
+                }, 1500);
+              } else {
+                messageDiv.innerHTML = '<p style="color: red;">' + (data.message || 'Login failed. Please try again.') + '</p>';
+              }
+            } catch (error) {
+              messageDiv.innerHTML = '<p style="color: red;">Error: Unable to connect to server.</p>';
+              console.error('Login error:', error);
+            }
+          });
+
+          // Google Sign-In (Demo Mode - Replace with actual OAuth when ready)
+          document.querySelector('.btn.google').addEventListener('click', function () {
+            const googleClientId = 'YOUR_GOOGLE_CLIENT_ID';
+
+            if (googleClientId === 'YOUR_GOOGLE_CLIENT_ID') {
+              // Demo mode - show instructions for setup
+              alert('Google Sign-In is in demo mode.\n\nTo enable:\n1. Create Google OAuth credentials at https://console.developers.google.com\n2. Replace "YOUR_GOOGLE_CLIENT_ID" in login.html\n3. Set up backend endpoints at /auth/google');
+
+              // Simulate successful login for demo
+              const messageDiv = document.getElementById('message');
+              messageDiv.innerHTML = '<p style="color: green;">Google Sign-In demo: Would redirect to Google...</p>';
+
+              // In actual implementation, redirect would happen here
+              return;
+            }
+
+            // Actual OAuth implementation
+            const redirectUri = window.location.origin + '/auth/google/callback';
+            const scope = 'email profile openid';
+            const state = generateRandomString(32);
+
+            sessionStorage.setItem('oauth_state', state);
+
+            const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+              `client_id=${googleClientId}&` +
+              `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+              `response_type=code&` +
+              `scope=${encodeURIComponent(scope)}&` +
+              `state=${state}&` +
+              `access_type=offline&` +
+              `prompt=select_account`;
+
+            window.location.href = googleAuthUrl;
+          });
+
+          // Helper function to generate random string for state parameter
+          function generateRandomString(length) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+              result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+          }
+
+          // Handle OAuth callback response
+          function handleOAuthCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const state = urlParams.get('state');
+            const storedState = sessionStorage.getItem('oauth_state');
+
+            if (code && state === storedState) {
+              sessionStorage.removeItem('oauth_state');
+
+              // Send authorization code to backend
+              const provider = 'google';
+
+              fetch(`/auth/${provider}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  code: code,
+                  accountType: selectedAccount
+                })
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    window.location.href = data.redirect || '/dashboard.html';
+                  } else {
+                    document.getElementById('message').innerHTML =
+                      '<p style="color: red;">' + (data.message || 'Authentication failed') + '</p>';
+                  }
+                })
+                .catch(error => {
+                  console.error('OAuth error:', error);
+                  document.getElementById('message').innerHTML =
+                    '<p style="color: red;">Authentication error occurred</p>';
+                });
+            }
+          }
+
+          // Apple Sign-In handler
+          function handleAppleSignIn(response) {
+            fetch('/auth/apple', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                id_token: response.authorization.id_token,
+                user: response.user,
+                accountType: selectedAccount
+              })
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  window.location.href = data.redirect || '/dashboard.html';
+                } else {
+                  document.getElementById('message').innerHTML =
+                    '<p style="color: red;">' + (data.message || 'Apple Sign-In failed') + '</p>';
+                }
+              })
+              .catch(error => {
+                console.error('Apple Sign-In error:', error);
+              });
+          }
+
+          // Check for OAuth callback on page load
+          document.addEventListener('DOMContentLoaded', function () {
+            handleOAuthCallback();
+          });
+
+          // Initialize greeting
+          document.addEventListener('DOMContentLoaded', function () {
+            selectAccount('Doctor');
+          });
+        </script>
+        <script>
+          function selectAccount(type) {
+            const doctorBtn = document.getElementById('doctorBtn');
+            const patientBtn = document.getElementById('patientBtn');
+            const greeting = document.getElementById('greeting');
+
+            if (type === 'Doctor') {
+              doctorBtn.classList.add('selected');
+              patientBtn.classList.remove('selected');
+              greeting.textContent = 'Hello doctor! Please fill out the form below to get started';
+            } else {
+              patientBtn.classList.add('selected');
+              doctorBtn.classList.remove('selected');
+              greeting.textContent = 'Hello patient! Please fill out the form below to get started';
+            }
+          }
+
+          document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+
+            // Disable submit button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            messageDiv.innerHTML = '';
+
+            // Get form data
+            const formData = new FormData(this);
+            const loginData = {
+              email: formData.get('email'),
+              password: formData.get('password'),
+              userType: document.querySelector('.account-type.selected').id === 'doctorBtn' ? 'Doctor' : 'Patient'
+            };
+
+            try {
+              const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData)
+              });
+
+              const result = await response.json();
+
+              if (result.success) {
+                messageDiv.innerHTML = `<div class="success-message">${result.message}</div>`;
+                // Redirect to dashboard after a short delay
+                setTimeout(() => {
+                  window.location.href = result.redirect || '/dashboard';
+                }, 1000);
+              } else {
+                messageDiv.innerHTML = `<div class="error-message">${result.message}</div>`;
+              }
+            } catch (error) {
+              console.error('Login error:', error);
+              messageDiv.innerHTML = '<div class="error-message">An error occurred. Please try again.</div>';
+            } finally {
+              // Re-enable submit button
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Login';
+            }
+          });
+        </script>
+</body>
+
+</html>
+
+<footer class="simple-footer" style="background-color: white; color: black; padding: 40px 0; margin-top: 60px;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
+
+      <div>
+        <h3 style="color: black; margin-bottom: 15px; font-size: 18px; font-weight: 600;">RaktDaan</h3>
+        <p style="color: #333; line-height: 1.6; font-size: 14px;">
+          Connecting hospitals with compassionate donors — because every drop counts when a life is on the line.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Quick Links</h4>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 8px;"><a href="#"
+              style="color: #333; text-decoration: none; font-size: 14px;">Home</a></li>
+          <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">Find
+              Donor</a></li>
+          <li style="margin-bottom: 8px;"><a href="#" style="color: #333; text-decoration: none; font-size: 14px;">About
+              Us</a></li>
+          <li style="margin-bottom: 8px;"><a href="#"
+              style="color: #333; text-decoration: none; font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Contact Info</h4>
+        <div style="color: #333; font-size: 14px; line-height: 1.8;">
+          <p><strong>Location:</strong> India</p>
+          <p><strong>Phone:</strong> <a href="tel:+918xxx-xxx-xxx" style="color: #333;">+91-8xxx-xxx-xxx</a></p>
+          <p><strong>Email:</strong> <a href="mailto:raktdaan@gmail.com" style="color: #333;">raktdaan@gmail.com</a></p>
+          <p><strong>Hours:</strong> 24 X 7 : 365 Days</p>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Follow Us</h4>
+        <div style="display: flex; gap: 15px; margin-top: 10px;">
+          <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL"
+            style="color: #333; font-size: 20px; text-decoration: none;">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.instagram.com/whxitte" style="color: #333; font-size: 20px; text-decoration: none;">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://twitter.com/Annabel07785340" style="color: #333; font-size: 20px; text-decoration: none;">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+      <p style="color: #666; font-size: 14px; margin: 0;">
+        &copy; 2024 All Rights Reserved by RaktDaan
+      </p>
+    </div>
+  </div>
+</footer>
+
+<a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+  <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
+</a>
+
+<script src="./assets/js/script.js" defer></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>

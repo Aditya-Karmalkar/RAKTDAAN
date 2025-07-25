@@ -58,6 +58,82 @@
   }
   </style>
 
+  <style>
+    /* Navbar Styling */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 20px 0;
+    }
+
+    .navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo a {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e63946;
+      text-decoration: none;
+    }
+
+    .navbar-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 30px;
+    }
+
+    .navbar-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-link:hover {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .glass-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-btn:hover {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+      transform: translateY(-1px);
+    }
+  </style>
+
 </head>
 
 <body>
@@ -306,119 +382,27 @@
             <a href="#" class="footer-link">
               <ion-icon name="add-outline"></ion-icon>
               <span class="span">Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Contact</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">Login / Register</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Our Services</p>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">
-              <ion-icon name="add-outline"></ion-icon>
-              <span class="span">xxxxxxxxx</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Contact Us</p>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-            <a href="https://goo.gl/maps/BYA5MxQUg5B8ZFLcA">
-            <address class="item-text">
-              Near Thaluk Headquarters,<br>
-              Vaikom, Kottayam, Kerala IN
-            </address>
-          </a>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="call-outline"></ion-icon>
-            </div>
-            <a href="tel:+917052101786" class="footer-link">+91-7558-951-351</a>
-          </li>
-          <li class="footer-item">
-            <div class="item-icon">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-            <a href="mailto:help@example.com" class="footer-link">redstream001@gmail.com</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">
-          &copy; 2024 All Rights Reserved by RaktDaan
-        </p>
-        <ul class="social-list">
-          <li>
-            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL" class="social-link">
               <ion-icon name="logo-facebook"></ion-icon>
             </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/_vladimir_putin.___/" class="social-link">
+            <a href="https://www.instagram.com/whxitte" style="color: #333; font-size: 20px; text-decoration: none;">
               <ion-icon name="logo-instagram"></ion-icon>
             </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/Annabel07785340" class="social-link">
+            <a href="https://twitter.com/Annabel07785340" style="color: #333; font-size: 20px; text-decoration: none;">
               <ion-icon name="logo-twitter"></ion-icon>
             </a>
-          </li>
-        </ul>
+          </div>
+        </div>
+
+      </div>
+      
+      <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          &copy; 2024 All Rights Reserved by RaktDaan
+        </p>
       </div>
     </div>
   </footer>
 
-  <!--BACK TO TOP-->
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
     <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
   </a>

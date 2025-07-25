@@ -1,337 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RaktDaan - Register</title>
-
-  <!-- favicon-->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-
-  <!--css-->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!-- google font link-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
   <style>
-    /* Form Styles */
-    .form-title {
-      color: var(--oxford-blue-1);
-      font-family: var(--ff-poppins);
-      font-size: 3.4rem;
-      font-weight: var(--fw-800);
-      text-align: center;
-      margin-bottom: 20px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .form-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    body {
+      background-color: #f8fbff;
+      color: #ffffff;
     }
 
-    .form-field {
-      flex: 0 0 48%;
-      margin-bottom: 20px;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    .form-field label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
+    ul {
+      list-style: none;
     }
 
-    .form-field input,
-    .form-field select {
+    .navbar {
+      background: transparent;
+      position: fixed;
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      top: 0;
+      z-index: 1000;
+      padding: 20px 0;
     }
 
-    .form-field input[type="submit"] {
-      background-color: #216aca;
-      color: #fff;
+    .navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo a {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e63946;
+    }
+
+    .navbar .logo a:hover {
+      color: #2b9df5;
+    }
+
+    .glass-radio-group {
+      --bg: rgba(255, 255, 255, 0.06);
+      --text: #222;
+
+      display: flex;
+      position: relative;
+      background: var(--bg);
+      border-radius: 1rem;
+      backdrop-filter: blur(14px);
+      box-shadow:
+        inset 1px 1px 4px rgba(255, 255, 255, 0.2),
+        inset -1px -1px 6px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .glass-radio-group input {
+      display: none;
+    }
+
+    .glass-radio-group label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      font-size: 14px;
+      padding: 0.8rem 1.6rem;
       cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text);
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease-in-out;
+      background: transparent;
     }
 
-    .form-field input[type="submit"]:hover {
-      background-color: #060952;
+    .glass-radio-group label:hover {
+      color: #ee6060;
     }
 
-    .error-message {
-      color: #ff0000;
-      margin-top: 5px;
-      font-size: 0.9em;
+    .glass-radio-group input:checked+label {
+      color: #2b9df5;
     }
 
-    .success-message {
-      color: #008000;
-      margin: 10px 0;
+    .glass-glider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: calc(100% / 4);
+      /* 4 items */
+      border-radius: 1rem;
+      z-index: 1;
+      transition:
+        transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+        background 0.4s ease-in-out,
+        box-shadow 0.4s ease-in-out;
+    }
+
+    /* Glider movement styles */
+    #nav-home:checked~.glass-glider {
+      transform: translateX(0%);
+      background: linear-gradient(135deg, #ff6a6a55, #ff9e9e);
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+    }
+
+    #nav-donors:checked~.glass-glider {
+      transform: translateX(100%);
+      background: linear-gradient(135deg, #ffd70055, #ffcc00);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+
+    #nav-login:checked~.glass-glider {
+      transform: translateX(200%);
+      background: linear-gradient(135deg, #a8edea55, #fed6e3);
+      box-shadow: 0 0 15px rgba(168, 237, 234, 0.4);
+    }
+
+    #nav-register:checked~.glass-glider {
+      transform: translateX(300%);
+      background: linear-gradient(135deg, #d0e7ff55, #a0d8ff);
+      box-shadow: 0 0 15px rgba(160, 216, 255, 0.4);
+    }
+
+
+    .page-center {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 160px 20px 60px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    }
+
+    .register-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 800px;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
       text-align: center;
-      font-weight: bold;
+    }
+
+    .register-title {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .register-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 14px 18px;
+      border: 1.5px solid #ecedec;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #2d79f3;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #151717;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .register-btn:hover {
+      background-color: #252727;
+    }
+
+    .login-link {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #2d79f3;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+      color: #6f0903;
+    }
+
+    @media (max-width: 480px) {
+      .register-container {
+        padding: 20px;
+        margin: 10px;
+        align-items: center;
+        border-color: #555;
+      }
+    }
+
+    .account-selector {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .account-type {
+      flex: 1;
+      padding: 15px;
+      border: 2px solid #111111;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .account-type.selected {
+      border-color: #00aaff;
+      background-color: #fcfcfc;
+      align-items: center;
+    }
+
+    .account-type img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+      align-content: center;
+    }
+
+    .greeting {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 16px;
+      color: #666;
+      /* background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigB8iI5tb8WSVBuVUGc9UjjB8O0708X7Fdic_4O1LT4CmLHoiwhanLXiRhe82yw0R7LgACQ2IhZaTY0hhmGi0gYp_Ynb49CVzfmXtYHUVKgXXpWvJ_oYT8cB4vzsnJLe3iCwuzj-w6PeYq_JaHmy_CoGoa6nw0FBo-2xLdOPvsLTh_fmYH2xhkaZ-OGQ/s16000/footer_bg.png") no-repeat scroll center 0; */
+      width: 100%;
+      height: 60px;
+    }
+
+    /* .footer_bg_one {
+      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif") no-repeat center center;
+      width: 330px;
+      height: 105px;
+      background-size: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 30%;
+      animation: myfirst 22s linear infinite;
+    }
+
+    .footer_bg_two {
+      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLGwEUVwPK6Vi8xXMymsc-ZXVwLWyXhogZxbcXQYSY55REw_0D4VTQnsVzCrL7nsyjd0P7RVOI5NKJbQ75koZIalD8mqbMquP20fL3DxsWngKkOLOzoOf9sMuxlbyfkIBTsDw5WFUj-YJiI50yzgVjF8cZPHhEjkOP_PRTQXDHEq8AyWpBiJdN9SfQA/s16000/cyclist.gif") no-repeat center center;
+      width: 88px;
+      height: 100px;
+      background-size: 100%;
+      bottom: 0;
+      left: 38%;
+      position: absolute;
+      animation: myfirst 30s linear infinite;
+    } */
+
+    @keyframes myfirst {
+      0% {
+        left: -25%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    .new_footer_area {
+      background: #fbfbfd;
+    }
+
+    .new_footer_top {
+      padding: 120px 0px 270px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .new_footer_area .footer_bottom {
+      padding-top: 5px;
+      padding-bottom: 50px;
+    }
+
+    .footer_bottom {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 20px;
+      color: #7f88a6;
+      padding: 27px 0px;
+    }
+
+    .new_footer_top .footer_bg {
+      position: absolute;
+      bottom: 0;
+      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigB8iI5tb8WSVBuVUGc9UjjB8O0708X7Fdic_4O1LT4CmLHoiwhanLXiRhe82yw0R7LgACQ2IhZaTY0hhmGi0gYp_Ynb49CVzfmXtYHUVKgXXpWvJ_oYT8cB4vzsnJLe3iCwuzj-w6PeYq_JaHmy_CoGoa6nw0FBo-2xLdOPvsLTh_fmYH2xhkaZ-OGQ/s16000/footer_bg.png") no-repeat scroll center 0;
+      width: 100%;
+      height: 266px;
+    }
+
+    .footer_bg_one {
+      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif") no-repeat center center;
+      width: 330px;
+      height: 105px;
+      background-size: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 30%;
+      animation: myfirst 22s linear infinite;
+    }
+
+    .footer_bg_two {
+      background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLGwEUVwPK6Vi8xXMymsc-ZXVwLWyXhogZxbcXQYSY55REw_0D4VTQnsVzCrL7nsyjd0P7RVOI5NKJbQ75koZIalD8mqbMquP20fL3DxsWngKkOLOzoOf9sMuxlbyfkIBTsDw5WFUj-YJiI50yzgVjF8cZPHhEjkOP_PRTQXDHEq8AyWpBiJdN9SfQA/s16000/cyclist.gif") no-repeat center center;
+      width: 88px;
+      height: 100px;
+      background-size: 100%;
+      bottom: 0;
+      left: 38%;
+      position: absolute;
+      animation: myfirst 30s linear infinite;
+    }
+
+    .f_widget {
+      margin-bottom: 30px;
+    }
+
+    .f_widget .f_list li {
+      margin-bottom: 11px;
+    }
+
+    .f_widget .f_list li:hover {
+      color: #ffffff;
+    }
+
+
+    .f_widget .f_list li a {
+      color: #6a7695;
+      text-decoration: none;
+    }
+
+    .f_widget .f_list li a:hover {
+      color: #ffffff;
+    }
+
+    .f_social_icon a {
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      background: #e8e9ec;
+      border-radius: 50%;
+      display: inline-block;
+      text-align: center;
+      margin-right: 10px;
+      color: #6a7695;
+      font-size: 16px;
+    }
+
+    .f_social_icon a:hover {
+      color: #ffffff;
     }
   </style>
 </head>
 
-<body id="top">
-  <!-- HEADER-->
-  <header class="header">
-    <div class="header-top">
-      <div class="container">
-        <ul class="contact-list">
-          <li class="contact-item">
-            <ion-icon name="mail-outline"></ion-icon>
-            <a href="mailto:redstream001@gmail.com" class="contact-link">redstream001@gmail.com</a>
-          </li>
-          <li class="contact-item">
-            <ion-icon name="call-outline"></ion-icon>
-            <a href="tel:+917558951351" class="contact-link">+91-7558-951-351</a>
-          </li>
-        </ul>
-        <ul class="social-list">
-          <li>
-            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/_vladimir_putin.___/" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/Annabel07785340" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://youtu.be/Af0gk_kiGac" class="social-link">
-              <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="header-bottom" data-header>
-      <div class="container">
-        <a href="#" class="logo">RaktDaan</a>
-        <nav class="navbar container" data-navbar>
-          <ul class="navbar-list">
-            <li>
-              <a href="index.html" class="navbar-link" data-nav-link>Home</a>
-            </li>
-            <li>
-              <a href="#service" class="navbar-link" data-nav-link>Find donor</a>
-            </li>
-            <li>
-              <a href="about.html" class="navbar-link" data-nav-link>About Us</a>
-            </li>
-            <li>
-              <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
-            </li>
-            <li>
-              <a href="contact.html" class="navbar-link" data-nav-link>Contact</a>
-            </li>
-          </ul>
-        </nav>
-        <a href="login.html" class="btn">Login</a>
-        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
-          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
-          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
-        </button>
-      </div>
-    </div>
-  </header>
+<body>
 
-  <main>
-    <article>
-      <section class="section hero" id="home" style="background-image: url('./assets/images/hero-bg.png'); margin: 0%;" aria-label="hero">
-        <!-- Registration Form -->
-        <div class="container">
-          <div class="form-container">
-            <div class="form-title">Register</div>
-            <div id="message" class="success-message"></div>
-            <form id="registrationForm">
-              <!-- Personal Information -->
-              <div class="form-section">
-                <div class="form-field">
-                  <label for="full_name">FULL NAME *</label>
-                  <input type="text" id="full_name" name="full_name" required>
-                  <div id="nameError" class="error-message"></div>
-                </div>
-                <div class="form-field">
-                  <label for="mobile_number">MOBILE NUMBER *</label>
-                  <input type="tel" id="mobile_number" name="mobile_number" required>
-                  <div id="mobileError" class="error-message"></div>
-                </div>
-                <div class="form-field">
-                  <label for="email">EMAIL *</label>
-                  <input type="email" id="email" name="email" required>
-                  <div id="emailError" class="error-message"></div>
-                </div>
-                <div class="form-field">
-                  <label for="password">PASSWORD *</label>
-                  <input type="password" id="password" name="password" required>
-                  <div id="passwordError" class="error-message"></div>
-                </div>
-                <div class="form-field">
-                  <label for="blood_group">BLOOD GROUP</label>
-                  <select id="blood_group" name="blood_group">
-                    <option value="">Select Blood Group</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label for="gender">GENDER</label>
-                  <select id="gender" name="gender">
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div class="form-field">
-                  <label for="birth_date">DATE OF BIRTH</label>
-                  <input type="date" id="birth_date" name="birth_date">
-                </div>
-                <div class="form-field">
-                  <label for="weight">WEIGHT (kg)</label>
-                  <input type="number" id="weight" name="weight" min="30" max="200">
-                </div>
-                <div class="form-field">
-                  <label for="state">STATE</label>
-                  <input type="text" id="state" name="state">
-                </div>
-                <div class="form-field">
-                  <label for="zip_code">ZIP CODE</label>
-                  <input type="text" id="zip_code" name="zip_code">
-                </div>
-                <div class="form-field">
-                  <label for="district">DISTRICT</label>
-                  <input type="text" id="district" name="district">
-                </div>
-                <div class="form-field">
-                  <label for="area">AREA</label>
-                  <input type="text" id="area" name="area">
-                </div>
-                <div class="form-field">
-                  <label for="landmarks">LANDMARKS</label>
-                  <input type="text" id="landmarks" name="landmarks">
-                </div>
-              </div>
-              
-              <div class="form-field">
-                <input type="submit" value="Register">
-              </div>
-            </form>
-            <p style="text-align: center; margin-top: 15px;">
-              Already have an account? <a href="login.html">Login here</a>
-            </p>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo"><a href="index.html">RAKTDAAN</a></div>
+
+      <div class="glass-radio-group" id="navGlass">
+        <input type="radio" name="nav" id="nav-home" checked />
+        <label for="nav-home" onclick="window.location.href='index.html'">Home</label>
+
+        <input type="radio" name="nav" id="nav-donors" />
+        <label for="nav-donors" onclick="window.location.href='donors.html'">Donors</label>
+
+        <input type="radio" name="nav" id="nav-donors" />
+        <label for="nav-donors" onclick="window.location.href='contact.html'">Contact</label>
+
+        <input type="radio" name="nav" id="nav-login" />
+        <label for="nav-login" onclick="window.location.href='login.html'">Login</label>
+
+        <!-- <input type="radio" name="nav" id="nav-register" />
+        <label for="nav-register" onclick="window.location.href='register.html'">Register</label> -->
+
+        <div class="glass-glider"></div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Register Form -->
+  <div class="page-center">
+    <div class="form-container">
+      <form class="form" id="loginForm">
+        <div class="account-selector">
+          <div class="account-type selected" id="doctorBtn" onclick="selectAccount('Doctor')">
+            <img src="https://img.icons8.com/ios-filled/50/000000/doctor-male.png" alt="Doctor" />
+            <span style="color: rgb(0, 0, 0);">Doctor</span>
+          </div>
+          <div class="account-type" id="patientBtn" onclick="selectAccount('Patient')">
+            <img src="https://img.icons8.com/ios-filled/50/000000/patient-oxygen-mask.png" alt="Patient" />
+            <span style="color: rgb(0, 0, 0);">Patient</span>
           </div>
         </div>
-      </section>
-    </article>
-  </main>
 
-  <footer class="footer">
-    <div class="footer-top section">
-      <div class="container">
-        <div class="footer-brand">
-          <a href="#" class="logo">RaktDaan</a>
-          <p class="footer-text">
-            We are passionate about connecting blood donors with recipients and bridging the gap in the healthcare industry.
-          </p>
-        </div>
+        <div class="greeting" id="greeting">Welcome doctor! Please fill out the form below to get started</div>
+
+        <form class="register-form">
+          <div class="form-group"><label>Full Name *</label><input type="text" required></div>
+          <div class="form-group"><label>Mobile Number *</label><input type="tel" required></div>
+          <div class="form-group"><label>Email *</label><input type="email" required></div>
+          <div class="form-group"><label>Password *</label><input type="password" required></div>
+          <div class="form-group"><label>Blood Group</label>
+            <select>
+              <option value="">Select</option>
+              <option>A+</option>
+              <option>B+</option>
+              <option>AB+</option>
+              <option>O+</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Gender</label><select>
+              <option>Male</option>
+              <option>Female</option>
+            </select></div>
+          <div class="form-group"><label>Date of Birth</label><input type="date"></div>
+          <div class="form-group"><label>Weight (kg)</label><input type="number"></div>
+          <div class="form-group"><label>State</label><input type="text"></div>
+          <div class="form-group"><label>Zip Code</label><input type="text"></div>
+          <div class="form-group"><label>District</label><input type="text"></div>
+          <div class="form-group full-width"><label>Address</label><input type="text"></div>
+          <div class="form-group full-width" id="hospitalField">
+            <label>Hospital Name *</label><input type="text" required>
+          </div>
+          <button type="submit" class="register-btn">Register</button>
+          <div class="login-link">Already have an account? <a href="login.html">Login here</a></div>
+        </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="new_footer_area bg_color">
+    <div class="new_footer_top">
+      <div class="footer_bg">
+        <div class="footer_bg_one"></div>
+        <div class="footer_bg_two"></div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="footer_bottom">
       <div class="container">
-        <p class="copyright">
-          &copy; 2024 All Rights Reserved by RaktDaan
-        </p>
+        <div class="row align-items-center">
+        </div>
       </div>
     </div>
   </footer>
 
-  <!--BACK TO TOP-->
+  <script>
+    function selectAccount(type) {
+      const doctorBtn = document.getElementById('doctorBtn');
+      const patientBtn = document.getElementById('patientBtn');
+      const greeting = document.getElementById('greeting');
+      const hospitalField = document.getElementById('hospitalField');
+
+      if (type === 'Doctor') {
+        doctorBtn.classList.add('selected');
+        patientBtn.classList.remove('selected');
+        greeting.textContent = 'Welcome doctor! Please fill out the form below to get started';
+        hospitalField.style.display = 'block';
+        hospitalField.querySelector('input').required = true;
+      } else {
+        patientBtn.classList.add('selected');
+        doctorBtn.classList.remove('selected');
+        greeting.textContent = 'Welcome patient! Please fill out the form below to get started';
+        hospitalField.style.display = 'none';
+        hospitalField.querySelector('input').required = false;
+      }
+    }
+
+    selectAccount('Doctor');
+  </script>
+
+  <footer class="simple-footer" style="background-color: white; color: black; padding: 40px 0; margin-top: 60px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
+
+        <div>
+          <h3 style="color: black; margin-bottom: 15px; font-size: 18px; font-weight: 600;">RaktDaan</h3>
+          <p style="color: #333; line-height: 1.6; font-size: 14px;">
+            Connecting hospitals with compassionate donors — because every drop counts when a life is on the line.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Quick Links</h4>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Home</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Find Donor</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">About Us</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Contact Info</h4>
+          <div style="color: #333; font-size: 14px; line-height: 1.8;">
+            <p><strong>Location:</strong> India</p>
+            <p><strong>Phone:</strong> <a href="tel:+918xxx-xxx-xxx" style="color: #333;">+91-8xxx-xxx-xxx</a></p>
+            <p><strong>Email:</strong> <a href="mailto:raktdaan@gmail.com" style="color: #333;">raktdaan@gmail.com</a>
+            </p>
+            <p><strong>Hours:</strong> 24 X 7 : 365 Days</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Follow Us</h4>
+          <div style="display: flex; gap: 15px; margin-top: 10px;">
+            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL"
+              style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+            <a href="https://www.instagram.com/whxitte" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a href="https://twitter.com/Annabel07785340" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          © 2024 All Rights Reserved by RaktDaan
+        </p>
+      </div>
+    </div>
+  </footer>
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
     <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
   </a>
 
-  <!-- custom js link-->
   <script src="./assets/js/script.js" defer></script>
-  
-  <!-- ionicon link -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <script>
-    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      // Reset error messages
-      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-      document.getElementById('message').textContent = '';
-      document.getElementById('message').className = 'success-message';
-      
-      // Get form data
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
-      
-      try {
-        const response = await fetch('/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        
-        if (response.ok) {
-          // Registration successful
-          document.getElementById('message').textContent = 'Registration successful! Redirecting to login...';
-          document.getElementById('message').style.color = 'green';
-          
-          // Redirect to login page after 2 seconds
-          setTimeout(() => {
-            window.location.href = 'login.html';
-          }, 2000);
-        } else {
-          // Show error message
-          document.getElementById('message').textContent = result.message || 'An error occurred during registration.';
-          document.getElementById('message').style.color = 'red';
-          
-          // Show field-specific errors if available
-          if (result.errors) {
-            Object.entries(result.errors).forEach(([field, message]) => {
-              const errorElement = document.getElementById(`${field}Error`);
-              if (errorElement) {
-                errorElement.textContent = message;
-              }
-            });
-          }
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('message').textContent = 'An error occurred. Please try again.';
-        document.getElementById('message').style.color = 'red';
-      }
-    });
-  </script>
 </body>
+
 </html>

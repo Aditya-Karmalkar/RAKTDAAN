@@ -16,7 +16,9 @@
   <!-- google font link-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Roboto:wght@400;500;600&display=swap"
+    rel="stylesheet">
 
   <style>
     /* Popup styles */
@@ -82,74 +84,182 @@
       }
     }
   </style>
+
+  <style>
+    /* Navbar Styling */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 900;
+      padding: 10px 0;
+    }
+
+    .navbar .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo a {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e63946;
+      align-self: start;
+    }
+
+    .navbar .logo a:hover {
+      color: #2b9df5;
+    }
+
+    .glass-radio-group {
+      --bg: rgba(255, 255, 255, 0.06);
+      --text: #222;
+
+      display: flex;
+      position: relative;
+      background: var(--bg);
+      border-radius: 1rem;
+      backdrop-filter: blur(14px);
+      box-shadow:
+        inset 1px 1px 4px rgba(255, 255, 255, 0.2),
+        inset -1px -1px 6px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .glass-radio-group input {
+      display: none;
+    }
+
+    .glass-radio-group label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      font-size: 14px;
+      padding: 0.8rem 1.6rem;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text);
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .glass-radio-group label:hover {
+      color: #ee6060;
+    }
+
+    .glass-radio-group input:checked+label {
+      color: #2b9df5;
+    }
+
+    .glass-glider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: calc(100% / 4);
+      /* 4 items */
+      border-radius: 1rem;
+      z-index: 1;
+      transition:
+        transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+        background 0.4s ease-in-out,
+        box-shadow 0.4s ease-in-out;
+    }
+
+    /* Glider movement styles */
+    #nav-home:checked~.glass-glider {
+      transform: translateX(0%);
+      background: linear-gradient(135deg, #ff6a6a55, #ff9e9e);
+      box-shadow: 0 0 15px rgba(255, 106, 106, 0.3);
+    }
+
+    #nav-donors:checked~.glass-glider {
+      transform: translateX(100%);
+      background: linear-gradient(135deg, #ffd70055, #ffcc00);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+
+    #nav-login:checked~.glass-glider {
+      transform: translateX(200%);
+      background: linear-gradient(135deg, #a8edea55, #fed6e3);
+      box-shadow: 0 0 15px rgba(168, 237, 234, 0.4);
+    }
+
+    #nav-register:checked~.glass-glider {
+      transform: translateX(300%);
+      background: linear-gradient(135deg, #d0e7ff55, #a0d8ff);
+      box-shadow: 0 0 15px rgba(160, 216, 255, 0.4);
+    }
+
+    /* Login Button Styling */
+    .btn {
+      background: linear-gradient(135deg, #ff6a6a, #720202);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #ff9e9e, #720202);
+      color: white;
+      box-shadow: 0 4px 8px rgba(255, 106, 106, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(255, 106, 106, 0.2);
+    }
+  </style>
 </head>
 
 <body id="top">
   <!-- HEADER-->
   <header class="header">
-    <div class="header-top">
-      <div class="container">
-        <ul class="contact-list">
-          <li class="contact-item">
-            <ion-icon name="mail-outline"></ion-icon>
-            <a href="mailto:redstream001@gmail.com" class="contact-link">redstream001@gmail.com</a>
-          </li>
-          <li class="contact-item">
-            <ion-icon name="call-outline"></ion-icon>
-            <a href="tel:+917558951351" class="contact-link">+91-7558-951-351</a>
-          </li>
-        </ul>
-        <ul class="social-list">
-          <li>
-            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/_vladimir_putin.___/" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/Annabel07785340" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-          <li>
-            <a href="https://youtu.be/Af0gk_kiGac" class="social-link">
-              <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="header-bottom" data-header>
       <div class="container">
-        <a href="#" class="logo">RaktDaan</a>
-        <nav class="navbar container" data-navbar>
-          <ul class="navbar-list">
-            <li>
-              <a href="index.html" class="navbar-link" data-nav-link>Home</a>
-            </li>
-            <li>
-              <a href="#service" class="navbar-link" data-nav-link>Find donor</a>
-            </li>
-            <li>
-              <a href="about.html" class="navbar-link" data-nav-link>About Us</a>
-            </li>
-            <li>
-              <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
-            </li>
-            <li>
-              <a href="contact.html" class="navbar-link" data-nav-link>Contact</a>
-            </li>
-          </ul>
+        <nav class="navbar">
+          <div class="container">
+            <div class="logo"><a href="index.html">RAKTDAAN</a></div>
+
+            <div class="glass-radio-group" id="navGlass">
+              <input type="radio" name="nav" id="nav-home" checked />
+              <label for="nav-home" onclick="window.location.href='index.html'">Home</label>
+
+              <input type="radio" name="nav" id="nav-donors" />
+              <label for="nav-donors" onclick="window.location.href='donors.html'">Donor</label>
+
+              <input type="radio" name="nav" id="nav-login" />
+              <label for="nav-login" onclick="window.location.href='about.html'">About</label>
+
+              <input type="radio" name="nav" id="nav-login" />
+              <label for="nav-login" onclick="window.location.href='login.html'">Login</label>
+
+              <input type="radio" name="nav" id="nav-register" />
+              <label for="nav-register" onclick="window.location.href='register.html'">Register</label>
+              <div class="glass-glider"></div>
+            </div>
+          </div>
         </nav>
-        <a href="login.html" class="btn">Login / Register</a>
-        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
-          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
-          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
-        </button>
       </div>
     </div>
   </header>
@@ -157,66 +267,111 @@
   <main>
     <article>
       <!--HERO-->
-      <section class="section hero" id="home" style="background-image: url('./assets/images/hero-bg.png')" aria-label="hero">
+      <section class="section hero" id="home" style="background-image: url('./assets/images/hero-bg.png')"
+        aria-label="hero">
         <div class="container">
           <div class="hero-content">
-            <img src="assets/images/blood-icon.png" alt="ICON" width="70" height="70">
-            <p class="section-subtitle">RaktDaan</p>
-            <h1 class="h1 hero-title">Contact Us</h1>
-            <h2 style="color: var(--royal-blue-light);">Address</h2>
-            <p class="hero-text">
-              RaktDaan, Vaikom Road, Near Thalook Headquarters<br>
-              kottayam, Kerala, IN<br>
-              Pin 686141
+            <!-- <img src="assets/images/blood-icon.png" alt="ICON" width="70" height="70"> -->
+            <!-- <p class="section-subtitle" style="color: #e63946;">RaktDaan</p> -->
+            <h1 class="h1 hero-title" style="color: #08d1ff;">Contact Us</h1>
+            <h2 style="color: #3c3b3b;">Address</h2>
+            <p class="hero-text" style="color: #2b2a2a;">
+              India<br>
             </p>
-            <h2 style="color: var(--royal-blue-light);">Contact Details</h2>
-            <p class="hero-text">
-              MOBILE: +91 7558 9513 51 | TELEPHONE: 0484-292674<br>
-              EMAIL : redstream001@gmail.com<br>
+            <h2 style="color: #000000;">Contact Details</h2>
+            <p class="hero-text" style="color: #2b2a2a;">
+              MOBILE: <a href="tel:+918xxxxxxxxx" style="color: red; text-decoration: none;">+91 8xxx-xxx-xxx</a><br>
             </p>
-            <form id="contactForm" class="hero-form">
-              <input type="email" id="email_address" name="email_address" aria-label="email" placeholder="Your Email Address..." required class="email-field">
+            <p class="hero-text" style="color: #2b2a2a;">
+              EMAIL: <a href="mailto:raktdaan@gmail.com"
+                style="color: red; text-decoration: none;">raktdaan@gmail.com</a><br>
+            </p>
+            <!-- <form id="contactForm" class="hero-form">
+              <input type="email" id="email_address" name="email_address" aria-label="email"
+                placeholder="Your Email Address..." required class="email-field">
               <button type="submit" class="btn">Get Response Back</button>
-            </form>
+            </form> -->
             <div id="message" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
           </div>
           <figure class="hero-banner">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245.76164524118906!2d76.39003912368983!3d9.750279515331268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b08790da3aa8ec7%3A0x58b351f9df4075a3!2sBlood%20Storage%20Center!5e0!3m2!1sen!2sin!4v1689507408879!5m2!1sen!2sin" width="700" height="600" style="border:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30773676.341575!2d61.01662479526768!3d19.68909728283356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1753376565864!5m2!1sen!2sin"
+              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
           </figure>
         </div>
       </section>
     </article>
   </main>
 
-  <footer class="footer">
-    <div class="footer-top section">
-      <div class="container">
-        <div class="footer-brand">
-          <a href="#" class="logo">RaktDaan</a>
-          <p class="footer-text">
-            We are passionate about connecting blood donors with recipients and bridging the gap in the healthcare industry.
+  <footer class="simple-footer" style="background-color: white; color: black; padding: 40px 0; margin-top: 60px;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
+
+        <div>
+          <h3 style="color: black; margin-bottom: 15px; font-size: 18px; font-weight: 600;">RaktDaan</h3>
+          <p style="color: #333; line-height: 1.6; font-size: 14px;">
+            Connecting hospitals with compassionate donors — because every drop counts when a life is on the line.
           </p>
         </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Quick Links</h4>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Home</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Find Donor</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">About Us</a></li>
+            <li style="margin-bottom: 8px;"><a href="#"
+                style="color: #333; text-decoration: none; font-size: 14px;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Contact Info</h4>
+          <div style="color: #333; font-size: 14px; line-height: 1.8;">
+            <p><strong>Location:</strong> India</p>
+            <p><strong>Phone:</strong> <a href="tel:+918xxx-xxx-xxx" style="color: #333;">+91-8xxx-xxx-xxx</a></p>
+            <p><strong>Email:</strong> <a href="mailto:raktdaan@gmail.com" style="color: #333;">raktdaan@gmail.com</a>
+            </p>
+            <p><strong>Hours:</strong> 24 X 7 : 365 Days</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color: black; margin-bottom: 15px; font-size: 16px; font-weight: 600;">Follow Us</h4>
+          <div style="display: flex; gap: 15px; margin-top: 10px;">
+            <a href="https://www.facebook.com/andro.pool.54?mibextid=ZbWKwL"
+              style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+            <a href="https://www.instagram.com/whxitte" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a href="https://twitter.com/Annabel07785340" style="color: #333; font-size: 20px; text-decoration: none;">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">
+
+      <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
           &copy; 2024 All Rights Reserved by RaktDaan
         </p>
       </div>
     </div>
   </footer>
 
-  <!--BACK TO TOP-->
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
     <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
   </a>
 
-  <!-- custom js link-->
   <script src="./assets/js/script.js" defer></script>
-  
-  <!-- ionicon link -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -228,27 +383,27 @@
       popup.textContent = message;
       popup.style.color = isError ? 'red' : 'green';
       document.body.appendChild(popup);
-      
+
       // Automatically close the popup after 3 seconds
-      setTimeout(function() {
+      setTimeout(function () {
         popup.remove();
       }, 3000);
     }
 
     // Handle contact form submission
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      
+
       const email = document.getElementById('email_address').value.trim();
       const messageElement = document.getElementById('message');
-      
+
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!email || !emailRegex.test(email)) {
         showPopup('Please enter a valid email address', true);
         return;
       }
-      
+
       try {
         const response = await fetch('/contact', {
           method: 'POST',
@@ -257,9 +412,9 @@
           },
           body: JSON.stringify({ email_address: email })
         });
-        
+
         const result = await response.json();
-        
+
         if (response.ok) {
           // Show success message
           showPopup(result.message || 'Thank you for contacting us!');
@@ -276,4 +431,5 @@
     });
   </script>
 </body>
+
 </html>
