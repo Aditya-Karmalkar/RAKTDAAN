@@ -1,140 +1,165 @@
+# [RAKTDAAN 🩸](https://raktdaanorg.netlify.app/)
+*Connecting Blood Donors & Recipients Instantly*
 
-RAKTDAAN 🩸
-Connecting Blood Donors & Recipients Instantly
+![Netlify Status](https://img.shields.io/badge/Live-Netlify-green?style=flat-square)
+![GitHub Stars](https://img.shields.io/github/stars/Aditya-Karmalkar/RAKTDAAN?style=social)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+---
 
+## 🌟 Project Overview
 
+**RAKTDAAN** is a real-time blood donation platform that connects **donors, recipients, hospitals, and administrators** through a centralized system. Designed with responsiveness, urgency, and simplicity in mind, it helps bridge the life-saving gap in critical moments.
 
-🌟 Project Overview
-RAKTDAAN is a real-time blood donation platform that connects donors, recipients, hospitals, and administrators through a centralized system. Designed with responsiveness, urgency, and simplicity in mind, it helps bridge the life-saving gap in critical moments.
+> 💡 _“One unit of blood can save up to three lives. Be the reason someone lives. Be a donor. Be a hero.”_
 
-💡 “One unit of blood can save up to three lives. Be the reason someone lives. Be a donor. Be a hero.”
+---
 
-📸 Live Demo →
-🎯 Project Purpose
-Facilitate real-time donor-recipient matching
+## 🚀 Live Demo
 
-Enable emergency blood requests (SOS) from hospitals or individuals
+👉 [Visit the Live Site](https://raktdaanorg.netlify.app/)
 
-Maintain donation history and availability status
+---
 
-Provide a secure admin dashboard for management
+## 🎯 Project Purpose
 
-Encourage and organize voluntary blood donation
+- Facilitate **real-time donor-recipient matching**
+- Enable **emergency blood requests (SOS)** from hospitals or individuals
+- Maintain **donation history** and **availability status**
+- Provide a secure **admin dashboard** for management
+- Encourage and organize **voluntary blood donation**
 
-📋 Features
-🧑‍💉 Donor Features
-Quick & secure donor registration
+---
 
-Update availability and location in real-time
+## 📋 Features
 
-View donation history
+### 🧑‍💉 Donor Features
+- Secure donor registration
+- Real-time location and availability status updates
+- View donation history
+- Receive alerts for nearby SOS requests
 
-Receive alerts for nearby requests
+### 🏥 Hospital Features
+- Create emergency SOS requests
+- Manage blood inventory and requests
+- View matched donors by blood group and location
 
-🏥 Hospital Features
-Raise emergency SOS alerts
+### 🚨 Emergency System
+- Location-based matching of donors and recipients
+- Real-time alerts to available donors
 
-Manage blood request inventory
+### 🛡️ Admin Dashboard
+- Verify and manage donor/hospital registrations
+- Monitor real-time SOS requests
+- Manage roles and access control
 
-View matched donors by group/location
+---
 
-🚨 Emergency System
-Location-based real-time matching
+## 🛠️ Tech Stack
 
-Auto-alerts to eligible donors nearby
+| Layer         | Technology                          |
+|---------------|--------------------------------------|
+| **Frontend**  | React 19, Vite, Tailwind CSS         |
+| **Backend**   | [Convex](https://www.convex.dev)     |
+| **Services**  | Firebase (Auth & Uploads), Geo API   |
+| **Hosting**   | Netlify (CI/CD + Live Deployment)    |
 
-🛡️ Admin Dashboard
-View, verify, and manage donor/hospital registrations
+---
 
-Monitor active requests
+## 🚀 Getting Started
 
-Control user roles and platform statistics
+### 🔧 Prerequisites
+- Node.js ≥ 18
+- Git
+- Convex CLI
+- Firebase CLI (optional)
 
-🛠️ Tech Stack
-Layer	Technology
-Frontend	React 19, Vite, Tailwind CSS
-Backend	Convex (serverless functions, DB, and auth)
-Other	Firebase (auth & uploads), Location Services (GeoLocation API), Netlify (deployment)
-
-🚀 Getting Started
-🔧 Prerequisites
-Node.js ≥ 18
-
-Git
-
-Convex CLI & Firebase CLI (optional)
-
-📥 Clone & Install
-bash
-Copy
-Edit
+### 📥 Clone the Repository
+```bash
 git clone https://github.com/Aditya-Karmalkar/RAKTDAAN.git
 cd RAKTDAAN
 npm install
-🧪 Environment Setup
-Create a .env file in the root with the following variables:
+```
 
-env
-Copy
-Edit
+### 🔐 Environment Setup
+
+Create a `.env` file in the root directory and add:
+```env
 VITE_CONVEX_URL=your_convex_url
 VITE_FIREBASE_API_KEY=your_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-🖥️ Run the App
-bash
-Copy
-Edit
-npm run dev
-Visit: http://localhost:5173
+```
 
-📁 Project Structure
-bash
-Copy
-Edit
+### 🖥️ Start Development Server
+```bash
+npm run dev
+```
+
+Visit: `http://localhost:5173`
+
+---
+
+## 📁 Project Structure
+
+```
 RAKTDAAN/
 ├── public/
 ├── src/
 │   ├── components/        # Reusable UI components
 │   ├── pages/             # Page-level components
-│   ├── convex/            # Backend functions (Convex)
-│   ├── firebase/          # Firebase config
-│   └── utils/             # Helpers (e.g., geolocation, form validators)
+│   ├── convex/            # Backend logic & DB interactions
+│   ├── firebase/          # Firebase config & auth
+│   └── utils/             # Geolocation, validators, etc.
 ├── .env
 └── vite.config.js
-🔐 Admin Access (For Reviewers)
-🧪 Test Credentials
+```
 
-✅ Features:
+---
 
-Donor list & verification
+## 🔐 Admin Access (For Reviewers)
 
-SOS request monitoring
+### 🧪 Test Credentials
+```
+Email: admin@raktdaan.org
+Password: Rakt1234!
+```
 
-Stats dashboard
+### ✅ Admin Features
+- Manage users (Donors, Hospitals)
+- Track SOS alerts
+- View usage statistics
+- Moderate activity and update data
 
-User role management
+---
 
-🤝 Contributing
-We welcome contributions from developers, designers, and medical volunteers!
+## 🤝 Contributing
 
-How to Contribute:
-Fork the repo
+We welcome contributions from developers, designers, and volunteers!
 
-Create a new branch: feature/your-feature
+### How to Contribute:
+1. Fork this repository
+2. Create your feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m "Add some feature"`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a pull request
 
-Submit a PR with detailed description
+📬 Questions or ideas? Use [issues](https://github.com/Aditya-Karmalkar/RAKTDAAN/issues) to start a discussion.
 
-📬 For any queries or suggestions, reach out via issues
+---
 
-🙏 Acknowledgments
-Convex.dev for enabling real-time backend features
+## 🙏 Acknowledgments
 
-Firebase for streamlined authentication
+- [Convex.dev](https://convex.dev) for serverless backend with real-time updates  
+- [Firebase](https://firebase.google.com/) for easy auth and storage  
+- [Tailwind CSS](https://tailwindcss.com/) for rapid UI development  
+- Inspired by India's [RaktDaan Amrit Mahotsav](https://www.nhm.gov.in)
 
-Tailwind CSS for a clean, modern UI
+---
 
+## 📄 License
 
-📄 License
-This project is licensed under the MIT License.
-Feel free to use, adapt, and expand it for educational or non-profit initiatives.
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+> Made with ❤️ by [Aditya Karmalkar](https://github.com/Aditya-Karmalkar)
