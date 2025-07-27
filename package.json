@@ -7,7 +7,10 @@
     "dev": "npm-run-all --parallel dev:frontend dev:backend",
     "dev:frontend": "vite --open",
     "dev:backend": "convex dev",
-    "build": "vite build",
+    "build": "tsc && vite build",
+    "build:netlify": "npm run build",
+    "preview": "vite preview",
+    "deploy-check": "node deploy-check.js",
     "lint": "tsc -p convex -noEmit --pretty false && tsc -p . -noEmit --pretty false && convex dev --once && vite build"
   },
   "dependencies": {
