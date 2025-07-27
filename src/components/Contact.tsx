@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { useState } from "react";
 import { toast } from "sonner";
+import { api } from "../../convex/_generated/api";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -169,7 +169,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">+1 (555) 123-BLOOD</p>
+                    <p className="text-gray-600">+91 8XX-Rakt-Daan</p>
                     <p className="text-gray-600">24/7 Emergency Hotline</p>
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export function Contact() {
                     <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
                     <p className="text-gray-600">123 Lifesaver Street</p>
                     <p className="text-gray-600">Healthcare District</p>
-                    <p className="text-gray-600">City, State 12345</p>
+                    <p className="text-gray-600">Pune, Maharashtra 12345</p>
                   </div>
                 </div>
               </div>
@@ -232,7 +232,7 @@ export function Contact() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="tel:+15551234567"
+                  href="tel:+91 8XX-Rakt-Daan"
                   className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors text-center"
                 >
                   Call Emergency Line
