@@ -18,6 +18,9 @@ dist-ssr
 .env.production
 .env.development
 
+# Actual values file (contains secrets)
+ACTUAL_ENV_VALUES.md
+
 # Convex keys
 .env.convex
 convex/dist/

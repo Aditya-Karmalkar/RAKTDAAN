@@ -4,8 +4,8 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Validate required environment variables
-const requiredEnvVars = {
+// Your web app's Firebase configuration - uses environment variables only
+const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -15,29 +15,15 @@ const requiredEnvVars = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Check for missing environment variables
-const missingVars = Object.entries(requiredEnvVars)
+// Validate configuration
+const missingVars = Object.entries(firebaseConfig)
   .filter(([key, value]) => !value)
   .map(([key]) => key);
 
 if (missingVars.length > 0) {
   console.error('Missing Firebase environment variables:', missingVars);
-  // In development, use fallback values
-  if (import.meta.env.DEV) {
-    console.warn('Using fallback Firebase configuration for development');
-  }
+  throw new Error(`Missing Firebase environment variables: ${missingVars.join(', ')}`);
 }
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: requiredEnvVars.apiKey || (import.meta.env.DEV ? "dev-api-key" : ""),
-  authDomain: requiredEnvVars.authDomain || (import.meta.env.DEV ? "dev-auth-domain" : ""),
-  projectId: requiredEnvVars.projectId || (import.meta.env.DEV ? "dev-project-id" : ""),
-  storageBucket: requiredEnvVars.storageBucket || (import.meta.env.DEV ? "dev-storage-bucket" : ""),
-  messagingSenderId: requiredEnvVars.messagingSenderId || (import.meta.env.DEV ? "000000000000" : ""),
-  appId: requiredEnvVars.appId || (import.meta.env.DEV ? "dev-app-id" : ""),
-  measurementId: requiredEnvVars.measurementId || (import.meta.env.DEV ? "dev-measurement-id" : "")
-};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

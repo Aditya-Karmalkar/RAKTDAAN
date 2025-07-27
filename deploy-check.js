@@ -64,7 +64,7 @@ if (fs.existsSync(redirectsPath)) {
   console.log('❌ _redirects file not found');
 }
 
-console.log('\n🎯 Production URL: https://curious-toucan-762.convex.cloud');
+console.log('\n🎯 Production URL: (Set via VITE_CONVEX_URL environment variable)');
 console.log('\n📚 Next steps:');
 console.log('1. Set environment variables in Netlify dashboard');
 console.log('2. Deploy using: netlify deploy --prod');

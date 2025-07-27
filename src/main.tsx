@@ -1,8 +1,8 @@
-import { createRoot } from "react-dom/client";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
-import "./index.css";
+import { createRoot } from "react-dom/client";
 import App from "./App";
+import "./index.css";
 
 // Validate Convex URL
 const convexUrl = import.meta.env.VITE_CONVEX_URL;
