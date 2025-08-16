@@ -19,8 +19,9 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: "#4F46E5",
-          hover: "#4338CA",
+          DEFAULT: "#dc2626",   // 🔴 Red (base)
+          hover: "#b91c1c",     // 🔴 Dark Red (hover)
+          light: "#fca5a5",     // 🔴 Light Red (optional)
         },
         secondary: {
           DEFAULT: "#6B7280",
