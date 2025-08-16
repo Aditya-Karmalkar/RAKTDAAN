@@ -55,7 +55,6 @@ export function Footer() {
             </ul>
           </div>
 
-
           {/* Support */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
