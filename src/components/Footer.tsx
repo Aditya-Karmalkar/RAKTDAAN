@@ -47,11 +47,11 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Our Mission</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Become a Donor</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Hospital Registration</a></li>
+              <li><a href="/" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
+              <li><a href="/Mission" className="text-gray-300 hover:text-white transition-colors">Our Mission</a></li>
+              <li><a href="/HowItWorks" className="text-gray-300 hover:text-white transition-colors">How It Works</a></li>
+              <li><a href="/DonorRegistration" className="text-gray-300 hover:text-white transition-colors">Become a Donor</a></li>
+              <li><a href="/HospitalRegistration" className="text-gray-300 hover:text-white transition-colors">Hospital Registration</a></li>
             </ul>
           </div>
 
