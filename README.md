@@ -116,14 +116,6 @@ RAKTDAAN/
 
 ---
 
-## 🔐 Admin Access (For Reviewers)
-
-### 🧪 Test Credentials
-```
-Email: admin@raktdaan.org
-Password: Rakt1234!
-```
-
 ### ✅ Admin Features
 - Manage users (Donors, Hospitals)
 - Track SOS alerts
