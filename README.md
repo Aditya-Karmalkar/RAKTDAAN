@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/OSCI_Project_Banner.png" alt="RAKTDAAN Banner" width="100%" />
+</p>
+
 # [RAKTDAAN 🩸](https://raktdaanorg.netlify.app/)
 *Connecting Blood Donors & Recipients Instantly*
 
