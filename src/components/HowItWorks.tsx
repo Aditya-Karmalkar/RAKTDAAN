@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 export function HowItWorks() {
   return (
     <div className="min-h-screen bg-gray-50 py-20">
@@ -20,9 +22,13 @@ export function HowItWorks() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">1</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
@@ -31,11 +37,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Sign up and provide your basic information, blood type, and location
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">2</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
@@ -44,11 +54,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Receive real-time SOS alerts when hospitals near you need your blood type
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">3</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
@@ -57,11 +71,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Choose to help and get instant contact details of the requesting hospital
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">4</span>
                 </div>
               </div>
@@ -69,7 +87,7 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Visit the hospital and donate blood to save precious lives
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -81,9 +99,13 @@ export function HowItWorks() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">1</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
@@ -92,11 +114,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Register your hospital and get verified by our team for authenticity
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">2</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
@@ -105,11 +131,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Create urgent blood requests with specific requirements and urgency level
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">3</span>
                 </div>
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
@@ -118,11 +148,15 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Receive instant responses from nearby donors willing to help
               </p>
-            </div>
+            </motion.div>
 
-            <div className="text-center">
-              <div className="relative mb-6">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+            <motion.div className="text-center"
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+            >
+              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
+                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
                   <span className="text-white text-2xl font-bold">4</span>
                 </div>
               </div>
@@ -130,7 +164,7 @@ export function HowItWorks() {
               <p className="text-gray-600">
                 Manage donor visits and track blood collection through your dashboard
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
 
