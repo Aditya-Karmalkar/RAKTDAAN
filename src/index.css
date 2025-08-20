@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-light: #ffffff;
   --color-dark: #171717;
