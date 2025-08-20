@@ -18,7 +18,6 @@ import { Testimonials } from "./components/Testimonials";
 import { SignOutButton } from "./SignOutButton";
 import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
-import ScrollToTopButton from "./components/ScrollToTopButton";
 import DarkModeToggle from "./components/DarkModeToggle";
 
 
