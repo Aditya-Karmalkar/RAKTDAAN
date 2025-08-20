@@ -1,240 +1,139 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import {
+  BellRing,
+  ShieldCheck,
+  Smartphone,
+  BarChart3,
+  Clock,
+} from "lucide-react";
 
-export function HowItWorks() {
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+type Step = {
+  title: string;
+  desc: string;
+  color: "red" | "blue";
+  index: number;
+};
+
+const donorSteps: Step[] = [
+  { index: 1, title: "Register", desc: "Sign up and provide your basic information, blood type, and location.", color: "red" },
+  { index: 2, title: "Get Alerts", desc: "Receive real-time SOS alerts when hospitals near you need your blood type.", color: "red" },
+  { index: 3, title: "Respond", desc: "Choose to help and get instant contact details of the requesting hospital.", color: "red" },
+  { index: 4, title: "Save Lives", desc: "Visit the hospital and donate blood to save precious lives.", color: "red" },
+];
+
+const hospitalSteps: Step[] = [
+  { index: 1, title: "Register & Verify", desc: "Register your hospital and get verified by our team for authenticity.", color: "blue" },
+  { index: 2, title: "Send SOS Alert", desc: "Create urgent blood requests with specific requirements and urgency level.", color: "blue" },
+  { index: 3, title: "Get Responses", desc: "Receive instant responses from nearby donors willing to help.", color: "blue" },
+  { index: 4, title: "Coordinate", desc: "Manage donor visits and track blood collection through your dashboard.", color: "blue" },
+];
+
+const features = [
+  { icon: BellRing, title: "Real‑time Alerts", desc: "Instant notifications for urgent blood requirements." },
+  { icon: Smartphone, title: "Location Matching", desc: "Connect with the nearest available donors." },
+  { icon: ShieldCheck, title: "Verified Network", desc: "All hospitals and donors are verified for safety." },
+  { icon: Smartphone, title: "Mobile‑first", desc: "Optimized for quick on‑the‑go access." },
+  { icon: BarChart3, title: "Analytics Dashboard", desc: "Track donations and manage requests efficiently." },
+  { icon: Clock, title: "24/7 Availability", desc: "Round‑the‑clock service for emergencies." },
+];
+
+function StepCard({ step }: { step: Step }) {
+  const color = step.color === "red" ? "red" : "blue";
+  const circle = color === "red" ? "bg-red-600" : "bg-blue-600";
+  const ring = color === "red" ? "ring-red-100" : "ring-blue-100";
+
+  return (
+    <motion.li variants={item} className="group flex flex-col items-center text-center" whileHover={{ y: -4 }}>
+      <div className={`w-16 h-16 ${circle} rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-md mb-4`}>
+        {step.index}
+      </div>
+      <div className={`w-full max-w-xs bg-white rounded-xl shadow-sm ring-1 ${ring} p-5 transition-all hover:shadow-lg`}>
+        <h3 className="text-lg font-bold text-gray-900 mb-1">{step.title}</h3>
+        <p className="text-gray-600 text-sm">{step.desc}</p>
+      </div>
+    </motion.li>
+  );
+}
+
+function FeatureCard({ icon: Icon, title, desc }: { icon: any; title: string; desc: string }) {
+  return (
+    <motion.div variants={item} className="group p-6 bg-white rounded-2xl ring-1 ring-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+      <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-xl bg-red-50 ring-1 ring-red-100">
+        <Icon className="w-8 h-8 text-red-600" />
+      </div>
+      <h3 className="text-lg font-bold text-gray-900 mb-1">{title}</h3>
+      <p className="text-gray-600 text-sm">{desc}</p>
+    </motion.div>
+  );
+}
+
+export default function HowItWorks() {
   return (
     <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        <header className="text-center mb-16">
+          <motion.h1 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
             How It <span className="text-red-600">Works</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Simple steps to connect life-savers with those in need
-          </p>
-        </div>
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            Simple steps to connect life‑savers with those in need.
+          </motion.p>
+        </header>
 
         {/* For Donors */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">For Donors</h2>
-            <p className="text-lg text-gray-600">Become a hero in just a few simple steps</p>
+        <section aria-labelledby="donors" className="mb-20">
+          <div className="text-center mb-10">
+            <h2 id="donors" className="text-3xl font-bold text-gray-900 mb-2">For Donors</h2>
+            <p className="text-lg text-gray-600">Become a hero in just a few steps</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">1</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Register</h3>
-              <p className="text-gray-600">
-                Sign up and provide your basic information, blood type, and location
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">2</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Get Alerts</h3>
-              <p className="text-gray-600">
-                Receive real-time SOS alerts when hospitals near you need your blood type
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">3</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Respond</h3>
-              <p className="text-gray-600">
-                Choose to help and get instant contact details of the requesting hospital
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-red-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">4</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Save Lives</h3>
-              <p className="text-gray-600">
-                Visit the hospital and donate blood to save precious lives
-              </p>
-            </motion.div>
-          </div>
-        </div>
+          <motion.ol variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {donorSteps.map((s) => (
+              <StepCard step={s} key={`d-${s.index}`} />
+            ))}
+          </motion.ol>
+        </section>
 
         {/* For Hospitals */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">For Hospitals</h2>
+        <section aria-labelledby="hospitals" className="mb-20">
+          <div className="text-center mb-10">
+            <h2 id="hospitals" className="text-3xl font-bold text-gray-900 mb-2">For Hospitals</h2>
             <p className="text-lg text-gray-600">Get the blood you need, when you need it</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">1</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Register & Verify</h3>
-              <p className="text-gray-600">
-                Register your hospital and get verified by our team for authenticity
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">2</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Send SOS Alert</h3>
-              <p className="text-gray-600">
-                Create urgent blood requests with specific requirements and urgency level
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">3</span>
-                </div>
-                <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-blue-200 -translate-y-0.5"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Get Responses</h3>
-              <p className="text-gray-600">
-                Receive instant responses from nearby donors willing to help
-              </p>
-            </motion.div>
-
-            <motion.div className="text-center"
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-            >
-              <div className="relative mb-6 hover:scale-150 transition-transform duration-300">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg hover:bg-blue-500 transition-colors duration-300">
-                  <span className="text-white text-2xl font-bold">4</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Coordinate</h3>
-              <p className="text-gray-600">
-                Manage donor visits and track blood collection through your dashboard
-              </p>
-            </motion.div>
-          </div>
-        </div>
+          <motion.ol variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {hospitalSteps.map((s) => (
+              <StepCard step={s} key={`h-${s.index}`} />
+            ))}
+          </motion.ol>
+        </section>
 
         {/* Key Features */}
-        <div className="bg-white rounded-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Key Features</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Real-time Alerts</h3>
-              <p className="text-gray-600 text-sm">Instant notifications for urgent blood requirements</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Location-based Matching</h3>
-              <p className="text-gray-600 text-sm">Connect with the nearest available donors</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Verified Network</h3>
-              <p className="text-gray-600 text-sm">All hospitals and donors are verified for safety</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Mobile-First</h3>
-              <p className="text-gray-600 text-sm">Optimized for mobile devices for quick access</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Analytics Dashboard</h3>
-              <p className="text-gray-600 text-sm">Track donations and manage requests efficiently</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">24/7 Availability</h3>
-              <p className="text-gray-600 text-sm">Round-the-clock service for emergency situations</p>
-            </div>
-          </div>
-        </div>
+        <section className="bg-white rounded-2xl p-8 md:p-12 ring-1 ring-gray-100 shadow-sm">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Key Features</h2>
+          <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((f) => (
+              <FeatureCard key={f.title} icon={f.icon} title={f.title} desc={f.desc} />
+            ))}
+          </motion.div>
+          { <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-3">
+            <Button className="h-11 px-6 text-base rounded-xl">Become a Donor</Button>
+            <Button variant="secondary" className="h-11 px-6 text-base rounded-xl">Register Hospital</Button>
+          </div> }
+        </section>
       </div>
     </div>
   );
