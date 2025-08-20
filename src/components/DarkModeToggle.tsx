@@ -10,6 +10,7 @@ export default function DarkModeToggle() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  
   return (
     <button
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
