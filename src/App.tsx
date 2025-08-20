@@ -13,11 +13,12 @@ import { HospitalRegistration } from "./components/HospitalRegistration";
 import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
+import NotificationPopup from "./components/NotificationPopup";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
 import { Testimonials } from "./components/Testimonials";
-import { SignOutButton } from "./SignOutButton";
 import { useNotifications } from "./hooks/useNotifications";
-import NotificationPopup from "./components/NotificationPopup";
+import { SignOutButton } from "./SignOutButton";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -222,6 +223,9 @@ export default function App() {
           onClose={hideNotification}
         />
       ))}
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
   );
 }
