@@ -18,13 +18,7 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
 import { Testimonials } from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
-<<<<<<< HEAD
 import { SignOutButton } from "./SignOutButton";
-=======
-import NotificationPopup from "./components/NotificationPopup";
-import DarkModeToggle from "./components/DarkModeToggle";
-
->>>>>>> da040d17da258a3e5c1e0d0b5b4426dc14e048ba
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -84,7 +78,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,10 +91,8 @@ export default function App() {
               <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-bold text-red-600 dark:text-red-400">RaktDaan</span>
+              <span className="text-xl font-bold text-red-600">RaktDaan</span>
             </div>
-
-            <DarkModeToggle />
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-6">
@@ -231,11 +223,8 @@ export default function App() {
           onClose={hideNotification}
         />
       ))}
-<<<<<<< HEAD
 
       {/* Scroll to Top Button */}
-=======
->>>>>>> da040d17da258a3e5c1e0d0b5b4426dc14e048ba
       <ScrollToTopButton />
     </div>
   );
