@@ -24,7 +24,7 @@ const Counter: React.FC<CounterProps> = ({ target, label, duration = 2000, suffi
                     observer.disconnect();
                 }
             },
-            { threshold: 1 } // 70% element visible before trigger
+            { threshold: 0.8 } // 80% element visible before trigger
         );
 
         //attach observer to element 
