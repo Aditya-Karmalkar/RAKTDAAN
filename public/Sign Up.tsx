@@ -1,7 +1,8 @@
 // SignUpForm.tsx
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function SignUpForm({ onSignUp }) {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="signup-page" style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -35,11 +36,28 @@ export default function SignUpForm({ onSignUp }) {
               width: '100%', padding: '10px', marginBottom: '14px', borderRadius: '8px',
               border: '1px solid #d0d0d0'
             }} />
-          <input type="password" placeholder="Password" required
-            style={{
-              width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '8px',
-              border: '1px solid #d0d0d0'
-            }} />
+          <div style={{ position: 'relative', marginBottom: '10px' }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              style={{
+                width: '100%', padding: '10px', borderRadius: '8px',
+                border: '1px solid #d0d0d0', paddingRight: '40px'
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              style={{
+                position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
+                cursor: 'pointer', fontSize: '16px', background: 'none', border: 'none'
+              }}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
           <button type="submit" style={{
             background: '#283e4a', color: '#fff', fontWeight: 'bold', borderRadius: '8px',
             border: 'none', padding: '12px', width: '100%', fontSize: '18px'
