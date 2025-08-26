@@ -7,9 +7,14 @@ import { Id } from "../../convex/_generated/dataModel";
 export function LiveDonorAlert() {
   const alerts = useQuery(api.donors.getNearbyActiveSosAlerts) || [];
   const respondToAlert = useMutation(api.donors.respondToSosAlert);
+  const updateDonorLocation = useMutation(api.donors.updateLocation);
+  const submitEligibility = useMutation(api.donors.submitEligibility);
   const currentDonor = useQuery(api.donors.getCurrentDonor);
+  const updateAvailability = useMutation(api.donors.updateAvailability);
   const [respondingTo, setRespondingTo] = useState<Id<"sosAlerts"> | null>(null);
   const [notes, setNotes] = useState("");
+  const [eligibilityModal, setEligibilityModal] = useState<{ open: boolean; alertId: Id<"sosAlerts"> | null }>({ open: false, alertId: null });
+  const [eligibilityForm, setEligibilityForm] = useState({ lastDonationDate: "", healthConditions: "", consent: false });
 
   const handleRespond = async (alertId: Id<"sosAlerts">) => {
     if (!currentDonor) {
@@ -17,19 +22,8 @@ export function LiveDonorAlert() {
       return;
     }
 
-    setRespondingTo(alertId);
-    try {
-      await respondToAlert({
-        alertId,
-        notes: notes || undefined,
-      });
-      toast.success("Response sent! The hospital will contact you soon.");
-      setNotes("");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to respond");
-    } finally {
-      setRespondingTo(null);
-    }
+    // Open eligibility modal first
+    setEligibilityModal({ open: true, alertId });
   };
 
   const getUrgencyColor = (urgency: string) => {
@@ -84,6 +78,7 @@ export function LiveDonorAlert() {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -110,8 +105,50 @@ export function LiveDonorAlert() {
                 Status: {currentDonor.availability ? 'Available' : 'Not Available'}
               </span>
             </div>
-            <div className="text-sm text-gray-600">
-              Blood Type: <span className="font-semibold text-red-600">{currentDonor.bloodGroup}</span>
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-gray-600">
+                Blood Type: <span className="font-semibold text-red-600">{currentDonor.bloodGroup}</span>
+              </div>
+              <button
+                onClick={() => {
+                  if (!navigator.geolocation) {
+                    toast.error('Geolocation not supported');
+                    return;
+                  }
+                  navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                      try {
+                        await updateDonorLocation({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                        toast.success('Location updated');
+                      } catch {
+                        toast.error('Failed to update location');
+                      }
+                    },
+                    () => toast.error('Unable to capture location'),
+                    { enableHighAccuracy: true, timeout: 10000 }
+                  );
+                }}
+                className="px-3 py-1 rounded-md text-sm border hover:bg-gray-50"
+              >
+                Update Location
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await updateAvailability({ available: !currentDonor.availability });
+                    toast.success(`Status updated to ${!currentDonor.availability ? 'Available' : 'Not Available'}`);
+                  } catch (e) {
+                    toast.error('Failed to update availability');
+                  }
+                }}
+                className={`px-3 py-1 rounded-md text-sm font-medium border transition-colors ${
+                  currentDonor.availability
+                    ? 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
+                    : 'bg-green-600 text-white border-green-700 hover:bg-green-700'
+                }`}
+              >
+                {currentDonor.availability ? 'Set Unavailable' : 'Set Available'}
+              </button>
             </div>
           </div>
         </div>
@@ -204,5 +241,108 @@ export function LiveDonorAlert() {
         )}
       </div>
     </div>
+    {eligibilityModal.open && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">Quick Eligibility Check</h3>
+            <button onClick={() => setEligibilityModal({ open: false, alertId: null })} className="text-gray-400 hover:text-gray-600">✕</button>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Last Donation Date (if any)</label>
+              <input
+                type="date"
+                value={eligibilityForm.lastDonationDate}
+                onChange={(e) => setEligibilityForm({ ...eligibilityForm, lastDonationDate: e.target.value })}
+                className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+              />
+              <p className="text-xs text-gray-500 mt-1">Must be at least 56 days since your last donation.</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Health Conditions (comma-separated)</label>
+              <textarea
+                rows={2}
+                value={eligibilityForm.healthConditions}
+                onChange={(e) => setEligibilityForm({ ...eligibilityForm, healthConditions: e.target.value })}
+                placeholder="e.g., none"
+                className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+              />
+              <p className="text-xs text-gray-500 mt-1">Do not donate if you have conditions like hepatitis, HIV, malaria, are pregnant, or had recent surgery.</p>
+            </div>
+            <label className="flex items-center gap-2 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                checked={eligibilityForm.consent}
+                onChange={(e) => setEligibilityForm({ ...eligibilityForm, consent: e.target.checked })}
+              />
+              I confirm the above information is accurate and consent to eligibility checks.
+            </label>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setEligibilityModal({ open: false, alertId: null })}
+                className="flex-1 px-4 py-2 border rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  // submit and respond
+                  // reconstruct logic inline to avoid context collisions
+                  let lastDonationMs: number | undefined = undefined;
+                  if (eligibilityForm.lastDonationDate) {
+                    const d = new Date(eligibilityForm.lastDonationDate);
+                    if (!isNaN(d.getTime())) {
+                      lastDonationMs = d.getTime();
+                      const days = Math.floor((Date.now() - lastDonationMs) / (1000 * 60 * 60 * 24));
+                      if (days < 56) {
+                        toast.error(`You last donated ${days} days ago. Minimum interval is 56 days.`);
+                        return;
+                      }
+                    }
+                  }
+                  const risky = /hepatitis|hiv|aids|malaria|syphilis|tuberculosis|cancer|pregnant|recent\s*surgery|antibiotics|covid/i.test(eligibilityForm.healthConditions);
+                  if (eligibilityForm.healthConditions && risky) {
+                    toast.error("Based on your health info, you may be ineligible to donate now.");
+                    return;
+                  }
+                  if (!eligibilityForm.consent) {
+                    toast.error("Please provide consent to proceed");
+                    return;
+                  }
+                  if (!eligibilityModal.alertId) return;
+                  try {
+                    await submitEligibility({
+                      lastDonationDate: lastDonationMs,
+                      healthConditions: eligibilityForm.healthConditions
+                        ? eligibilityForm.healthConditions.split(",").map(s => s.trim()).filter(Boolean)
+                        : undefined,
+                      eligibilityConsent: true,
+                    } as any);
+                    setRespondingTo(eligibilityModal.alertId);
+                    await respondToAlert({
+                      alertId: eligibilityModal.alertId,
+                      notes: notes || undefined,
+                    });
+                    toast.success("Response sent! The hospital will contact you soon.");
+                    setNotes("");
+                    setEligibilityModal({ open: false, alertId: null });
+                    setEligibilityForm({ lastDonationDate: "", healthConditions: "", consent: false });
+                  } catch (error) {
+                    toast.error(error instanceof Error ? error.message : "Failed to submit eligibility");
+                  } finally {
+                    setRespondingTo(null);
+                  }
+                }}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

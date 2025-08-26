@@ -16,6 +16,7 @@ import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
+import SmartMatchingDashboard from "./components/SmartMatchingDashboard";
 import { Testimonials } from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
@@ -42,6 +43,7 @@ export default function App() {
     { id: "live-alerts", label: "Live Alerts" },
     { id: "dashboard", label: "Dashboard" },
     ...(isAdmin ? [{ id: "admin", label: "Admin" }] : []),
+    { id: "smart-matching", label: "Smart Matching" },
     { id: "testimonials", label: "Stories" },
     { id: "contact", label: "Contact" },
   ];
@@ -68,6 +70,8 @@ export default function App() {
         return <Dashboard />;
       case "admin":
         return <AdminDashboard />;
+      case "smart-matching":
+        return <SmartMatchingDashboard hospitalId={currentHospital?._id || ""} hospitalData={currentHospital} />;
       case "testimonials":
         return <Testimonials />;
       case "contact":
@@ -129,6 +133,12 @@ export default function App() {
                       Dashboard
                     </button>
                   )}
+                  <button
+                    onClick={() => setCurrentScreen("smart-matching")}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Smart Matching
+                  </button>
                   {isAdmin === true && (
                     <button
                       onClick={() => setCurrentScreen("admin")}

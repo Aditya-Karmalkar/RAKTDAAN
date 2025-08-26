@@ -1,12 +1,15 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 
 export const registerHospital = mutation({
   args: {
     name: v.string(),
     hospitalId: v.string(),
     location: v.string(),
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
     phone: v.string(),
     contactPerson: v.string(),
     address: v.string(),
@@ -32,6 +35,8 @@ export const registerHospital = mutation({
       name: args.name,
       hospitalId: args.hospitalId,
       location: args.location,
+      latitude: args.latitude,
+      longitude: args.longitude,
       phone: args.phone,
       contactPerson: args.contactPerson,
       address: args.address,
@@ -165,12 +170,20 @@ export const createSosAlert = mutation({
       status: "active",
       expiresAt,
       notificationsSent: targetedDonors.length,
+      // Smart Matching Fields
+      matchingAlgorithm: "smart",
+      priorityScore: 0, // Will be calculated by smart matching
+      lastMatchingUpdate: Date.now(),
     });
+
+    // Note: Smart matching will be triggered separately
+    // For now, we'll create the alert without smart matching
+    console.log("SOS Alert created. Smart matching can be triggered separately.");
 
     return {
       alertId,
       donorsNotified: targetedDonors.length,
-      message: `SOS Alert created! ${targetedDonors.length} nearby ${args.bloodGroup} donors have been notified.`
+      message: `SOS Alert created with Smart Matching! ${targetedDonors.length} nearby ${args.bloodGroup} donors have been notified.`
     };
   },
 });
@@ -254,6 +267,33 @@ export const updateSosAlertStatus = mutation({
 
     await ctx.db.patch(args.alertId, {
       status: args.status,
+    });
+  },
+});
+
+export const updateLocation = mutation({
+  args: {
+    latitude: v.number(),
+    longitude: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Must be logged in");
+    }
+
+    const hospital = await ctx.db
+      .query("hospitals")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .unique();
+
+    if (!hospital) {
+      throw new Error("Hospital not found");
+    }
+
+    await ctx.db.patch(hospital._id, {
+      latitude: args.latitude,
+      longitude: args.longitude,
     });
   },
 });

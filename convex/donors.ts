@@ -1,12 +1,15 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 
 export const registerDonor = mutation({
   args: {
     name: v.string(),
     bloodGroup: v.string(),
     location: v.string(),
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
     phone: v.string(),
     emergencyContact: v.optional(v.string()),
   },
@@ -31,6 +34,8 @@ export const registerDonor = mutation({
       name: args.name,
       bloodGroup: args.bloodGroup,
       location: args.location,
+      latitude: args.latitude,
+      longitude: args.longitude,
       phone: args.phone,
       availability: true,
       emergencyContact: args.emergencyContact,
@@ -63,6 +68,34 @@ export const updateAvailability = mutation({
   },
 });
 
+export const updateLocation = mutation({
+  args: {
+    latitude: v.number(),
+    longitude: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Must be logged in");
+    }
+
+    const donor = await ctx.db
+      .query("donors")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .unique();
+
+    if (!donor) {
+      throw new Error("Donor not found");
+    }
+
+    await ctx.db.patch(donor._id, {
+      latitude: args.latitude,
+      longitude: args.longitude,
+      lastUpdate: Date.now(),
+    });
+  },
+});
+
 export const getCurrentDonor = query({
   args: {},
   handler: async (ctx) => {
@@ -75,6 +108,85 @@ export const getCurrentDonor = query({
       .query("donors")
       .withIndex("by_user", (q) => q.eq("userId", userId))
       .unique();
+  },
+});
+
+export const updateEligibility = mutation({
+  args: {
+    healthStatus: v.union(v.literal("excellent"), v.literal("good"), v.literal("fair"), v.literal("restricted")),
+    lastDonation: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Must be logged in");
+    }
+
+    const donor = await ctx.db
+      .query("donors")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .unique();
+
+    if (!donor) {
+      throw new Error("Donor not found");
+    }
+
+    await ctx.db.patch(donor._id, {
+      healthStatus: args.healthStatus,
+      lastDonation: args.lastDonation,
+      lastUpdate: Date.now(),
+    });
+  },
+});
+
+export const submitEligibility = mutation({
+  args: {
+    lastDonationDate: v.optional(v.number()),
+    healthConditions: v.optional(v.array(v.string())),
+    eligibilityConsent: v.boolean(),
+    lastDonationProof: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Must be logged in");
+
+    const donor = await ctx.db
+      .query("donors")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .unique();
+    if (!donor) throw new Error("Donor not found");
+
+    const existing = await ctx.db
+      .query("donorVerifications")
+      .withIndex("by_donor", (q) => q.eq("donorId", donor._id))
+      .first();
+
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        lastDonationDate: args.lastDonationDate,
+        healthConditions: args.healthConditions,
+        eligibilityConsent: args.eligibilityConsent,
+        lastDonationProof: args.lastDonationProof,
+        submittedAt: Date.now(),
+        status: "pending",
+      });
+      return existing._id;
+    }
+
+    return await ctx.db.insert("donorVerifications", {
+      donorId: donor._id,
+      userId,
+      verified: false,
+      idType: "aadhar",
+      idNumber: "",
+      idImageUrl: "",
+      lastDonationProof: args.lastDonationProof,
+      lastDonationDate: args.lastDonationDate,
+      healthConditions: args.healthConditions,
+      eligibilityConsent: args.eligibilityConsent,
+      submittedAt: Date.now(),
+      status: "pending",
+    } as any);
   },
 });
 
@@ -166,15 +278,84 @@ export const respondToSosAlert = mutation({
       throw new Error("You have already responded to this alert");
     }
 
+    // Calculate match score for this donor
+    const alert = await ctx.db.get(args.alertId);
+    if (!alert) {
+      throw new Error("SOS Alert not found");
+    }
+
+    const matchScore = calculateDonorMatchScore(donor, alert);
+    const responseSpeed = Date.now() - alert._creationTime;
+    
     return await ctx.db.insert("donorResponses", {
       sosAlertId: args.alertId,
       donorId: donor._id,
       status: "interested",
       responseTime: Date.now(),
       notes: args.notes,
+      // Smart Matching Fields
+      matchScore,
+      responseSpeed: Math.round(responseSpeed / 1000), // Convert to seconds
+      availabilityConfirmed: donor.availability,
+      healthCheckPassed: donor.healthStatus !== "restricted",
+      priorityRank: 0, // Will be calculated by smart matching system
     });
   },
 });
+
+// Helper function to calculate donor match score
+function calculateDonorMatchScore(donor: any, alert: any): number {
+  let score = 0;
+  const now = Date.now();
+  
+  // Base score for blood group compatibility
+  score += 30;
+  
+  // Health status bonus
+  const healthScore = {
+    "excellent": 20,
+    "good": 15,
+    "fair": 10,
+    "restricted": 5,
+  };
+  score += healthScore[donor.healthStatus as keyof typeof healthScore] || 10;
+  
+  // Availability bonus
+  if (donor.availability) score += 15;
+  
+  // Response time bonus (faster = better)
+  if (donor.responseTime) {
+    const responseBonus = Math.max(0, 20 - donor.responseTime);
+    score += responseBonus;
+  }
+  
+  // Success rate bonus
+  if (donor.successRate) {
+    score += (donor.successRate / 100) * 10;
+  }
+  
+  // Last donation penalty (longer ago = better)
+  if (donor.lastDonation) {
+    const daysSinceDonation = (now - donor.lastDonation) / (1000 * 60 * 60 * 24);
+    if (daysSinceDonation >= 56) { // 8 weeks minimum
+      score += 10;
+    } else if (daysSinceDonation >= 30) {
+      score += 5;
+    }
+  }
+  
+  // Location proximity bonus
+  if (alert.targetArea && donor.location.toLowerCase().includes(alert.targetArea.toLowerCase())) {
+    score += 10;
+  }
+  
+  // Emergency preference bonus
+  if (alert.urgency === "critical" && donor.emergencyOnly) {
+    score += 15;
+  }
+  
+  return Math.min(100, Math.max(0, score));
+}
 
 // Enhanced query to get location-based SOS alerts for donors
 export const getNearbyActiveSosAlerts = query({
