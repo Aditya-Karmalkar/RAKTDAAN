@@ -3,7 +3,11 @@ import { Authenticated, Unauthenticated } from "convex/react";
 import { SignInForm } from "../SignInForm";
 import Counter from "./StatsCountingUI"; // counting UI feature
 
-export function Home() {
+interface HomeProps {
+  onNavigate?: (screen: string) => void;
+}
+
+export function Home({ onNavigate }: HomeProps) {
   const navigate = useNavigate(); // useNavigate for routing
 
   return (
@@ -51,13 +55,13 @@ export function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Authenticated>
                 <button
-                  onClick={() => navigate("/donor-registration")}
+                  onClick={() => { void navigate("/donor-registration"); }}
                   className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   Become a Lifesaver
                 </button>
                 <button
-                  onClick={() => navigate("/hospital-registration")}
+                  onClick={() => { void navigate("/hospital-registration"); }}
                   className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-600 hover:text-white transition-all duration-200"
                 >
                   Hospital Registration
@@ -115,7 +119,7 @@ export function Home() {
                 Register yourself as a blood donor and give the gift of life.
               </p>
               <button
-                onClick={() => navigate("/donor-registration")}
+                onClick={() => { void navigate("/donor-registration"); }}
                 className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
               >
                 Register Now
@@ -130,7 +134,7 @@ export function Home() {
                 Need urgent blood? Post a request and find nearby donors.
               </p>
               <button
-                onClick={() => navigate("/hospital-registration")}
+                onClick={() => { void navigate("/hospital-registration"); }}
                 className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
               >
                 Request Now

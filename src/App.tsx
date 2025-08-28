@@ -16,9 +16,10 @@ import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import { Testimonials } from "./components/Testimonials";
+import Testimonials from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
+import { SignUp } from "./SignUp";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -38,6 +39,7 @@ export default function App() {
     { id: "gallery", label: "Gallery" },
     { id: "donor-registration", label: "Become a Donor" },
     { id: "hospital-registration", label: "Hospital Registration" },
+    { id: "sign-up", label: "Sign Up" },
     { id: "sos-alert", label: "SOS Alert" },
     { id: "live-alerts", label: "Live Alerts" },
     { id: "dashboard", label: "Dashboard" },
@@ -60,6 +62,8 @@ export default function App() {
         return <DonorRegistration />;
       case "hospital-registration":
         return <HospitalRegistration />;
+      case "sign-up":
+        return <SignUp />;
       case "sos-alert":
         return <SosAlert />;
       case "live-alerts":
@@ -142,12 +146,20 @@ export default function App() {
               </Authenticated>
 
               <Unauthenticated>
-                <button
-                  onClick={() => setCurrentScreen("home")}
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Sign In
-                </button>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => setCurrentScreen("sign-up")}
+                    className="border-2 border-red-600 text-red-600 px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                  >
+                    Sign Up
+                  </button>
+                  <button
+                    onClick={() => setCurrentScreen("home")}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Sign In
+                  </button>
+                </div>
               </Unauthenticated>
             </div>
 
@@ -189,15 +201,26 @@ export default function App() {
                     <SignOutButton />
                   </Authenticated>
                   <Unauthenticated>
-                    <button
-                      onClick={() => {
-                        setCurrentScreen("home");
-                        setIsMenuOpen(false);
-                      }}
-                      className="w-full text-left bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                    >
-                      Sign In
-                    </button>
+                    <div className="flex flex-col space-y-2">
+                      <button
+                        onClick={() => {
+                          setCurrentScreen("sign-up");
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full text-left border-2 border-red-600 text-red-600 px-3 py-2 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                      >
+                        Sign Up
+                      </button>
+                      <button
+                        onClick={() => {
+                          setCurrentScreen("home");
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full text-left bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      >
+                        Sign In
+                      </button>
+                    </div>
                   </Unauthenticated>
                 </div>
               </div>
