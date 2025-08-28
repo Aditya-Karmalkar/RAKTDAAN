@@ -16,7 +16,7 @@ import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import { Testimonials } from "./components/Testimonials";
+import Testimonials from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
 
@@ -49,7 +49,7 @@ export default function App() {
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
-        return <Home onNavigate={setCurrentScreen} />;
+        return <Home />;
       case "mission":
         return <Mission />;
       case "how-it-works":
@@ -73,7 +73,7 @@ export default function App() {
       case "contact":
         return <Contact />;
       default:
-        return <Home onNavigate={setCurrentScreen} />;
+        return <Home />;
     }
   };
 
