@@ -1,6 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Authenticated, Unauthenticated } from "convex/react";
+import { useNavigate } from "react-router-dom";
 import { SignInForm } from "../SignInForm";
 import Counter from "./StatsCountingUI"; // counting UI feature
 
