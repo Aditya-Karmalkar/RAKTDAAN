@@ -16,9 +16,12 @@ import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import { Testimonials } from "./components/Testimonials";
+import Testimonials from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
+import Emergency from "./pages/Emergency";
+import Term from "./pages/Term";
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -34,6 +37,8 @@ export default function App() {
   const screens = [
     { id: "home", label: "Home" },
     { id: "mission", label: "Mission" },
+    { id: "emergency", label: "Emergency" },
+   
     { id: "how-it-works", label: "How It Works" },
     { id: "gallery", label: "Gallery" },
     { id: "donor-registration", label: "Become a Donor" },
@@ -44,6 +49,7 @@ export default function App() {
     ...(isAdmin ? [{ id: "admin", label: "Admin" }] : []),
     { id: "testimonials", label: "Stories" },
     { id: "contact", label: "Contact" },
+    
   ];
 
   const renderScreen = () => {
@@ -62,6 +68,10 @@ export default function App() {
         return <HospitalRegistration />;
       case "sos-alert":
         return <SosAlert />;
+      case "emergency":
+        return <Emergency />;
+      case "term":
+        return <Term />;
       case "live-alerts":
         return <LiveDonorAlert />;
       case "dashboard":
@@ -212,7 +222,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer setCurrentScreen={setCurrentScreen} />
 
       <Toaster />
       
