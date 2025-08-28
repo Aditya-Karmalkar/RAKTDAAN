@@ -1,11 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { SignInForm } from "../SignInForm";
+import Counter from "./StatsCountingUI"; // counting UI feature
 
-interface HomeProps {
-  onNavigate: (screen: string) => void;
-}
+export function Home() {
+  const navigate = useNavigate(); // useNavigate for routing
 
-export function Home({ onNavigate }: HomeProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-white">
       {/* Hero Section */}
@@ -51,13 +51,13 @@ export function Home({ onNavigate }: HomeProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Authenticated>
                 <button
-                  onClick={() => onNavigate("donor-registration")}
+                  onClick={() => navigate("/donor-registration")}
                   className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   Become a Lifesaver
                 </button>
                 <button
-                  onClick={() => onNavigate("hospital-registration")}
+                  onClick={() => navigate("/hospital-registration")}
                   className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-600 hover:text-white transition-all duration-200"
                 >
                   Hospital Registration
@@ -86,18 +86,9 @@ export function Home({ onNavigate }: HomeProps) {
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-6">
-              <div className="text-4xl font-bold text-red-600 mb-2">24/7</div>
-              <div className="text-gray-700">Emergency Response</div>
-            </div>
-            <div className="p-6">
-              <div className="text-4xl font-bold text-red-600 mb-2">1000+</div>
-              <div className="text-gray-700">Lives Saved</div>
-            </div>
-            <div className="p-6">
-              <div className="text-4xl font-bold text-red-600 mb-2">500+</div>
-              <div className="text-gray-700">Active Donors</div>
-            </div>
+            <Counter target={24} label="Emergency Response (Hours)" suffix="/7" />
+            <Counter target={1000} label="Lives Saved" />
+            <Counter target={500} label="Active Donors" />
           </div>
         </div>
       </div>
@@ -123,7 +114,10 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 mb-4">
                 Register yourself as a blood donor and give the gift of life.
               </p>
-              <button className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
+              <button
+                onClick={() => navigate("/donor-registration")}
+                className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
+              >
                 Register Now
               </button>
             </div>
@@ -135,7 +129,10 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 mb-4">
                 Need urgent blood? Post a request and find nearby donors.
               </p>
-              <button className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
+              <button
+                onClick={() => navigate("/hospital-registration")}
+                className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
+              >
                 Request Now
               </button>
             </div>
@@ -147,7 +144,10 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 mb-4">
                 Help us reach more people by sharing and educating others.
               </p>
-              <button className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
+              <button
+                onClick={() => alert("Sharing feature coming soon!")}
+                className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
+              >
                 Share Now
               </button>
             </div>
