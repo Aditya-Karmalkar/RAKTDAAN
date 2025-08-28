@@ -1,0 +1,4 @@
+# Remove the following lines if present:
+# [submodule "RAKTDAAN"]
+#     path = RAKTDAAN
+#     url = <REPO_URL>
