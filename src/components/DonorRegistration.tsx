@@ -8,6 +8,8 @@ export function DonorRegistration() {
     name: "",
     bloodGroup: "",
     location: "",
+    latitude: undefined as number | undefined,
+    longitude: undefined as number | undefined,
     phone: "",
     emergencyContact: "",
   });
@@ -27,6 +29,8 @@ export function DonorRegistration() {
         name: formData.name,
         bloodGroup: formData.bloodGroup,
         location: formData.location,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
         phone: formData.phone,
         emergencyContact: formData.emergencyContact || undefined,
       });
@@ -36,6 +40,8 @@ export function DonorRegistration() {
         name: "",
         bloodGroup: "",
         location: "",
+        latitude: undefined,
+        longitude: undefined,
         phone: "",
         emergencyContact: "",
       });
@@ -170,6 +176,31 @@ export function DonorRegistration() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
                 placeholder="City, State"
               />
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!navigator.geolocation) {
+                      toast.error("Geolocation not supported");
+                      return;
+                    }
+                    navigator.geolocation.getCurrentPosition(
+                      (pos) => {
+                        setFormData((p) => ({ ...p, latitude: pos.coords.latitude, longitude: pos.coords.longitude }));
+                        toast.success("Location captured");
+                      },
+                      () => toast.error("Unable to capture location"),
+                      { enableHighAccuracy: true, timeout: 10000 }
+                    );
+                  }}
+                  className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50"
+                >
+                  Use my current location
+                </button>
+                {formData.latitude && formData.longitude && (
+                  <span className="text-xs text-gray-600">{formData.latitude.toFixed(5)}, {formData.longitude.toFixed(5)}</span>
+                )}
+              </div>
             </div>
 
             <div>

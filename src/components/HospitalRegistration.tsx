@@ -8,6 +8,8 @@ export function HospitalRegistration() {
     name: "",
     hospitalId: "",
     location: "",
+    latitude: undefined as number | undefined,
+    longitude: undefined as number | undefined,
     phone: "",
     contactPerson: "",
     address: "",
@@ -22,12 +24,14 @@ export function HospitalRegistration() {
     setIsSubmitting(true);
 
     try {
-      await registerHospital(formData);
+      await registerHospital(formData as any);
       toast.success("Registration successful! Your hospital is pending verification.");
       setFormData({
         name: "",
         hospitalId: "",
         location: "",
+        latitude: undefined,
+        longitude: undefined,
         phone: "",
         contactPerson: "",
         address: "",
@@ -97,6 +101,9 @@ export function HospitalRegistration() {
                 </div>
               </div>
             </div>
+            {currentHospital.verified && (
+              <SetExactLocation />
+            )}
             {currentHospital.verified ? (
               <p className="text-gray-600">
                 You can now create SOS alerts and manage blood requests through your dashboard.
@@ -108,6 +115,37 @@ export function HospitalRegistration() {
             )}
           </div>
         </div>
+      </div>
+    );
+  }
+
+  function SetExactLocation() {
+    const updateHospitalLocation = useMutation(api.hospitals.updateLocation);
+    return (
+      <div className="mt-4">
+        <button
+          onClick={() => {
+            if (!navigator.geolocation) {
+              toast.error("Geolocation not supported");
+              return;
+            }
+            navigator.geolocation.getCurrentPosition(
+              async (pos) => {
+                try {
+                  await updateHospitalLocation({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                  toast.success("Hospital location updated");
+                } catch {
+                  toast.error("Failed to update hospital location");
+                }
+              },
+              () => toast.error("Unable to capture location"),
+              { enableHighAccuracy: true, timeout: 10000 }
+            );
+          }}
+          className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-50"
+        >
+          Set exact hospital location
+        </button>
       </div>
     );
   }
@@ -211,6 +249,31 @@ export function HospitalRegistration() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                 placeholder="City, State"
               />
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!navigator.geolocation) {
+                      toast.error("Geolocation not supported");
+                      return;
+                    }
+                    navigator.geolocation.getCurrentPosition(
+                      (pos) => {
+                        setFormData((p) => ({ ...p, latitude: pos.coords.latitude, longitude: pos.coords.longitude }));
+                        toast.success("Location captured");
+                      },
+                      () => toast.error("Unable to capture location"),
+                      { enableHighAccuracy: true, timeout: 10000 }
+                    );
+                  }}
+                  className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50"
+                >
+                  Use hospital current location
+                </button>
+                {formData.latitude && formData.longitude && (
+                  <span className="text-xs text-gray-600">{formData.latitude.toFixed(5)}, {formData.longitude.toFixed(5)}</span>
+                )}
+              </div>
             </div>
 
             <div>
