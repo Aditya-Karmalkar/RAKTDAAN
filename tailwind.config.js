@@ -57,4 +57,7 @@ module.exports = {
       scale: ["hover", "active"],
     },
   },
+  safelist: [
+    'rounded-container',
+  ],
 };
