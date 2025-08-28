@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, Hospital, Users, X } from "lucide-react";
+import { useState } from "react";
 
-export default function Testimonials() {
+export function Testimonials() {
   const [showForm, setShowForm] = useState(false);
 
   // 🔹 Dummy hardcoded stories
