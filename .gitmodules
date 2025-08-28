@@ -1,0 +1,7 @@
+# Remove the following lines if present:
+# [submodule "RAKTDAAN"]
+#     path = RAKTDAAN
+#     url =
+[submodule "RAKTDAAN"]
+    path = RAKTDAAN
+    url = https://github.com/Aditya-Karmalkar/RAKTDAAN

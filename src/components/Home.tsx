@@ -7,7 +7,6 @@ interface HomeProps {
 }
 
 export function Home({ onNavigate }: HomeProps) {
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-white">
       {/* Hero Section */}

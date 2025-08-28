@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export function SignInForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useAuthActions();
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [submitting, setSubmitting] = useState(false);
@@ -39,13 +40,33 @@ export function SignInForm() {
           placeholder="Email"
           required
         />
-        <input
-          className="auth-input-field"
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            className="auth-input-field"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            required
+            style={{ paddingRight: "40px" }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              fontSize: "16px",
+              background: "none",
+              border: "none",
+            }}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
+        </div>
         <button className="auth-button" type="submit" disabled={submitting}>
           {flow === "signIn" ? "Sign in" : "Sign up"}
         </button>
