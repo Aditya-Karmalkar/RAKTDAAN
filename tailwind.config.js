@@ -1,17 +1,18 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src//*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...fontFamily.sans],
       },
       borderRadius: {
+        sm: "4px",
         DEFAULT: "8px",
-        secondary: "4px",
-        container: "12px",
+        lg: "12px",
+        xl: "16px",
       },
       boxShadow: {
         DEFAULT: "0 1px 4px rgba(0, 0, 0, 0.1)",
@@ -19,9 +20,9 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: "#dc2626",   // 🔴 Red (base)
-          hover: "#b91c1c",     // 🔴 Dark Red (hover)
-          light: "#fca5a5",     // 🔴 Light Red (optional)
+          DEFAULT: "#dc2626",
+          hover: "#b91c1c",
+          light: "#fca5a5",
         },
         secondary: {
           DEFAULT: "#6B7280",
@@ -39,22 +40,23 @@ module.exports = {
           DEFAULT: "#F59E0B",
           hover: "#D97706",
         },
+        gray: colors.gray, // full gray palette
       },
       spacing: {
         "form-field": "16px",
+        "section-sm": "24px",
         section: "32px",
+        "section-lg": "48px",
+      },
+      fontSize: {
+        h1: ["2rem", { fontWeight: "700", lineHeight: "1.2" }],
+        h2: ["1.5rem", { fontWeight: "600", lineHeight: "1.3" }],
+        body: ["1rem", { fontWeight: "400", lineHeight: "1.5" }],
       },
       animation: {
-        'bounce-gentle': 'bounce 2s infinite',
-        'pulse-slow': 'pulse 3s infinite',
+        "bounce-gentle": "bounce 2s infinite",
+        "pulse-slow": "pulse 3s infinite",
       },
-    },
-  },
-  variants: {
-    extend: {
-      boxShadow: ["hover", "active"],
-      transform: ["hover", "active"],
-      scale: ["hover", "active"],
     },
   },
 };
