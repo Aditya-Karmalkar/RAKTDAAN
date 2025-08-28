@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, Hospital, Users, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Testimonials() {
   const [showForm, setShowForm] = useState(false);
@@ -136,3 +136,6 @@ export default function Testimonials() {
     </div>
   );
 }
+
+// Add named export for compatibility
+export { Testimonials };

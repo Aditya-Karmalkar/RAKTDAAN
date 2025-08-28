@@ -1,9 +1,14 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { SignInForm } from "../SignInForm";
 import Counter from "./StatsCountingUI"; // counting UI feature
 
-export function Home() {
+interface HomeProps {
+  onNavigate: (screen: string) => void;
+}
+
+export function Home({ onNavigate }: HomeProps) {
   const navigate = useNavigate(); // useNavigate for routing
 
   return (
