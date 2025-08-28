@@ -59,4 +59,11 @@ module.exports = {
       },
     },
   },
+  variants: {
+    extend: {
+      boxShadow: ["hover", "active"],
+      transform: ["hover", "active"],
+      scale: ["hover", "active"],
+    },
+  },
 };
