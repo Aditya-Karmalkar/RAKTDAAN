@@ -12,19 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Environment variables
-.env
-.env.local
-.env.production
-.env.development
-
-# Actual values file (contains secrets)
-ACTUAL_ENV_VALUES.md
-
-# Convex keys
-.env.convex
-convex/dist/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -35,6 +22,3 @@ convex/dist/
 *.njsproj
 *.sln
 *.sw?
-
-# Ignored for the template, you probably want to remove it:
-package-lock.json
