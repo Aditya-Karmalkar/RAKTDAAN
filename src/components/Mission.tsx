@@ -1,4 +1,9 @@
-export function Mission() {
+// Props type for Mission component for onNavigate function
+interface MissionProps {
+  onNavigate: (screen: string) => void;
+}
+
+export function Mission({ onNavigate }: MissionProps) {
   return (
     <div className="min-h-screen bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +13,7 @@ export function Mission() {
             Our <span className="text-red-600">Mission</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Bridging the gap between hospitals and donors to create a seamless, 
+            Bridging the gap between hospitals and donors to create a seamless,
             life-saving blood donation ecosystem.
           </p>
         </div>
@@ -18,16 +23,16 @@ export function Mission() {
           <div className="text-center">
             <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-6">
               Every Second Counts
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
-              In medical emergencies, the difference between life and death often comes down to 
-              the availability of blood. RaktDaan exists to eliminate the barriers between those 
-              who need blood and those willing to give it. We believe that technology can transform 
+              In medical emergencies, the difference between life and death often comes down to
+              the availability of blood. RaktDaan exists to eliminate the barriers between those
+              who need blood and those willing to give it. We believe that technology can transform
               the traditional blood donation process into something immediate, efficient, and deeply human.
             </p>
           </div>
@@ -119,17 +124,17 @@ export function Mission() {
           </div>
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - added onclick event*/}
         <div className="text-center bg-gradient-to-r from-red-600 to-pink-600 rounded-2xl p-12 text-white">
           <h2 className="text-3xl font-bold mb-6">Join Our Life-Saving Mission</h2>
           <p className="text-xl mb-8 opacity-90">
             Together, we can ensure that no life is lost due to blood unavailability.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button onClick={() => onNavigate("donor-registration")} className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
               Become a Donor
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
+            <button onClick={() => onNavigate("hospital-registration")} className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
               Register Hospital
             </button>
           </div>
