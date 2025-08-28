@@ -34,6 +34,9 @@ const applicationTables = {
     rejectionReason: v.optional(v.string()),
     verificationNotes: v.optional(v.string()),
     lastDonationProof: v.optional(v.string()), // URL to last donation certificate
+    lastDonationDate: v.optional(v.number()), // Epoch ms - self-reported or verified
+    healthConditions: v.optional(v.array(v.string())), // self-reported conditions
+    eligibilityConsent: v.optional(v.boolean()), // consent for using self-reported data
     // File storage metadata
     fileName: v.optional(v.string()),
     fileType: v.optional(v.string()),
@@ -110,19 +113,39 @@ const applicationTables = {
     name: v.string(),
     bloodGroup: v.string(),
     location: v.string(),
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
     phone: v.string(),
     availability: v.boolean(),
     lastDonation: v.optional(v.number()),
     emergencyContact: v.optional(v.string()),
+    // Smart Matching Fields
+    healthStatus: v.optional(v.string()), // "excellent", "good", "fair", "restricted"
+    travelRadius: v.optional(v.number()), // Maximum travel distance in km
+    responseTime: v.optional(v.number()), // Average response time in minutes
+    successRate: v.optional(v.number()), // Percentage of successful donations
+    lastAvailabilityUpdate: v.optional(v.number()), // Timestamp of last availability update
+    preferredHospitals: v.optional(v.array(v.string())), // List of preferred hospital names
+    restrictions: v.optional(v.array(v.string())), // Health restrictions or conditions
+    emergencyOnly: v.optional(v.boolean()), // Whether donor only responds to emergency alerts
+    // Enhanced Analytics Fields
+    totalDonations: v.optional(v.number()),
+    successfulDonations: v.optional(v.number()),
+    averageResponseTime: v.optional(v.number()),
+    lastUpdate: v.optional(v.number()),
   }).index("by_user", ["userId"])
     .index("by_blood_group", ["bloodGroup"])
-    .index("by_availability", ["availability"]),
+    .index("by_availability", ["availability"])
+    .index("by_health_status", ["healthStatus"])
+    .index("by_emergency_only", ["emergencyOnly"]),
 
   hospitals: defineTable({
     userId: v.id("users"),
     name: v.string(),
     hospitalId: v.string(),
     location: v.string(),
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
     phone: v.string(),
     contactPerson: v.string(),
     verified: v.boolean(),
@@ -140,23 +163,66 @@ const applicationTables = {
     radiusKm: v.optional(v.number()), // Target radius in kilometers
     contactNumber: v.string(),
     description: v.string(),
-    status: v.string(), // "active", "fulfilled", "expired"
+    status: v.string(), // "active", "fulfilled", "expired", "cancelled", "donor_confirmed", "completed", "escalated"
     expiresAt: v.number(),
     notificationsSent: v.optional(v.number()), // Track how many donors were notified
+    // Smart Matching Fields
+    priorityScore: v.optional(v.number()), // Calculated priority score
+    matchedDonors: v.optional(v.array(v.id("donors"))), // Top recommended donors
+    matchingAlgorithm: v.optional(v.string()), // "smart", "traditional", "hybrid"
+    lastMatchingUpdate: v.optional(v.number()), // When matching was last updated
+    estimatedResponseTime: v.optional(v.number()), // Estimated time to get response in minutes
+    // Enhanced Response Management Fields
+    acceptedDonorId: v.optional(v.id("donors")),
+    lastUpdate: v.optional(v.number()),
+    lastRankingUpdate: v.optional(v.number()),
+    totalResponses: v.optional(v.number()),
+    topDonorScore: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    // Escalation Fields
+    escalatedAt: v.optional(v.number()),
+    escalationReason: v.optional(v.string()),
+    escalationLevel: v.optional(v.number()), // 1 = low, 2 = medium, 3 = high, 4 = critical
   }).index("by_hospital", ["hospitalId"])
     .index("by_blood_group", ["bloodGroup"])
     .index("by_status", ["status"])
     .index("by_urgency", ["urgency"])
-    .index("by_location", ["location"]),
+    .index("by_location", ["location"])
+    .index("by_priority", ["priorityScore"])
+    .index("by_escalation", ["escalationLevel"]),
 
   donorResponses: defineTable({
     sosAlertId: v.id("sosAlerts"),
     donorId: v.id("donors"),
-    status: v.string(), // "interested", "confirmed", "completed"
+    status: v.string(), // "interested", "confirmed", "accepted", "rejected", "on_hold", "completed", "unavailable", "escalated"
     responseTime: v.number(),
     notes: v.optional(v.string()),
+    matchScore: v.optional(v.number()),
+    responseSpeed: v.optional(v.number()), // Time from alert creation to response
+    availabilityConfirmed: v.optional(v.boolean()),
+    estimatedTravelTime: v.optional(v.number()),
+    healthCheckPassed: v.optional(v.boolean()),
+    priorityRank: v.optional(v.number()),
+    // Enhanced Response Management Fields
+    acceptedAt: v.optional(v.number()),
+    rejectedAt: v.optional(v.number()),
+    heldAt: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    fulfilledAt: v.optional(v.number()),
+    hospitalNotes: v.optional(v.string()),
+    isPrimaryDonor: v.optional(v.boolean()),
+    lastRankingUpdate: v.optional(v.number()),
+    // Donor Unavailability Fields
+    unavailableAt: v.optional(v.number()),
+    unavailabilityReason: v.optional(v.string()),
+    isReplacement: v.optional(v.boolean()), // Whether this donor is replacing an unavailable one
+    replacementFor: v.optional(v.id("donorResponses")), // Reference to the unavailable donor response
   }).index("by_alert", ["sosAlertId"])
-    .index("by_donor", ["donorId"]),
+    .index("by_donor", ["donorId"])
+    .index("by_status", ["status"])
+    .index("by_alert_and_donor", ["sosAlertId", "donorId"])
+    .index("by_priority", ["priorityRank"])
+    .index("by_match_score", ["matchScore"]),
 
   testimonials: defineTable({
     name: v.string(),
@@ -236,6 +302,26 @@ const applicationTables = {
   }).index("by_recipient", ["recipientId"])
     .index("by_read", ["read"])
     .index("by_timestamp", ["timestamp"]),
+
+  // Smart Matching Analytics
+  matchingAnalytics: defineTable({
+    alertId: v.id("sosAlerts"),
+    hospitalId: v.id("hospitals"),
+    algorithm: v.string(), // "smart", "traditional", "hybrid"
+    totalDonorsFound: v.number(),
+    eligibleDonors: v.number(),
+    responseRate: v.number(), // Percentage of donors who responded
+    averageResponseTime: v.number(), // Average response time in minutes
+    successfulMatches: v.number(),
+    totalUnitsFulfilled: v.number(),
+    matchingDuration: v.number(), // Time taken to find matches in minutes
+    priorityScore: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_alert", ["alertId"])
+    .index("by_hospital", ["hospitalId"])
+    .index("by_algorithm", ["algorithm"])
+    .index("by_priority_score", ["priorityScore"]),
 };
 
 export default defineSchema({

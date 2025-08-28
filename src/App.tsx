@@ -1,5 +1,5 @@
 import { Authenticated, Unauthenticated, useQuery } from "convex/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "sonner";
 import { api } from "../convex/_generated/api";
 import { AdminDashboard } from "./components/AdminDashboard";
@@ -16,7 +16,8 @@ import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import Testimonials from "./components/Testimonials";
+import SmartMatchingDashboard from "./components/SmartMatchingDashboard";
+import { Testimonials } from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
 
@@ -27,7 +28,13 @@ export default function App() {
   const currentDonor = useQuery(api.donors.getCurrentDonor);
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
   const isAdmin = useQuery(api.admin.isCurrentUserAdmin);
-  
+
+  // scroll to top whenever the screen changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentScreen]);
+
+
   // Notification system
   const { notifications, hideNotification } = useNotifications();
 
@@ -42,6 +49,7 @@ export default function App() {
     { id: "live-alerts", label: "Live Alerts" },
     { id: "dashboard", label: "Dashboard" },
     ...(isAdmin ? [{ id: "admin", label: "Admin" }] : []),
+    { id: "smart-matching", label: "Smart Matching" },
     { id: "testimonials", label: "Stories" },
     { id: "contact", label: "Contact" },
   ];
@@ -51,7 +59,7 @@ export default function App() {
       case "home":
         return <Home onNavigate={setCurrentScreen} />;
       case "mission":
-        return <Mission />;
+        return <Mission onNavigate={setCurrentScreen} />;
       case "how-it-works":
         return <HowItWorks />;
       case "gallery":
@@ -68,6 +76,8 @@ export default function App() {
         return <Dashboard />;
       case "admin":
         return <AdminDashboard />;
+      case "smart-matching":
+        return <SmartMatchingDashboard hospitalId={currentHospital?._id || ""} hospitalData={currentHospital} />;
       case "testimonials":
         return <Testimonials />;
       case "contact":
@@ -85,7 +95,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div 
+            <div
               className="flex items-center cursor-pointer"
               onClick={() => setCurrentScreen("home")}
             >
@@ -101,16 +111,15 @@ export default function App() {
                 <button
                   key={screen.id}
                   onClick={() => setCurrentScreen(screen.id)}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
-                    currentScreen === screen.id
-                      ? "text-red-600 border-b-2 border-red-600"
-                      : "text-gray-700 hover:text-red-600"
-                  }`}
+                  className={`px-3 py-2 text-sm font-medium transition-colors ${currentScreen === screen.id
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-gray-700 hover:text-red-600"
+                    }`}
                 >
                   {screen.label}
                 </button>
               ))}
-              
+
               <Authenticated>
                 <div className="flex items-center space-x-4">
                   {currentDonor !== undefined && currentDonor && (
@@ -129,6 +138,12 @@ export default function App() {
                       Dashboard
                     </button>
                   )}
+                  <button
+                    onClick={() => setCurrentScreen("smart-matching")}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Smart Matching
+                  </button>
                   {isAdmin === true && (
                     <button
                       onClick={() => setCurrentScreen("admin")}
@@ -175,11 +190,10 @@ export default function App() {
                       setCurrentScreen(screen.id);
                       setIsMenuOpen(false);
                     }}
-                    className={`text-left px-3 py-2 text-sm font-medium transition-colors ${
-                      currentScreen === screen.id
-                        ? "text-red-600 bg-red-50"
-                        : "text-gray-700 hover:text-red-600"
-                    }`}
+                    className={`text-left px-3 py-2 text-sm font-medium transition-colors ${currentScreen === screen.id
+                      ? "text-red-600 bg-red-50"
+                      : "text-gray-700 hover:text-red-600"
+                      }`}
                   >
                     {screen.label}
                   </button>
@@ -215,7 +229,7 @@ export default function App() {
       <Footer />
 
       <Toaster />
-      
+
       {/* Notification Popups */}
       {notifications.map(notification => (
         <NotificationPopup
