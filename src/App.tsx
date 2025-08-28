@@ -49,7 +49,7 @@ export default function App() {
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
-        return <Home />;
+        return <Home onNavigate={setCurrentScreen} />;
       case "mission":
         return <Mission />;
       case "how-it-works":
@@ -73,7 +73,7 @@ export default function App() {
       case "contact":
         return <Contact />;
       default:
-        return <Home />;
+        return <Home onNavigate={setCurrentScreen} />;
     }
   };
 
