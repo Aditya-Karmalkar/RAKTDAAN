@@ -92,7 +92,7 @@ export default function App() {
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3 group-hover:bg-primary-hover transition-colors">
                 <span className="text-primary-foreground font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-logo font-bold text-primary group-hover:text-primary-hover transition-colors">RaktDaan</span>
+              <span className="text-xl logo-heading group-hover:text-primary-hover transition-colors">RaktDaan</span>
             </div>
 
             {/* Desktop Navigation */}
