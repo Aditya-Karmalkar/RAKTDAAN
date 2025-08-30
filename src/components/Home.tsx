@@ -122,6 +122,9 @@ export function Home({ onNavigate }: HomeProps) {
                 onClick={() => navigate("/donor-registration")}
                 className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
               >
+              <button 
+              onClick={() => onNavigate("donor-registration")}
+              className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
                 Register Now
               </button>
             </div>
@@ -137,6 +140,9 @@ export function Home({ onNavigate }: HomeProps) {
                 onClick={() => navigate("/hospital-registration")}
                 className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
               >
+              <button 
+              onClick={() => onNavigate("donor-registration")}
+              className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
                 Request Now
               </button>
             </div>
@@ -152,6 +158,9 @@ export function Home({ onNavigate }: HomeProps) {
                 onClick={() => alert("Sharing feature coming soon!")}
                 className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
               >
+              <button 
+              onClick={() => onNavigate("donor-registration")}
+              className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
                 Share Now
               </button>
             </div>

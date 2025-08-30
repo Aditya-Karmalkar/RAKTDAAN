@@ -14,6 +14,7 @@ import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
+import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
 import Testimonials from "./components/Testimonials";
@@ -79,6 +80,7 @@ export default function App() {
 
   
   return (
+    <>
     <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
@@ -228,5 +230,7 @@ export default function App() {
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
     </div>
+    <ScrollToTop screen={currentScreen} />
+    </>
   );
 }
