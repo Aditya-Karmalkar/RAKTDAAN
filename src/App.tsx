@@ -18,6 +18,7 @@ import { Testimonials } from "./components/Testimonials";
 import { SignOutButton } from "./SignOutButton";
 import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -77,6 +78,7 @@ export default function App() {
   };
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
@@ -223,5 +225,7 @@ export default function App() {
         />
       ))}
     </div>
+    <ScrollToTop screen={currentScreen} />
+    </>
   );
 }
