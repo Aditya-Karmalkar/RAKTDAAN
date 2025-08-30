@@ -28,6 +28,9 @@ export default function App() {
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
   const isAdmin = useQuery(api.admin.isCurrentUserAdmin);
   
+ // Log values to check if they are being fetched correctly
+  console.log(loggedInUser, currentDonor, currentHospital, isAdmin);
+
   // Notification system
   const { notifications, hideNotification } = useNotifications();
 

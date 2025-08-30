@@ -1,13 +1,28 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "target": "es6",           // ES6 के रूप में ट्रांसपाइल करें
+    "lib": ["dom", "esnext"],  // DOM और ESNext लाइब्रेरी को शामिल करें
+    "jsx": "react-jsx",        // JSX के लिए React JSX ट्रांसपाइलर का उपयोग करें
+    "moduleResolution": "node", // Node के अनुसार मॉड्यूल रिजॉल्यूशन
+    "esModuleInterop": true,    // ES6 मॉड्यूल के साथ इंटरऑपरेबिलिटी
+    "strict": true,             // सख्त टाइपिंग चेकिंग
+    "skipLibCheck": true,       // लाइब्रेरी चेकिंग को स्किप करें, परफॉर्मेंस के लिए
+    "forceConsistentCasingInFileNames": true // फाइल नाम के मामले में सामंजस्य बनाए रखें
+  },
+  "include": [
+    "src/**/*" // 'src' फोल्डर के अंदर की सभी फाइलें शामिल करें
+  ],
+  "exclude": [
+    "node_modules", // node_modules को बाहर करें
+    "**/*.test.ts",  // टेस्ट फाइलों को बाहर करें (यदि टेस्ट फाइलें हैं)
+    "**/*.test.tsx"
+  ],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
