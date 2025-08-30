@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-light: #ffffff;
   --color-dark: #171717;
@@ -44,6 +46,12 @@ body {
     "Noto Color Emoji";
   color: var(--color-dark);
   background: var(--color-light);
+  scroll-behavior: smooth;
+}
+
+/* Enhanced button styles */
+.scroll-to-top-btn {
+  @apply fixed bottom-6 right-6 bg-primary hover:bg-primary-hover text-white p-3 rounded-full shadow hover:shadow-hover z-50 transition-all duration-200 transform hover:scale-105;
 }
 
 /* only use this to update the style of the auth input fields. use a different class for all other input fields */

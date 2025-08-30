@@ -31,16 +31,30 @@ module.exports = {
           DEFAULT: "#8B5CF6",
           hover: "#7C3AED",
         },
+        success: {
+          DEFAULT: "#10B981",
+          hover: "#059669",
+        },
+        warning: {
+          DEFAULT: "#F59E0B",
+          hover: "#D97706",
+        },
       },
       spacing: {
         "form-field": "16px",
         section: "32px",
+      },
+      animation: {
+        'bounce-gentle': 'bounce 2s infinite',
+        'pulse-slow': 'pulse 3s infinite',
       },
     },
   },
   variants: {
     extend: {
       boxShadow: ["hover", "active"],
+      transform: ["hover", "active"],
+      scale: ["hover", "active"],
     },
   },
 };

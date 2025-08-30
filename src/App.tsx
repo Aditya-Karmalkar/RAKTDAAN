@@ -13,12 +13,13 @@ import { HospitalRegistration } from "./components/HospitalRegistration";
 import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
-import { SosAlert } from "./components/SosAlert";
-import { Testimonials } from "./components/Testimonials";
-import { SignOutButton } from "./SignOutButton";
-import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import { SosAlert } from "./components/SosAlert";
+import Testimonials from "./components/Testimonials";
+import { useNotifications } from "./hooks/useNotifications";
+import { SignOutButton } from "./SignOutButton";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -77,6 +78,7 @@ export default function App() {
     }
   };
 
+  
   return (
     <>
     <div className="min-h-screen bg-gray-50">
@@ -224,6 +226,9 @@ export default function App() {
           onClose={hideNotification}
         />
       ))}
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
     <ScrollToTop screen={currentScreen} />
     </>
