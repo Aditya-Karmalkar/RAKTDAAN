@@ -57,11 +57,46 @@ export function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
-              <li><a href="/Mission" className="text-gray-300 hover:text-white transition-colors">Our Mission</a></li>
-              <li><a href="/HowItWorks" className="text-gray-300 hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="/DonorRegistration" className="text-gray-300 hover:text-white transition-colors">Become a Donor</a></li>
-              <li><a href="/HospitalRegistration" className="text-gray-300 hover:text-white transition-colors">Hospital Registration</a></li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('home')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('mission')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Our Mission
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('how-it-works')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  How It Works
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('donor-registration')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Become a Donor
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('hospital-registration')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Hospital Registration
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -69,7 +104,14 @@ export function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('contact')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Contact Us
+                </button>
+              </li>
               <li>
                 <button 
                   onClick={() => handleNavigation('faq')}
