@@ -37,8 +37,6 @@ export default function App() {
   const screens = [
     { id: "home", label: "Home" },
     { id: "mission", label: "Mission" },
-    { id: "emergency", label: "Emergency" },
-   
     { id: "how-it-works", label: "How It Works" },
     { id: "gallery", label: "Gallery" },
     { id: "donor-registration", label: "Become a Donor" },
@@ -48,8 +46,7 @@ export default function App() {
     { id: "dashboard", label: "Dashboard" },
     ...(isAdmin ? [{ id: "admin", label: "Admin" }] : []),
     { id: "testimonials", label: "Stories" },
-    { id: "contact", label: "Contact" },
-    
+    { id: "contact", label: "Contact" }
   ];
 
   const renderScreen = () => {
