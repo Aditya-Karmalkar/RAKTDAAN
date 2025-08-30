@@ -211,8 +211,8 @@ export default function App() {
         {renderScreen()}
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer - Only show on homepage */}
+      {currentScreen === "home" && <Footer />}
 
       <Toaster />
       
