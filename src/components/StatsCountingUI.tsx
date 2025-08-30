@@ -70,10 +70,10 @@ const Counter: React.FC<CounterProps> = ({ target, label, duration = 2000, suffi
 
     return (
         <div ref={ref} className="p-6 text-center">
-            <div className="text-4xl font-bold text-red-600 mb-2">
+            <div className="text-4xl font-bold text-primary mb-2">
                 {count}{suffix}
             </div>
-            <div className="text-gray-700">{label}</div>
+            <div className="text-muted-foreground">{label}</div>
         </div>
     );
 };

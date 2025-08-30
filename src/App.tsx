@@ -79,20 +79,20 @@ export default function App() {
 
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
+      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div 
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer group"
               onClick={() => setCurrentScreen("home")}
             >
-              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-sm">R</span>
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3 group-hover:bg-primary-hover transition-colors">
+                <span className="text-primary-foreground font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-bold text-red-600">RaktDaan</span>
+              <span className="text-xl font-logo font-bold text-primary group-hover:text-primary-hover transition-colors">RaktDaan</span>
             </div>
 
             {/* Desktop Navigation */}
