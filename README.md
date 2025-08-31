@@ -11,15 +11,16 @@
 
 ---
 
-## 🌟 Project Overview
+🌟 Project Overview
 
-**RAKTDAAN** is a real-time blood donation platform that connects **donors, recipients, hospitals, and administrators** through a centralized system. Designed with responsiveness, urgency, and simplicity in mind, it helps bridge the life-saving gap in critical moments.
+RAKTDAAN is a real-time, open-source blood donation platform that seamlessly connects donors, recipients, hospitals, and administrators in one unified ecosystem. Built with speed, simplicity, and reliability at its core, it ensures that every drop of blood reaches those who need it most — when it matters the most.
 
-> 💡 _“One unit of blood can save up to three lives. Be the reason someone lives. Be a donor. Be a hero.”_
+🚑 Whether it’s an emergency request, a scheduled donation, or hospital coordination, RAKTDAAN empowers communities to respond with urgency, compassion, and efficiency.
 
----
+💻 Being open source, it encourages collaboration from developers, healthcare innovators, and volunteers worldwide to continuously improve and expand its impact.
 
-## 🚀 Live Demo
+💡 “One unit of blood can save up to three lives. Be the reason someone breathes again. Be a donor. Be a hero.”
+
 
 👉 [Visit the Live Site](https://raktdaanorg.netlify.app/)
 
@@ -157,5 +158,6 @@ We welcome contributions from developers, designers, and volunteers!
 This project is licensed under the [MIT License](LICENSE).
 
 ---
+
 
 > Made with ❤️ by [Aditya Karmalkar](https://github.com/Aditya-Karmalkar)
