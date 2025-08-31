@@ -1,3 +1,4 @@
+ fix-clickable-text
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
 import { createRoot } from "react-dom/client";

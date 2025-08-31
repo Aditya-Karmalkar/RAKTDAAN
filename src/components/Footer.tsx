@@ -1,3 +1,4 @@
+fix-clickable-text
 interface FooterProps {
   onNavigate: (screen: string) => void;
 }
@@ -172,3 +173,4 @@ export function Footer({ onNavigate }: FooterProps) {
     </footer>
   );
 }
+

@@ -1,4 +1,5 @@
-  import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+fix-clickable-text
+import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { useState } from "react";
 import { Toaster } from "sonner";
 import { api } from "../convex/_generated/api";

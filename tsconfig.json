@@ -1,3 +1,4 @@
+ fix-clickable-text
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -26,3 +27,4 @@
     { "path": "./tsconfig.node.json" }
   ]
 }
+

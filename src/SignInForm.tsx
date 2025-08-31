@@ -1,3 +1,4 @@
+ fix-clickable-text
 "use client";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
@@ -90,3 +91,4 @@ export function SignInForm() {
     </div>
   );
 }
+
