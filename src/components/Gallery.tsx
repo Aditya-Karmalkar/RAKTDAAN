@@ -97,10 +97,10 @@ export function Gallery() {
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-foreground mb-8">📸 Photo Gallery</h1>
-            <div className="bg-card rounded-xl shadow-lg p-12 text-muted-foreground">
+            <h1 className="text-4xl font-bold text-gray-900 mb-8">📸 Photo Gallery</h1>
+            <div className="bg-white rounded-xl shadow-lg p-12 text-gray-500">
               <p>No photos available yet.</p>
-              <p className="text-sm text-muted-foreground/70 mt-2">Photos will appear here once they're uploaded.</p>
+              <p className="text-sm text-gray-400 mt-2">Photos will appear here once they're uploaded.</p>
             </div>
           </div>
         </div>
@@ -113,8 +113,8 @@ export function Gallery() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">📸 Photo Gallery</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">📸 Photo Gallery</h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Explore our collection of moments from blood donation drives, awareness campaigns, and community events.
           </p>
         </div>
@@ -122,8 +122,8 @@ export function Gallery() {
         {/* Filters Row: Category chips + Search + Date range */}
         <div className="mb-8 grid gap-4 md:grid-cols-3">
           {/* Category Chips */}
-          <div className="md:col-span-2 bg-card rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Filter by Category</h3>
+          <div className="md:col-span-2 bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter by Category</h3>
             <div className="flex flex-wrap gap-3">
               {categories.map((category) => (
                 <button
@@ -131,8 +131,8 @@ export function Gallery() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? 'bg-primary text-primary-foreground shadow-lg'
-                      : 'bg-muted text-foreground hover:bg-muted-foreground/20'
+                      ? 'bg-red-600 text-white shadow-lg'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
                   {category === 'all' ? 'All Photos' : category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -142,8 +142,8 @@ export function Gallery() {
           </div>
 
           {/* Search + Date range */}
-          <div className="bg-card rounded-xl shadow-lg p-6">
-            <label htmlFor="gallery-search" className="block text-sm font-medium text-foreground mb-2">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <label htmlFor="gallery-search" className="block text-sm font-medium text-gray-700 mb-2">
               Search photos
             </label>
             <input
@@ -152,35 +152,35 @@ export function Gallery() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search photos by title, description, or category…"
-              className="w-full rounded-lg border border-input px-4 py-2 outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-red-500"
               aria-label="Search photos"
             />
 
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="start-date" className="block text-xs text-muted-foreground mb-1">Start date</label>
+                <label htmlFor="start-date" className="block text-xs text-gray-600 mb-1">Start date</label>
                 <input
                   id="start-date"
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full rounded-lg border border-input px-3 py-2 outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
               <div>
-                <label htmlFor="end-date" className="block text-xs text-muted-foreground mb-1">End date</label>
+                <label htmlFor="end-date" className="block text-xs text-gray-600 mb-1">End date</label>
                 <input
                   id="end-date"
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full rounded-lg border border-input px-3 py-2 outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
             </div>
 
             {(searchTerm || startDate || endDate) && (
-              <div className="mt-3 text-xs text-muted-foreground">
+              <div className="mt-3 text-xs text-gray-500">
                 Showing {filteredPhotos.length} result{filteredPhotos.length !== 1 ? 's' : ''}{' '}
                 {searchTerm && <>for “{searchTerm}” </>}
                 {startDate && <>from {startDate} </>}
@@ -195,7 +195,7 @@ export function Gallery() {
           <button
             onClick={() => setIsAutoPlay(!isAutoPlay)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-              isAutoPlay ? 'bg-green-600 text-white' : 'bg-muted text-foreground'
+              isAutoPlay ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
             }`}
           >
             {isAutoPlay ? '⏸️ Pause Auto-play' : '▶️ Auto-play'}
@@ -205,7 +205,7 @@ export function Gallery() {
         {filteredPhotos.length > 0 ? (
           <>
             {/* Main Carousel */}
-            <div className="bg-card rounded-xl shadow-2xl overflow-hidden mb-8">
+            <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-8">
               <div className="relative">
                 <div className="aspect-video w-full overflow-hidden">
                   <img
@@ -258,13 +258,13 @@ export function Gallery() {
 
               {/* Dots */}
               {filteredPhotos.length > 1 && (
-                <div className="flex justify-center space-x-2 p-4 bg-muted">
+                <div className="flex justify-center space-x-2 p-4 bg-gray-50">
                   {filteredPhotos.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => goToSlide(index)}
                       className={`w-3 h-3 rounded-full transition-all ${
-                        index === currentSlide ? 'bg-primary scale-125' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                        index === currentSlide ? 'bg-red-600 scale-125' : 'bg-gray-300 hover:bg-gray-400'
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
                     />
@@ -274,15 +274,15 @@ export function Gallery() {
             </div>
 
             {/* Thumbnails */}
-            <div className="bg-card rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">All Photos ({filteredPhotos.length})</h3>
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">All Photos ({filteredPhotos.length})</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {filteredPhotos.map((photo, index) => (
                   <div
                     key={photo._id}
                     onClick={() => goToSlide(index)}
                     className={`relative cursor-pointer rounded-lg overflow-hidden transition-all hover:scale-105 ${
-                      index === currentSlide ? 'ring-4 ring-primary shadow-lg' : 'hover:shadow-md'
+                      index === currentSlide ? 'ring-4 ring-red-500 shadow-lg' : 'hover:shadow-md'
                     }`}
                   >
                     <div className="aspect-square">
@@ -295,25 +295,25 @@ export function Gallery() {
             </div>
           </>
         ) : (
-          <div className="bg-card rounded-xl shadow-lg p-12 text-center text-muted-foreground">
+          <div className="bg-white rounded-xl shadow-lg p-12 text-center text-gray-600">
             No photos match your filters.
           </div>
         )}
 
         {/* Stats */}
-        <div className="mt-8 bg-card rounded-xl shadow-lg p-6">
+        <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">{allPhotos.length}</div>
-              <div className="text-muted-foreground">Total Photos</div>
+              <div className="text-3xl font-bold text-red-600 mb-2">{allPhotos.length}</div>
+              <div className="text-gray-600">Total Photos</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">{categories.length - 1}</div>
-              <div className="text-muted-foreground">Categories</div>
+              <div className="text-3xl font-bold text-red-600 mb-2">{categories.length - 1}</div>
+              <div className="text-gray-600">Categories</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">{filteredPhotos.length}</div>
-              <div className="text-muted-foreground">
+              <div className="text-3xl font-bold text-red-600 mb-2">{filteredPhotos.length}</div>
+              <div className="text-gray-600">
                 {selectedCategory === 'all' ? 'All Photos' : 'In Category'}
               </div>
             </div>
