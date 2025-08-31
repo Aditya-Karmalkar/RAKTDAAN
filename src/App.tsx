@@ -6,7 +6,6 @@ import { AdminDashboard } from "./components/AdminDashboard";
 import { Contact } from "./components/Contact";
 import { Dashboard } from "./components/Dashboard";
 import { DonorRegistration } from "./components/DonorRegistration";
-import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { Gallery } from "./components/Gallery";
 import { Home } from "./components/Home";
@@ -15,12 +14,14 @@ import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
-import { PrivacyPolicy } from "./components/PrivacyPolicy";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import { Testimonials } from "./components/Testimonials";
+import Testimonials from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
+import Emergency from "./pages/Emergency";
+import Term from "./pages/Term";
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -45,7 +46,7 @@ export default function App() {
     { id: "dashboard", label: "Dashboard" },
     ...(isAdmin ? [{ id: "admin", label: "Admin" }] : []),
     { id: "testimonials", label: "Stories" },
-    { id: "contact", label: "Contact" },
+    { id: "contact", label: "Contact" }
   ];
 
   const renderScreen = () => {
@@ -64,6 +65,10 @@ export default function App() {
         return <HospitalRegistration />;
       case "sos-alert":
         return <SosAlert />;
+      case "emergency":
+        return <Emergency />;
+      case "term":
+        return <Term />;
       case "live-alerts":
         return <LiveDonorAlert />;
       case "dashboard":
@@ -74,10 +79,6 @@ export default function App() {
         return <Testimonials />;
       case "contact":
         return <Contact />;
-      case "faq":
-        return <FAQ />;
-      case "privacy-policy":
-        return <PrivacyPolicy />;
       default:
         return <Home onNavigate={setCurrentScreen} />;
     }
@@ -102,7 +103,7 @@ export default function App() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-6">
               {screens.slice(0, 6).map((screen) => (
                 <button
                   key={screen.id}
@@ -158,7 +159,7 @@ export default function App() {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-red-600"
@@ -218,7 +219,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer onNavigate={setCurrentScreen} />
+      <Footer setCurrentScreen={setCurrentScreen} />
 
       <Toaster />
       
