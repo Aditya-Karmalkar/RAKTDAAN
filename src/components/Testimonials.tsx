@@ -46,16 +46,16 @@ export default function Testimonials() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Life-Saving Stories
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Read inspiring stories from donors and recipients whose lives were
             touched by the power of blood donation.
           </p>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-6 bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary-hover transition-colors"
+            className="mt-6 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors"
           >
             Share Your Story
           </button>
@@ -69,7 +69,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-border"
+              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="flex items-center mb-4">
                 {story.role === "Donor" && (
@@ -81,10 +81,10 @@ export default function Testimonials() {
                 {story.role === "Hospital" && (
                   <Hospital className="w-6 h-6 text-green-600 mr-2" />
                 )}
-                <h3 className="font-semibold text-foreground">{story.name}</h3>
+                <h3 className="font-semibold text-gray-900">{story.name}</h3>
               </div>
-              <p className="text-foreground/80 mb-4">{story.content}</p>
-              <span className="text-sm font-medium text-muted-foreground">
+              <p className="text-gray-700 mb-4">{story.content}</p>
+              <span className="text-sm font-medium text-gray-500">
                 {story.role}
               </span>
             </motion.div>
@@ -97,22 +97,22 @@ export default function Testimonials() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-card rounded-xl p-8 max-w-md w-full relative border border-border"
+              className="bg-white rounded-xl p-8 max-w-md w-full relative"
             >
               <button
                 onClick={() => setShowForm(false)}
-                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               >
                 <X className="w-6 h-6" />
               </button>
-              <h2 className="text-2xl font-bold mb-4 text-foreground">Share Your Story</h2>
+              <h2 className="text-2xl font-bold mb-4">Share Your Story</h2>
               <form className="space-y-4">
                 <input
                   type="text"
                   placeholder="Your Name"
-                  className="w-full p-3 border border-input rounded-lg bg-background text-foreground"
+                  className="w-full p-3 border rounded-lg"
                 />
-                <select className="w-full p-3 border border-input rounded-lg bg-background text-foreground">
+                <select className="w-full p-3 border rounded-lg">
                   <option value="">Select Role</option>
                   <option value="Donor">Donor</option>
                   <option value="Recipient">Recipient</option>
@@ -120,11 +120,11 @@ export default function Testimonials() {
                 </select>
                 <textarea
                   placeholder="Your Story"
-                  className="w-full p-3 border border-input rounded-lg h-32 bg-background text-foreground"
+                  className="w-full p-3 border rounded-lg h-32"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary-hover transition-colors"
+                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Submit Story
                 </button>

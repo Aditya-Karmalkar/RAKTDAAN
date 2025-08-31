@@ -6,6 +6,7 @@ import { AdminDashboard } from "./components/AdminDashboard";
 import { Contact } from "./components/Contact";
 import { Dashboard } from "./components/Dashboard";
 import { DonorRegistration } from "./components/DonorRegistration";
+import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { Gallery } from "./components/Gallery";
 import { Home } from "./components/Home";
@@ -14,9 +15,10 @@ import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
 import NotificationPopup from "./components/NotificationPopup";
+import { PrivacyPolicy } from "./components/PrivacyPolicy";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
-import Testimonials from "./components/Testimonials";
+import { Testimonials } from "./components/Testimonials";
 import { useNotifications } from "./hooks/useNotifications";
 import { SignOutButton } from "./SignOutButton";
 
@@ -72,6 +74,10 @@ export default function App() {
         return <Testimonials />;
       case "contact":
         return <Contact />;
+      case "faq":
+        return <FAQ />;
+      case "privacy-policy":
+        return <PrivacyPolicy />;
       default:
         return <Home onNavigate={setCurrentScreen} />;
     }
@@ -79,24 +85,24 @@ export default function App() {
 
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div 
-              className="flex items-center cursor-pointer group"
+              className="flex items-center cursor-pointer"
               onClick={() => setCurrentScreen("home")}
             >
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3 group-hover:bg-primary-hover transition-colors">
-                <span className="text-primary-foreground font-bold text-sm">R</span>
+              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
+                <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-xl font-logo font-bold text-primary group-hover:text-primary-hover transition-colors">RaktDaan</span>
+              <span className="text-xl font-bold text-red-600">RaktDaan</span>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6">
               {screens.slice(0, 6).map((screen) => (
                 <button
                   key={screen.id}
@@ -152,7 +158,7 @@ export default function App() {
             </div>
 
             {/* Mobile menu button */}
-            <div className="lg:hidden">
+            <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-red-600"
@@ -211,8 +217,8 @@ export default function App() {
         {renderScreen()}
       </main>
 
-      {/* Footer - Only show on homepage */}
-      {currentScreen === "home" && <Footer />}
+      {/* Footer */}
+      <Footer onNavigate={setCurrentScreen} />
 
       <Toaster />
       
