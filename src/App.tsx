@@ -1,4 +1,4 @@
-import { Authenticated, Unauthenticated, useQuery } from "convex/react";
+  import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { useState } from "react";
 import { Toaster } from "sonner";
 import { api } from "../convex/_generated/api";
@@ -13,12 +13,12 @@ import { HospitalRegistration } from "./components/HospitalRegistration";
 import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
+import { SosAlert } from "./components/SosAlert";
+import { Testimonials } from "./components/Testimonials";
+import { SignOutButton } from "./SignOutButton";
+import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import { SosAlert } from "./components/SosAlert";
-import Testimonials from "./components/Testimonials";
-import { useNotifications } from "./hooks/useNotifications";
-import { SignOutButton } from "./SignOutButton";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -27,9 +27,6 @@ export default function App() {
   const currentDonor = useQuery(api.donors.getCurrentDonor);
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
   const isAdmin = useQuery(api.admin.isCurrentUserAdmin);
-  
- // Log values to check if they are being fetched correctly
-  console.log(loggedInUser, currentDonor, currentHospital, isAdmin);
 
   // Notification system
   const { notifications, hideNotification } = useNotifications();
@@ -80,7 +77,6 @@ export default function App() {
     }
   };
 
-  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
@@ -88,7 +84,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div 
+            <div
               className="flex items-center cursor-pointer"
               onClick={() => setCurrentScreen("home")}
             >
@@ -99,7 +95,7 @@ export default function App() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6">
               {screens.slice(0, 6).map((screen) => (
                 <button
                   key={screen.id}
@@ -113,7 +109,7 @@ export default function App() {
                   {screen.label}
                 </button>
               ))}
-              
+
               <Authenticated>
                 <div className="flex items-center space-x-4">
                   {currentDonor !== undefined && currentDonor && (
@@ -155,13 +151,23 @@ export default function App() {
             </div>
 
             {/* Mobile menu button */}
-            <div className="lg:hidden">
+            <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-red-600"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>
@@ -214,21 +220,19 @@ export default function App() {
         {renderScreen()}
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer (pass setCurrentScreen as prop) */}
+      <Footer onNavigate={setCurrentScreen} />
 
       <Toaster />
-      
+
       {/* Notification Popups */}
-      {notifications.map(notification => (
+      {notifications.map((notification) => (
         <NotificationPopup
           key={notification.id}
           notification={notification}
           onClose={hideNotification}
         />
       ))}
-
-      {/* Scroll to Top Button */}
       <ScrollToTopButton />
     </div>
   );
