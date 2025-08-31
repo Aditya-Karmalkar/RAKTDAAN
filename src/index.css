@@ -1,3 +1,6 @@
+/* Google Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Labrada:ital,wght@0,400..900;1,400..900&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,12 +8,99 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-light: #ffffff;
-  --color-dark: #171717;
-  --color-primary: #dc2626;
-  --color-primary-hover: #b91c1c;
-  --color-secondary: #6b7280;
-  --color-secondary-hover: #4b5563;
+  --background: #fff0f8;
+  --foreground: #91185c;
+  --card: #fff7fc;
+  --card-foreground: #91185c;
+  --popover: #fff7fc;
+  --popover-foreground: #91185c;
+  --primary: #e6067a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #d1056e; /* Added hover variant */
+  --secondary: #ffd6ff;
+  --secondary-foreground: #91185c;
+  --muted: #ffe3f2;
+  --muted-foreground: #c04283;
+  --accent: #ffc1e3;
+  --accent-foreground: #91185c;
+  --destructive: #d13869;
+  --destructive-foreground: #ffffff;
+  --border: #ffc7e6;
+  --input: #ffd6ff;
+  --ring: #e6067a;
+  --chart-1: #e6067a;
+  --chart-2: #c44b97;
+  --chart-3: #9969b6;
+  --chart-4: #7371bf;
+  --chart-5: #5e84ff;
+  --sidebar: #ffedf6;
+  --sidebar-foreground: #91185c;
+  --sidebar-primary: #e6067a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ffc1e3;
+  --sidebar-accent-foreground: #91185c;
+  --sidebar-border: #ffddf0;
+  --sidebar-ring: #e6067a;
+  --font-logo: 'Labrada', serif;
+  --font-primary: 'Bricolage Grotesque', sans-serif;
+  --font-secondary: 'Poppins', sans-serif;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 3px 0px 0px hsl(330 70% 30% / 0.09);
+  --shadow-xs: 0px 3px 0px 0px hsl(330 70% 30% / 0.09);
+  --shadow-sm: 0px 3px 0px 0px hsl(330 70% 30% / 0.18), 0px 1px 2px -1px hsl(330 70% 30% / 0.18);
+  --shadow: 0px 3px 0px 0px hsl(330 70% 30% / 0.18), 0px 1px 2px -1px hsl(330 70% 30% / 0.18);
+  --shadow-md: 0px 3px 0px 0px hsl(330 70% 30% / 0.18), 0px 2px 4px -1px hsl(330 70% 30% / 0.18);
+  --shadow-lg: 0px 3px 0px 0px hsl(330 70% 30% / 0.18), 0px 4px 6px -1px hsl(330 70% 30% / 0.18);
+  --shadow-xl: 0px 3px 0px 0px hsl(330 70% 30% / 0.18), 0px 8px 10px -1px hsl(330 70% 30% / 0.18);
+  --shadow-2xl: 0px 3px 0px 0px hsl(330 70% 30% / 0.45);
+  --shadow-hover: 0px 4px 6px hsl(330 70% 30% / 0.3); /* Added hover shadow */
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: #1a0922;
+  --foreground: #ffb3ff;
+  --card: #2a1435;
+  --card-foreground: #ffb3ff;
+  --popover: #2a1435;
+  --popover-foreground: #ffb3ff;
+  --primary: #ff6bef;
+  --primary-foreground: #180518;
+  --primary-hover: #e05ae0; /* Added hover variant */
+  --secondary: #46204f;
+  --secondary-foreground: #ffb3ff;
+  --muted: #331941;
+  --muted-foreground: #d67ad6;
+  --accent: #5a1f5d;
+  --accent-foreground: #ffb3ff;
+  --destructive: #ff2876;
+  --destructive-foreground: #f9f9f9;
+  --border: #4a1b5f;
+  --input: #46204f;
+  --ring: #ff6bef;
+  --chart-1: #ff6bef;
+  --chart-2: #c359e3;
+  --chart-3: #9161ff;
+  --chart-4: #6f73e2;
+  --chart-5: #547aff;
+  --sidebar: #1c0d25;
+  --sidebar-foreground: #ffb3ff;
+  --sidebar-primary: #ff6bef;
+  --sidebar-primary-foreground: #180518;
+  --sidebar-accent: #5a1f5d;
+  --sidebar-accent-foreground: #ffb3ff;
+  --sidebar-border: #4a1b5f;
+  --sidebar-ring: #ff6bef;
+  --shadow-2xs: 0px 3px 0px 0px hsl(300 80% 50% / 0.09);
+  --shadow-xs: 0px 3px 0px 0px hsl(300 80% 50% / 0.09);
+  --shadow-sm: 0px 3px 0px 0px hsl(300 80% 50% / 0.18), 0px 1px 2px -1px hsl(300 80% 50% / 0.18);
+  --shadow: 0px 3px 0px 0px hsl(300 80% 50% / 0.18), 0px 1px 2px -1px hsl(300 80% 50% / 0.18);
+  --shadow-md: 0px 3px 0px 0px hsl(300 80% 50% / 0.18), 0px 2px 4px -1px hsl(300 80% 50% / 0.18);
+  --shadow-lg: 0px 3px 0px 0px hsl(300 80% 50% / 0.18), 0px 4px 6px -1px hsl(300 80% 50% / 0.18);
+  --shadow-xl: 0px 3px 0px 0px hsl(300 80% 50% / 0.18), 0px 8px 10px -1px hsl(300 80% 50% / 0.18);
+  --shadow-2xl: 0px 3px 0px 0px hsl(300 80% 50% / 0.45);
+  --shadow-hover: 0px 4px 6px hsl(300 80% 50% / 0.3); /* Added hover shadow */
 }
 
 .accent-text {
@@ -32,39 +122,37 @@
 }
 
 body {
-  font-family:
-    "Inter Variable",
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
-  color: var(--color-dark);
-  background: var(--color-light);
+  font-family: var(--font-primary), "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  color: var(--foreground);
+  background: var(--background);
   scroll-behavior: smooth;
 }
 
 /* Enhanced button styles */
 .scroll-to-top-btn {
-  @apply fixed bottom-6 right-6 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full shadow-lg hover:shadow-xl z-50 transition-all duration-200 transform hover:scale-105;
+  @apply fixed bottom-6 right-6 bg-primary hover:bg-primary-hover text-white p-3 rounded-full shadow hover:shadow-hover z-50 transition-all duration-200 transform hover:scale-105;
 }
 
 /* only use this to update the style of the auth input fields. use a different class for all other input fields */
 .auth-input-field {
-  @apply w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-shadow shadow-sm hover:shadow;
+  @apply w-full px-4 py-3 rounded-container bg-white border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow shadow-sm hover:shadow;
 }
 
 /* only use this to update the style of the auth buttons. use the button class for all other buttons */
 .auth-button {
-  @apply w-full px-4 py-3 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply w-full px-4 py-3 rounded bg-primary text-white font-semibold hover:bg-primary-hover transition-colors shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
+/* Logo heading style for RaktDaan */
+.logo-heading {
+  font-family: var(--font-logo) !important;
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}
+
+/* More specific selector to override Tailwind */
+h1.logo-heading {
+  font-family: var(--font-logo) !important;
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}
