@@ -360,55 +360,17 @@ export function AdminDashboard() {
 
   // Enhanced Dashboard with modern UI and real-time data
   const renderEnhancedDashboard = () => (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: '2rem' 
-    }}>
+    <div className="space-y-8">
       {/* Real-time Status Bar */}
-      <div style={{ 
-        background: 'linear-gradient(to right, var(--primary), var(--secondary))',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-lg)',
-        padding: '1.5rem',
-        color: 'var(--primary-foreground)'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          flexWrap: 'wrap'
-        }}>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+        <div className="flex justify-between items-center">
           <div>
-            <h2 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: 'bold', 
-              marginBottom: '0.5rem'
-            }}>
-              Blood Donation Platform Dashboard
-            </h2>
-            <p style={{ 
-              opacity: 0.8,
-              color: 'var(--primary-foreground)'
-            }}>
-              Real-time monitoring and analytics
-            </p>
+            <h2 className="text-2xl font-bold mb-2">Blood Donation Platform Dashboard</h2>
+            <p className="text-blue-100">Real-time monitoring and analytics</p>
           </div>
-          <div style={{ 
-            textAlign: 'right',
-            marginTop: '0.5rem'
-          }}>
-            <div style={{ 
-              fontSize: '0.875rem', 
-              opacity: 0.8,
-              color: 'var(--primary-foreground)'
-            }}>
-              Last Updated
-            </div>
-            <div style={{ 
-              fontSize: '1.125rem', 
-              fontWeight: '600'
-            }}>
+          <div className="text-right">
+            <div className="text-sm text-blue-100">Last Updated</div>
+            <div className="text-lg font-semibold">
               {realTimeData?.lastUpdated ? new Date(realTimeData.lastUpdated).toLocaleTimeString() : "Loading..."}
             </div>
           </div>
@@ -416,133 +378,65 @@ export function AdminDashboard() {
       </div>
 
       {/* Key Metrics Grid */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '1.5rem'
-      }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {renderAnalyticsCard(
           "Active Users", 
           realTimeData?.totalUsers || 0, 
           "👥", 
-          "border-left-blue", 
+          "border-l-blue-500", 
           `+${realTimeData?.recentUsers || 0} today`
         )}
         {renderAnalyticsCard(
           "Total Donors", 
           realTimeData?.totalDonors || 0, 
           "❤️", 
-          "border-left-red", 
+          "border-l-red-500", 
           `${realTimeData?.availableDonors || 0} available`
         )}
         {renderAnalyticsCard(
           "Verified Hospitals", 
           realTimeData?.verifiedHospitals || 0, 
           "🏥", 
-          "border-left-green", 
+          "border-l-green-500", 
           `${realTimeData?.totalHospitals || 0} total`
         )}
         {renderAnalyticsCard(
           "Active SOS Alerts", 
           realTimeData?.activeSosAlerts || 0, 
           "🚨", 
-          "border-left-orange", 
+          "border-l-orange-500", 
           `${realTimeData?.responseRate || 0}% response rate`
         )}
       </div>
 
       {/* Live Activity Feed */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr', 
-        gap: '1.5rem'
-      }}>
-        <div style={{ 
-          backgroundColor: 'var(--card)',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          color: 'var(--foreground)'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            <span style={{ marginRight: '0.5rem' }}>⚡</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <span className="mr-2">⚡</span>
             Live Activity Feed
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div className="space-y-4">
             {realTimeData?.recentUsers > 0 && (
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.75rem',
-                padding: '0.75rem',
-                borderRadius: '0.5rem',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)'
-              }}>
-                <div style={{ 
-                  width: '0.5rem', 
-                  height: '0.5rem', 
-                  backgroundColor: '#3b82f6',
-                  borderRadius: '50%',
-                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                }}></div>
-                <span style={{ 
-                  fontSize: '0.875rem',
-                  color: '#1e40af'
-                }}>
+              <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-blue-800">
                   {realTimeData.recentUsers} new users registered today
                 </span>
               </div>
             )}
             {realTimeData?.recentAlerts > 0 && (
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.75rem',
-                padding: '0.75rem',
-                borderRadius: '0.5rem',
-                backgroundColor: 'rgba(239, 68, 68, 0.1)'
-              }}>
-                <div style={{ 
-                  width: '0.5rem', 
-                  height: '0.5rem', 
-                  backgroundColor: '#ef4444',
-                  borderRadius: '50%',
-                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                }}></div>
-                <span style={{ 
-                  fontSize: '0.875rem',
-                  color: '#991b1b'
-                }}>
+              <div className="flex items-center space-x-3 p-3 bg-red-50 rounded-lg">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-red-800">
                   {realTimeData.recentAlerts} SOS alerts created today
                 </span>
               </div>
             )}
             {realTimeData?.recentResponses > 0 && (
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.75rem',
-                padding: '0.75rem',
-                borderRadius: '0.5rem',
-                backgroundColor: 'rgba(34, 197, 94, 0.1)'
-              }}>
-                <div style={{ 
-                  width: '0.5rem', 
-                  height: '0.5rem', 
-                  backgroundColor: '#22c55e',
-                  borderRadius: '50%',
-                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                }}></div>
-                <span style={{ 
-                  fontSize: '0.875rem',
-                  color: '#166534'
-                }}>
+              <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-green-800">
                   {realTimeData.recentResponses} donor responses today
                 </span>
               </div>
@@ -550,210 +444,70 @@ export function AdminDashboard() {
           </div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'var(--card)',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          color: 'var(--foreground)'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            <span style={{ marginRight: '0.5rem' }}>📊</span>
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <span className="mr-2">📊</span>
             System Health
           </h3>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '1rem'
-          }}>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(34, 197, 94, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold',
-                color: '#22c55e'
-              }}>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">
                 {realTimeData?.systemHealth?.uptime || 99.9}%
               </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: 'var(--muted-foreground)'
-              }}>
-                Uptime
-              </div>
+              <div className="text-sm text-gray-600">Uptime</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(59, 130, 246, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold',
-                color: '#3b82f6'
-              }}>
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600">
                 {realTimeData?.systemHealth?.avgResponseTime || 2.3}s
               </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: 'var(--muted-foreground)'
-              }}>
-                Avg Response
-              </div>
+              <div className="text-sm text-gray-600">Avg Response</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(192, 132, 252, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold',
-                color: '#a855f7'
-              }}>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600">
                 {realTimeData?.systemHealth?.activeConnections || 75}
               </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: 'var(--muted-foreground)'
-              }}>
-                Active Connections
-              </div>
+              <div className="text-sm text-gray-600">Active Connections</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(251, 146, 60, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold',
-                color: '#f97316'
-              }}>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600">
                 {realTimeData?.systemHealth?.serverLoad || 25}%
               </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: 'var(--muted-foreground)'
-              }}>
-                Server Load
-              </div>
+              <div className="text-sm text-gray-600">Server Load</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div style={{ 
-        backgroundColor: 'var(--card)',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-lg)',
-        padding: '1.5rem',
-        color: 'var(--foreground)'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: '600', 
-          marginBottom: '1rem'
-        }}>
-          Quick Actions
-        </h3>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1rem'
-        }}>
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <button
             onClick={() => setShowCampaignForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #10b981, #059669)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #059669, #047857)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #10b981, #059669)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>📢</span>
+            <span className="mr-2">📢</span>
             Create Campaign
           </button>
           <button
             onClick={() => setShowPhotoForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #3b82f6, #2563eb)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #2563eb, #1d4ed8)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #3b82f6, #2563eb)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>📸</span>
+            <span className="mr-2">📸</span>
             Upload Photo
           </button>
           <button
             onClick={() => setActiveTab("donors")}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, var(--primary), var(--secondary))',
-              color: 'var(--primary-foreground)',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, var(--primary-hover), var(--secondary))'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, var(--primary), var(--secondary))'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>❤️</span>
+            <span className="mr-2">❤️</span>
             Verify Donors
           </button>
           <button
             onClick={() => setActiveTab("analytics")}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #a855f7, #9333ea)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #9333ea, #7e22ce)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #a855f7, #9333ea)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>⚡</span>
+            <span className="mr-2">⚡</span>
             Live Analytics
           </button>
         </div>
@@ -763,178 +517,65 @@ export function AdminDashboard() {
 
   // Real-time Analytics Dashboard
   const renderRealTimeAnalytics = () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div className="space-y-8">
       {/* Real-time Header */}
-      <div style={{ 
-        background: 'linear-gradient(to right, var(--primary), var(--secondary))',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-lg)',
-        padding: '1.5rem',
-        color: 'var(--primary-foreground)'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          flexWrap: 'wrap'
-        }}>
+      <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+        <div className="flex justify-between items-center">
           <div>
-            <h2 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: 'bold', 
-              marginBottom: '0.5rem'
-            }}>
-              Real-time Analytics
-            </h2>
-            <p style={{ 
-              opacity: 0.8,
-              color: 'var(--primary-foreground)'
-            }}>
-              Live monitoring and insights
-            </p>
+            <h2 className="text-2xl font-bold mb-2">Real-time Analytics</h2>
+            <p className="text-purple-100">Live monitoring and insights</p>
           </div>
-          <div style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.5rem'
-          }}>
-            <div style={{ 
-              width: '0.75rem', 
-              height: '0.75rem', 
-              backgroundColor: '#4ade80',
-              borderRadius: '50%',
-              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-            }}></div>
-            <span style={{ fontSize: '0.875rem' }}>Live</span>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-sm">Live</span>
           </div>
         </div>
       </div>
 
       {/* Blood Type Distribution */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr', 
-        gap: '1.5rem'
-      }}>
-        <div style={{ 
-          backgroundColor: 'var(--card)',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          color: 'var(--foreground)'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem'
-          }}>
-            Blood Type Distribution
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Blood Type Distribution</h3>
+          <div className="space-y-3">
             {realTimeData?.bloodTypeDistribution && Object.entries(realTimeData.bloodTypeDistribution).map(([type, count]) => (
-              <div key={type} style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center'
-              }}>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  color: '#374151'
-                }}>
-                  {type}
-                </span>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem'
-                }}>
-                  <div style={{ 
-                    width: '5rem', 
-                    backgroundColor: '#e5e7eb',
-                    borderRadius: '9999px',
-                    height: '0.5rem'
-                  }}>
+              <div key={type} className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700">{type}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
                     <div 
+                      className="bg-red-500 h-2 rounded-full" 
                       style={{ 
-                        backgroundColor: '#ef4444',
-                        height: '0.5rem',
-                        borderRadius: '9999px',
-                        width: `${realTimeData.totalDonors > 0 ? ((count as number) / realTimeData.totalDonors) * 100 : 0}%`
+                        width: `${realTimeData.totalDonors > 0 ? ((count as number) / realTimeData.totalDonors) * 100 : 0}%` 
                       }}
                     ></div>
                   </div>
-                  <span style={{ 
-                    fontSize: '0.875rem', 
-                    fontWeight: '600',
-                    color: '#111827'
-                  }}>
-                    {count as number}
-                  </span>
+                  <span className="text-sm font-semibold text-gray-900">{count as number}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            Alert Urgency Levels
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Alert Urgency Levels</h3>
+          <div className="space-y-3">
             {realTimeData?.urgencyDistribution && Object.entries(realTimeData.urgencyDistribution).map(([urgency, count]) => (
-              <div key={urgency} style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center'
-              }}>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  textTransform: 'capitalize',
-                  color: '#374151'
-                }}>
-                  {urgency}
-                </span>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem'
-                }}>
-                  <div style={{ 
-                    width: '5rem', 
-                    backgroundColor: '#e5e7eb',
-                    borderRadius: '9999px',
-                    height: '0.5rem'
-                  }}>
+              <div key={urgency} className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700 capitalize">{urgency}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
                     <div 
+                      className={`h-2 rounded-full ${
+                        urgency === 'critical' ? 'bg-red-600' :
+                        urgency === 'urgent' ? 'bg-orange-500' :
+                        urgency === 'normal' ? 'bg-green-500' : 'bg-gray-400'
+                      }`}
                       style={{ 
-                        height: '0.5rem',
-                        borderRadius: '9999px',
-                        backgroundColor: urgency === 'critical' ? '#dc2626' :
-                                       urgency === 'urgent' ? '#f97316' :
-                                       urgency === 'normal' ? '#22c55e' : '#9ca3af',
-                        width: `${realTimeData.totalSosAlerts > 0 ? ((count as number) / realTimeData.totalSosAlerts) * 100 : 0}%`
+                        width: `${realTimeData.totalSosAlerts > 0 ? ((count as number) / realTimeData.totalSosAlerts) * 100 : 0}%` 
                       }}
                     ></div>
                   </div>
-                  <span style={{ 
-                    fontSize: '0.875rem', 
-                    fontWeight: '600',
-                    color: '#111827'
-                  }}>
-                    {count as number}
-                  </span>
+                  <span className="text-sm font-semibold text-gray-900">{count as number}</span>
                 </div>
               </div>
             ))}
@@ -943,87 +584,27 @@ export function AdminDashboard() {
       </div>
 
       {/* Growth Trends */}
-      <div style={{ 
-        backgroundColor: 'white',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-lg)',
-        padding: '1.5rem'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: '600', 
-          marginBottom: '1.5rem',
-          color: '#111827'
-        }}>
-          Growth Trends
-        </h3>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: '1fr', 
-          gap: '1.5rem'
-        }}>
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">Growth Trends</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 style={{ 
-              fontSize: '1rem', 
-              fontWeight: '500', 
-              marginBottom: '1rem',
-              color: '#374151'
-            }}>
-              User Registration Trend
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <h4 className="text-md font-medium text-gray-700 mb-4">User Registration Trend</h4>
+            <div className="space-y-3">
               {realTimeData?.userGrowthTrend?.map((trend: any) => (
-                <div key={trend.period} style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center'
-                }}>
-                  <span style={{ 
-                    fontSize: '0.875rem',
-                    color: '#4b5563'
-                  }}>
-                    Last {trend.period}
-                  </span>
-                  <span style={{ 
-                    fontSize: '1.125rem', 
-                    fontWeight: '600',
-                    color: '#2563eb'
-                  }}>
-                    +{trend.count}
-                  </span>
+                <div key={trend.period} className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Last {trend.period}</span>
+                  <span className="text-lg font-semibold text-blue-600">+{trend.count}</span>
                 </div>
               ))}
             </div>
           </div>
           <div>
-            <h4 style={{ 
-              fontSize: '1rem', 
-              fontWeight: '500', 
-              marginBottom: '1rem',
-              color: '#374151'
-            }}>
-              SOS Alert Trend
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <h4 className="text-md font-medium text-gray-700 mb-4">SOS Alert Trend</h4>
+            <div className="space-y-3">
               {realTimeData?.alertTrend?.map((trend: any) => (
-                <div key={trend.period} style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center'
-                }}>
-                  <span style={{ 
-                    fontSize: '0.875rem',
-                    color: '#4b5563'
-                  }}>
-                    Last {trend.period}
-                  </span>
-                  <span style={{ 
-                    fontSize: '1.125rem', 
-                    fontWeight: '600',
-                    color: '#dc2626'
-                  }}>
-                    +{trend.count}
-                  </span>
+                <div key={trend.period} className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Last {trend.period}</span>
+                  <span className="text-lg font-semibold text-red-600">+{trend.count}</span>
                 </div>
               ))}
             </div>
@@ -1032,208 +613,50 @@ export function AdminDashboard() {
       </div>
 
       {/* Performance Metrics */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '1.5rem'
-      }}>
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ 
-            fontSize: '1.875rem', 
-            fontWeight: '700',
-            color: '#22c55e'
-          }}>
-            {realTimeData?.responseRate || 0}%
-          </div>
-          <div style={{ 
-            fontSize: '0.875rem',
-            marginTop: '0.25rem',
-            color: '#4b5563'
-          }}>
-            Response Rate
-          </div>
-          <div style={{ 
-            fontSize: '0.75rem',
-            marginTop: '0.25rem',
-            color: realTimeData?.responseRate > 80 ? '#22c55e' : 
-                   realTimeData?.responseRate > 60 ? '#3b82f6' : '#ef4444'
-          }}>
-            {realTimeData?.responseRate > 80 ? "↗ Excellent" : 
-             realTimeData?.responseRate > 60 ? "→ Good" : "↘ Needs Improvement"}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+          <div className="text-3xl font-bold text-green-600">{realTimeData?.responseRate || 0}%</div>
+          <div className="text-sm text-gray-600 mt-1">Response Rate</div>
+          <div className="text-xs text-green-600 mt-1">
+            {realTimeData?.responseRate > 80 ? "↗ Excellent" : realTimeData?.responseRate > 60 ? "→ Good" : "↘ Needs Improvement"}
           </div>
         </div>
         
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ 
-            fontSize: '1.875rem', 
-            fontWeight: '700',
-            color: '#3b82f6'
-          }}>
-            {realTimeData?.availableDonors || 0}
-          </div>
-          <div style={{ 
-            fontSize: '0.875rem',
-            marginTop: '0.25rem',
-            color: '#4b5563'
-          }}>
-            Available Donors
-          </div>
-          <div style={{ 
-            fontSize: '0.75rem',
-            marginTop: '0.25rem',
-            color: '#3b82f6'
-          }}>
-            Ready to donate
-          </div>
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+          <div className="text-3xl font-bold text-blue-600">{realTimeData?.availableDonors || 0}</div>
+          <div className="text-sm text-gray-600 mt-1">Available Donors</div>
+          <div className="text-xs text-blue-600 mt-1">Ready to donate</div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ 
-            fontSize: '1.875rem', 
-            fontWeight: '700',
-            color: '#a855f7'
-          }}>
-            {realTimeData?.verifiedHospitals || 0}
-          </div>
-          <div style={{ 
-            fontSize: '0.875rem',
-            marginTop: '0.25rem',
-            color: '#4b5563'
-          }}>
-            Verified Hospitals
-          </div>
-          <div style={{ 
-            fontSize: '0.75rem',
-            marginTop: '0.25rem',
-            color: '#a855f7'
-          }}>
-            Trusted partners
-          </div>
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+          <div className="text-3xl font-bold text-purple-600">{realTimeData?.verifiedHospitals || 0}</div>
+          <div className="text-sm text-gray-600 mt-1">Verified Hospitals</div>
+          <div className="text-xs text-purple-600 mt-1">Trusted partners</div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-lg)',
-          padding: '1.5rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ 
-            fontSize: '1.875rem', 
-            fontWeight: '700',
-            color: '#f97316'
-          }}>
-            {realTimeData?.activeSosAlerts || 0}
-          </div>
-          <div style={{ 
-            fontSize: '0.875rem',
-            marginTop: '0.25rem',
-            color: '#4b5563'
-          }}>
-            Active Alerts
-          </div>
-          <div style={{ 
-            fontSize: '0.75rem',
-            marginTop: '0.25rem',
-            color: '#f97316'
-          }}>
-            Urgent needs
-          </div>
+        <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+          <div className="text-3xl font-bold text-orange-600">{realTimeData?.activeSosAlerts || 0}</div>
+          <div className="text-sm text-gray-600 mt-1">Active Alerts</div>
+          <div className="text-xs text-orange-600 mt-1">Urgent needs</div>
         </div>
       </div>
     </div>
   );
 
-  const renderAnalyticsCard = (title: string, value: number, icon: string, colorClass: string, subtitle?: string) => {
-    // Map color classes to actual styles
-    const getColorStyle = () => {
-      switch (colorClass) {
-        case "border-left-blue":
-          return { borderLeft: "4px solid #3b82f6" };
-        case "border-left-red":
-          return { borderLeft: "4px solid #ef4444" };
-        case "border-left-green":
-          return { borderLeft: "4px solid #22c55e" };
-        case "border-left-orange":
-          return { borderLeft: "4px solid #f97316" };
-        case "border-left-purple":
-          return { borderLeft: "4px solid #a855f7" };
-        case "border-left-yellow":
-          return { borderLeft: "4px solid #eab308" };
-        default:
-          return { borderLeft: "4px solid var(--primary)" };
-      }
-    };
-
-    return (
-      <div 
-        style={{
-          backgroundColor: 'var(--card)',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem',
-          transition: 'all 0.2s ease-in-out',
-          ...getColorStyle()
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-      >
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between'
-        }}>
-          <div>
-            <p style={{ 
-              fontSize: '0.875rem', 
-              fontWeight: '500', 
-              marginBottom: '0.25rem',
-              color: 'var(--muted-foreground)'
-            }}>
-              {title}
-            </p>
-            <p style={{ 
-              fontSize: '1.875rem', 
-              fontWeight: '700',
-              color: 'var(--foreground)'
-            }}>
-              {value}
-            </p>
-            {subtitle && (
-              <p style={{ 
-                fontSize: '0.75rem', 
-                marginTop: '0.25rem',
-                color: 'var(--muted-foreground)'
-              }}>
-                {subtitle}
-              </p>
-            )}
-          </div>
-          <div style={{ fontSize: '2.25rem' }}>
-            {icon}
-          </div>
+  const renderAnalyticsCard = (title: string, value: number, icon: string, color: string, subtitle?: string) => (
+    <div className={`bg-white rounded-xl shadow-md border-l-4 ${color} p-6 transform hover:scale-105 transition-all duration-200`}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
+          <p className="text-3xl font-bold text-gray-900">{value}</p>
+          {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+        </div>
+        <div className="text-4xl">
+          {icon}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
 
   const handleDeleteUser = async (userId: Id<"users">) => {
     if (confirm("Are you sure you want to delete this user?")) {
@@ -1276,82 +699,32 @@ export function AdminDashboard() {
   };
 
   const renderOverview = () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div className="space-y-8">
       {/* Analytics Cards */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '1.5rem'
-      }}>
-        {renderAnalyticsCard("Total Users", analyticsData.totalUsers, "👥", "border-left-blue", "Registered users")}
-        {renderAnalyticsCard("Hospitals", analyticsData.totalHospitals, "🏥", "border-left-green", `${analyticsData.verifiedHospitals} verified`)}
-        {renderAnalyticsCard("SOS Alerts", analyticsData.totalAlerts, "🚨", "border-left-red", `${analyticsData.activeAlerts} active`)}
-        {renderAnalyticsCard("Team Members", analyticsData.totalTeamMembers, "👨‍💼", "border-left-purple", "Active staff")}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {renderAnalyticsCard("Total Users", analyticsData.totalUsers, "👥", "border-l-blue-500", "Registered users")}
+        {renderAnalyticsCard("Hospitals", analyticsData.totalHospitals, "🏥", "border-l-green-500", `${analyticsData.verifiedHospitals} verified`)}
+        {renderAnalyticsCard("SOS Alerts", analyticsData.totalAlerts, "🚨", "border-l-red-500", `${analyticsData.activeAlerts} active`)}
+        {renderAnalyticsCard("Team Members", analyticsData.totalTeamMembers, "👨‍💼", "border-l-purple-500", "Active staff")}
       </div>
 
       {/* Charts and Analytics */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr', 
-        gap: '1.5rem'
-      }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Department Distribution */}
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            Team by Department
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Team by Department</h3>
+          <div className="space-y-3">
             {Object.entries(analyticsData.departmentStats).map(([dept, count]) => (
-              <div key={dept} style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center'
-              }}>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  textTransform: 'capitalize',
-                  color: '#374151'
-                }}>
-                  {dept}
-                </span>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem'
-                }}>
-                  <div style={{ 
-                    width: '5rem', 
-                    backgroundColor: '#e5e7eb',
-                    borderRadius: '9999px',
-                    height: '0.5rem'
-                  }}>
+              <div key={dept} className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700 capitalize">{dept}</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
                     <div 
-                      style={{ 
-                        backgroundColor: '#3b82f6',
-                        height: '0.5rem',
-                        borderRadius: '9999px',
-                        width: `${analyticsData.totalTeamMembers > 0 ? ((count as number) / analyticsData.totalTeamMembers) * 100 : 0}%`
-                      }}
+                      className="bg-blue-500 h-2 rounded-full" 
+                      style={{ width: `${analyticsData.totalTeamMembers > 0 ? ((count as number) / analyticsData.totalTeamMembers) * 100 : 0}%` }}
                     ></div>
                   </div>
-                  <span style={{ 
-                    fontSize: '0.875rem', 
-                    fontWeight: '600',
-                    color: '#111827'
-                  }}>
-                    {count as number}
-                  </span>
+                  <span className="text-sm font-semibold text-gray-900">{count as number}</span>
                 </div>
               </div>
             ))}
@@ -1359,130 +732,34 @@ export function AdminDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            Recent Activity
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.75rem'
-            }}>
-              <div style={{ 
-                width: '2rem', 
-                height: '2rem', 
-                backgroundColor: 'rgba(34, 197, 94, 0.2)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <span style={{ 
-                  color: '#22c55e', 
-                  fontSize: '0.875rem'
-                }}>
-                  ✓
-                </span>
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <span className="text-green-600 text-sm">✓</span>
               </div>
               <div>
-                <p style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  color: '#111827'
-                }}>
-                  System running smoothly
-                </p>
-                <p style={{ 
-                  fontSize: '0.75rem',
-                  color: '#6b7280'
-                }}>
-                  All services operational
-                </p>
+                <p className="text-sm font-medium text-gray-900">System running smoothly</p>
+                <p className="text-xs text-gray-500">All services operational</p>
               </div>
             </div>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.75rem'
-            }}>
-              <div style={{ 
-                width: '2rem', 
-                height: '2rem', 
-                backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <span style={{ 
-                  color: '#3b82f6', 
-                  fontSize: '0.875rem'
-                }}>
-                  🏥
-                </span>
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <span className="text-blue-600 text-sm">🏥</span>
               </div>
               <div>
-                <p style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  color: '#111827'
-                }}>
-                  {analyticsData.totalHospitals} hospitals registered
-                </p>
-                <p style={{ 
-                  fontSize: '0.75rem',
-                  color: '#6b7280'
-                }}>
-                  {analyticsData.verifiedHospitals} verified
-                </p>
+                <p className="text-sm font-medium text-gray-900">{analyticsData.totalHospitals} hospitals registered</p>
+                <p className="text-xs text-gray-500">{analyticsData.verifiedHospitals} verified</p>
               </div>
             </div>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.75rem'
-            }}>
-              <div style={{ 
-                width: '2rem', 
-                height: '2rem', 
-                backgroundColor: 'rgba(192, 132, 252, 0.2)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <span style={{ 
-                  color: '#a855f7', 
-                  fontSize: '0.875rem'
-                }}>
-                  👥
-                </span>
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                <span className="text-purple-600 text-sm">👥</span>
               </div>
               <div>
-                <p style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500',
-                  color: '#111827'
-                }}>
-                  {analyticsData.totalTeamMembers} team members active
-                </p>
-                <p style={{ 
-                  fontSize: '0.75rem',
-                  color: '#6b7280'
-                }}>
-                  Across {Object.keys(analyticsData.departmentStats).length} departments
-                </p>
+                <p className="text-sm font-medium text-gray-900">{analyticsData.totalTeamMembers} team members active</p>
+                <p className="text-xs text-gray-500">Across {Object.keys(analyticsData.departmentStats).length} departments</p>
               </div>
             </div>
           </div>
@@ -1490,83 +767,28 @@ export function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div style={{ 
-        backgroundColor: 'white',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-md)',
-        padding: '1.5rem'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: '600', 
-          marginBottom: '1rem',
-          color: '#111827'
-        }}>
-          Quick Actions
-        </h3>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-          gap: '1rem'
-        }}>
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             onClick={() => setShowTeamForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #3b82f6, #2563eb)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #2563eb, #1d4ed8)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #3b82f6, #2563eb)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>👥</span>
+            <span className="mr-2">👥</span>
             Add Team Member
           </button>
           <button
             onClick={() => setShowChannelForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #10b981, #059669)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #059669, #047857)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #10b981, #059669)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>💬</span>
+            <span className="mr-2">💬</span>
             Create Channel
           </button>
           <button
             onClick={() => setActiveTab("analytics")}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-              background: 'linear-gradient(to right, #a855f7, #9333ea)',
-              color: 'white',
-              borderRadius: '0.5rem',
-              transition: 'all 0.2s ease-in-out',
-              cursor: 'pointer',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #9333ea, #7e22ce)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #a855f7, #9333ea)'}
+            className="flex items-center justify-center p-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
           >
-            <span style={{ marginRight: '0.5rem' }}>📊</span>
+            <span className="mr-2">📊</span>
             View Analytics
           </button>
         </div>
@@ -1575,395 +797,95 @@ export function AdminDashboard() {
   );
 
   const renderAnalytics = () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div className="space-y-8">
       {/* Main Analytics Grid */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '1.5rem'
-      }}>
-        {renderAnalyticsCard("Growth Rate", 15, "📈", "border-left-green", "+15% this month")}
-        {renderAnalyticsCard("Response Time", 3, "⏱️", "border-left-yellow", "Average minutes")}
-        {renderAnalyticsCard("Success Rate", 98, "✅", "border-left-green", "98% success rate")}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {renderAnalyticsCard("Growth Rate", 15, "📈", "border-l-green-500", "+15% this month")}
+        {renderAnalyticsCard("Response Time", 3, "⏱️", "border-l-yellow-500", "Average minutes")}
+        {renderAnalyticsCard("Success Rate", 98, "✅", "border-l-green-500", "98% success rate")}
       </div>
 
       {/* Detailed Charts */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr', 
-        gap: '1.5rem'
-      }}>
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            Platform Performance
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center'
-            }}>
-              <span style={{ 
-                fontSize: '0.875rem', 
-                fontWeight: '500',
-                color: '#374151'
-              }}>
-                User Registration
-              </span>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.5rem'
-              }}>
-                <div style={{ 
-                  width: '6rem', 
-                  backgroundColor: '#e5e7eb',
-                  borderRadius: '9999px',
-                  height: '0.5rem'
-                }}>
-                  <div 
-                    style={{ 
-                      backgroundColor: '#3b82f6',
-                      height: '0.5rem',
-                      borderRadius: '9999px',
-                      width: "75%"
-                    }}
-                  ></div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Platform Performance</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-700">User Registration</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: "75%" }}></div>
                 </div>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '600',
-                  color: '#111827'
-                }}>
-                  75%
-                </span>
+                <span className="text-sm font-semibold text-gray-900">75%</span>
               </div>
             </div>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center'
-            }}>
-              <span style={{ 
-                fontSize: '0.875rem', 
-                fontWeight: '500',
-                color: '#374151'
-              }}>
-                Hospital Verification
-              </span>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.5rem'
-              }}>
-                <div style={{ 
-                  width: '6rem', 
-                  backgroundColor: '#e5e7eb',
-                  borderRadius: '9999px',
-                  height: '0.5rem'
-                }}>
-                  <div 
-                    style={{ 
-                      backgroundColor: '#22c55e',
-                      height: '0.5rem',
-                      borderRadius: '9999px',
-                      width: "90%"
-                    }}
-                  ></div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-700">Hospital Verification</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="bg-green-500 h-2 rounded-full" style={{ width: "90%" }}></div>
                 </div>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '600',
-                  color: '#111827'
-                }}>
-                  90%
-                </span>
+                <span className="text-sm font-semibold text-gray-900">90%</span>
               </div>
             </div>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center'
-            }}>
-              <span style={{ 
-                fontSize: '0.875rem', 
-                fontWeight: '500',
-                color: '#374151'
-              }}>
-                Alert Response
-              </span>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.5rem'
-              }}>
-                <div style={{ 
-                  width: '6rem', 
-                  backgroundColor: '#e5e7eb',
-                  borderRadius: '9999px',
-                  height: '0.5rem'
-                }}>
-                  <div 
-                    style={{ 
-                      backgroundColor: '#ef4444',
-                      height: '0.5rem',
-                      borderRadius: '9999px',
-                      width: "95%"
-                    }}
-                  ></div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-gray-700">Alert Response</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="bg-red-500 h-2 rounded-full" style={{ width: "95%" }}></div>
                 </div>
-                <span style={{ 
-                  fontSize: '0.875rem', 
-                  fontWeight: '600',
-                  color: '#111827'
-                }}>
-                  95%
-                </span>
+                <span className="text-sm font-semibold text-gray-900">95%</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'white',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem'
-        }}>
-          <h3 style={{ 
-            fontSize: '1.125rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            System Health
-          </h3>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '1rem'
-          }}>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(34, 197, 94, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: '700',
-                color: '#22c55e'
-              }}>
-                99.9%
-              </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: '#4b5563'
-              }}>
-                Uptime
-              </div>
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">System Health</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">99.9%</div>
+              <div className="text-sm text-gray-600">Uptime</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(59, 130, 246, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: '700',
-                color: '#3b82f6'
-              }}>
-                2.3s
-              </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: '#4b5563'
-              }}>
-                Avg Response
-              </div>
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600">2.3s</div>
+              <div className="text-sm text-gray-600">Avg Response</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(192, 132, 252, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: '700',
-                color: '#a855f7'
-              }}>
-                {analyticsData.totalUsers}
-              </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: '#4b5563'
-              }}>
-                Active Users
-              </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600">{analyticsData.totalUsers}</div>
+              <div className="text-sm text-gray-600">Active Users</div>
             </div>
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              backgroundColor: 'rgba(251, 146, 60, 0.1)'
-            }}>
-              <div style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: '700',
-                color: '#f97316'
-              }}>
-                24/7
-              </div>
-              <div style={{ 
-                fontSize: '0.875rem',
-                color: '#4b5563'
-              }}>
-                Monitoring
-              </div>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600">24/7</div>
+              <div className="text-sm text-gray-600">Monitoring</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Performance Metrics */}
-      <div style={{ 
-        backgroundColor: 'white',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-md)',
-        padding: '1.5rem'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: '600', 
-          marginBottom: '1.5rem',
-          color: '#111827'
-        }}>
-          Performance Metrics
-        </h3>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1.5rem'
-        }}>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1rem',
-            border: '1px solid #e5e7eb',
-            borderRadius: '0.5rem'
-          }}>
-            <div style={{ 
-              fontSize: '1.875rem', 
-              fontWeight: '700',
-              color: '#3b82f6'
-            }}>
-              {analyticsData.totalUsers}
-            </div>
-            <div style={{ 
-              fontSize: '0.875rem',
-              color: '#4b5563'
-            }}>
-              Total Users
-            </div>
-            <div style={{ 
-              fontSize: '0.75rem',
-              marginTop: '0.25rem',
-              color: '#22c55e'
-            }}>
-              ↗ +12% from last month
-            </div>
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="text-center p-4 border border-gray-200 rounded-lg">
+            <div className="text-3xl font-bold text-blue-600">{analyticsData.totalUsers}</div>
+            <div className="text-sm text-gray-600">Total Users</div>
+            <div className="text-xs text-green-600 mt-1">↗ +12% from last month</div>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1rem',
-            border: '1px solid #e5e7eb',
-            borderRadius: '0.5rem'
-          }}>
-            <div style={{ 
-              fontSize: '1.875rem', 
-              fontWeight: '700',
-              color: '#22c55e'
-            }}>
-              {analyticsData.verifiedHospitals}
-            </div>
-            <div style={{ 
-              fontSize: '0.875rem',
-              color: '#4b5563'
-            }}>
-              Verified Hospitals
-            </div>
-            <div style={{ 
-              fontSize: '0.75rem',
-              marginTop: '0.25rem',
-              color: '#22c55e'
-            }}>
-              ↗ +8% from last month
-            </div>
+          <div className="text-center p-4 border border-gray-200 rounded-lg">
+            <div className="text-3xl font-bold text-green-600">{analyticsData.verifiedHospitals}</div>
+            <div className="text-sm text-gray-600">Verified Hospitals</div>
+            <div className="text-xs text-green-600 mt-1">↗ +8% from last month</div>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1rem',
-            border: '1px solid #e5e7eb',
-            borderRadius: '0.5rem'
-          }}>
-            <div style={{ 
-              fontSize: '1.875rem', 
-              fontWeight: '700',
-              color: '#ef4444'
-            }}>
-              {analyticsData.activeAlerts}
-            </div>
-            <div style={{ 
-              fontSize: '0.875rem',
-              color: '#4b5563'
-            }}>
-              Active Alerts
-            </div>
-            <div style={{ 
-              fontSize: '0.75rem',
-              marginTop: '0.25rem',
-              color: '#4b5563'
-            }}>
-              Real-time monitoring
-            </div>
+          <div className="text-center p-4 border border-gray-200 rounded-lg">
+            <div className="text-3xl font-bold text-red-600">{analyticsData.activeAlerts}</div>
+            <div className="text-sm text-gray-600">Active Alerts</div>
+            <div className="text-xs text-gray-600 mt-1">Real-time monitoring</div>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1rem',
-            border: '1px solid #e5e7eb',
-            borderRadius: '0.5rem'
-          }}>
-            <div style={{ 
-              fontSize: '1.875rem', 
-              fontWeight: '700',
-              color: '#a855f7'
-            }}>
-              {analyticsData.totalTeamMembers}
-            </div>
-            <div style={{ 
-              fontSize: '0.875rem',
-              color: '#4b5563'
-            }}>
-              Team Members
-            </div>
-            <div style={{ 
-              fontSize: '0.75rem',
-              marginTop: '0.25rem',
-              color: '#22c55e'
-            }}>
-              ↗ +5% from last month
-            </div>
+          <div className="text-center p-4 border border-gray-200 rounded-lg">
+            <div className="text-3xl font-bold text-purple-600">{analyticsData.totalTeamMembers}</div>
+            <div className="text-sm text-gray-600">Team Members</div>
+            <div className="text-xs text-green-600 mt-1">↗ +5% from last month</div>
           </div>
         </div>
       </div>
@@ -1971,103 +893,38 @@ export function AdminDashboard() {
   );
 
   const renderTeamManagement = () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        flexWrap: 'wrap'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: '500',
-          color: '#111827'
-        }}>
-          Team Management
-        </h3>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-medium text-gray-900">Team Management</h3>
         <button
           onClick={() => setShowTeamForm(true)}
-          style={{
-            backgroundColor: 'var(--primary)',
-            color: 'white',
-            padding: '0.5rem 1rem',
-            borderRadius: '0.5rem',
-            transition: 'background-color 0.2s ease-in-out',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-hover)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary)'}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
         >
           Add Team Member
         </button>
       </div>
 
       {/* Team Members List */}
-      <div style={{ 
-        backgroundColor: 'white',
-        borderRadius: '0.5rem',
-        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        border: '1px solid rgba(220, 38, 38, 0.2)'
-      }}>
-        <div style={{ padding: '1.5rem' }}>
-          <h4 style={{ 
-            fontSize: '1rem', 
-            fontWeight: '500', 
-            marginBottom: '1rem',
-            color: '#111827'
-          }}>
-            Current Team Members
-          </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="bg-white rounded-lg shadow-sm border border-red-100">
+        <div className="p-6">
+          <h4 className="text-md font-medium text-gray-900 mb-4">Current Team Members</h4>
+          <div className="space-y-4">
             {Array.isArray(teamMembers) && teamMembers.map((member: any) => (
-              <div key={member._id} style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                padding: '1rem',
-                border: '1px solid #e5e7eb',
-                borderRadius: '0.5rem'
-              }}>
+              <div key={member._id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                 <div>
-                  <h5 style={{ 
-                    fontWeight: '500',
-                    color: '#111827'
-                  }}>
-                    {member.name}
-                  </h5>
-                  <p style={{ 
-                    fontSize: '0.875rem',
-                    color: '#4b5563'
-                  }}>
-                    {member.email}
-                  </p>
-                  <p style={{ 
-                    fontSize: '0.875rem',
-                    color: '#6b7280'
-                  }}>
-                    {member.role} - {member.department}
-                  </p>
+                  <h5 className="font-medium text-gray-900">{member.name}</h5>
+                  <p className="text-sm text-gray-600">{member.email}</p>
+                  <p className="text-sm text-gray-500">{member.role} - {member.department}</p>
                 </div>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem'
-                }}>
-                  <span style={{
-                    padding: '0.25rem 0.5rem',
-                    fontSize: '0.75rem',
-                    borderRadius: '9999px',
-                    backgroundColor: member.status === 'active' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(156, 163, 175, 0.1)',
-                    color: member.status === 'active' ? '#166534' : '#1f2937'
-                  }}>
+                <div className="flex items-center space-x-2">
+                  <span className={`px-2 py-1 text-xs rounded-full ${
+                    member.status === 'active' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-gray-100 text-gray-800'
+                  }`}>
                     {member.status}
                   </span>
-                  <span style={{ 
-                    fontSize: '0.875rem',
-                    color: '#6b7280'
-                  }}>
-                    {member.phone}
-                  </span>
+                  <span className="text-sm text-gray-500">{member.phone}</span>
                 </div>
               </div>
             ))}
@@ -2077,298 +934,106 @@ export function AdminDashboard() {
 
       {/* Team Form Modal */}
       {showTeamForm && (
-        <div style={{ 
-          position: 'fixed', 
-          inset: '0', 
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          zIndex: '50',
-          padding: '1rem'
-        }}>
-          <div style={{ 
-            backgroundColor: 'white',
-            borderRadius: 'var(--radius)',
-            boxShadow: 'var(--shadow-xl)',
-            width: '100%',
-            maxWidth: '28rem',
-            maxHeight: '90vh',
-            overflowY: 'auto'
-          }}>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center', 
-                marginBottom: '1.5rem'
-              }}>
-                <h3 style={{ 
-                  fontSize: '1.25rem', 
-                  fontWeight: '600',
-                  color: '#111827'
-                }}>
-                  Add Team Member
-                </h3>
-                <button
-                  onClick={() => setShowTeamForm(false)}
-                  style={{
-                    color: '#9ca3af',
-                    transition: 'color 0.2s ease-in-out',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#4b5563'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
-                >
-                  <svg style={{ width: '1.5rem', height: '1.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Add Team Member</h3>
+            <form onSubmit={handleCreateTeamMember} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input
+                  type="text"
+                  required
+                  value={teamForm.name}
+                  onChange={(e) => setTeamForm({...teamForm, name: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
               </div>
               
-              <form onSubmit={handleCreateTeamMember} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={teamForm.name}
-                    onChange={(e) => setTeamForm({...teamForm, name: e.target.value})}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={teamForm.email}
-                    onChange={(e) => setTeamForm({...teamForm, email: e.target.value})}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={teamForm.password}
-                    onChange={(e) => setTeamForm({...teamForm, password: e.target.value})}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Role
-                  </label>
-                  <select
-                    value={teamForm.role}
-                    onChange={(e) => setTeamForm({...teamForm, role: e.target.value})}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  >
-                    <option value="coordinator">Coordinator</option>
-                    <option value="manager">Manager</option>
-                    <option value="volunteer">Volunteer</option>
-                    <option value="medical_staff">Medical Staff</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Department
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={teamForm.department}
-                    onChange={(e) => setTeamForm({...teamForm, department: e.target.value})}
-                    placeholder="e.g., Emergency Response, Blood Bank"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    value={teamForm.phone}
-                    onChange={(e) => setTeamForm({...teamForm, phone: e.target.value})}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
-                
-                <div>
-                  <label style={{ 
-                    display: 'block', 
-                    fontSize: '0.875rem', 
-                    fontWeight: '500', 
-                    marginBottom: '0.25rem',
-                    color: '#374151'
-                  }}>
-                    Bio
-                  </label>
-                  <textarea
-                    value={teamForm.bio}
-                    onChange={(e) => setTeamForm({...teamForm, bio: e.target.value})}
-                    rows={3}
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      focus: {
-                        ring: '2px solid var(--primary)',
-                        borderColor: 'var(--primary)'
-                      }
-                    }}
-                  />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={teamForm.email}
+                  onChange={(e) => setTeamForm({...teamForm, email: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  required
+                  value={teamForm.password}
+                  onChange={(e) => setTeamForm({...teamForm, password: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                <select
+                  value={teamForm.role}
+                  onChange={(e) => setTeamForm({...teamForm, role: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                >
+                  <option value="coordinator">Coordinator</option>
+                  <option value="manager">Manager</option>
+                  <option value="volunteer">Volunteer</option>
+                  <option value="medical_staff">Medical Staff</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                <input
+                  type="text"
+                  required
+                  value={teamForm.department}
+                  onChange={(e) => setTeamForm({...teamForm, department: e.target.value})}
+                  placeholder="e.g., Emergency Response, Blood Bank"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input
+                  type="tel"
+                  required
+                  value={teamForm.phone}
+                  onChange={(e) => setTeamForm({...teamForm, phone: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                <textarea
+                  value={teamForm.bio}
+                  onChange={(e) => setTeamForm({...teamForm, bio: e.target.value})}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
 
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'flex-end', 
-                  gap: '0.75rem', 
-                  paddingTop: '1rem'
-                }}>
-                  <button
-                    type="button"
-                    onClick={() => setShowTeamForm(false)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      color: '#374151',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.5rem',
-                      transition: 'background-color 0.2s ease-in-out',
-                      background: 'none',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    style={{
-                      backgroundColor: 'var(--primary)',
-                      color: 'white',
-                      padding: '0.5rem 1.5rem',
-                      borderRadius: '0.5rem',
-                      transition: 'background-color 0.2s ease-in-out',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-hover)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary)'}
-                  >
-                    Create Member
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowTeamForm(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Create Member
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

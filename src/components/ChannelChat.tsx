@@ -121,7 +121,7 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
         day: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-        hour12: true 
+        hour12: true
       });
     }
     
@@ -139,31 +139,31 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full bg-card rounded-lg shadow-lg">
+    <div className="flex flex-col h-full bg-white rounded-lg shadow-lg">
       {/* Chat Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-muted">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-            <span className="text-primary-foreground font-semibold text-sm">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-semibold text-sm">
               {channel.name.charAt(0).toUpperCase()}
             </span>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">{channel.name}</h3>
-            <p className="text-sm text-muted-foreground">
+            <h3 className="font-semibold text-gray-900">{channel.name}</h3>
+            <p className="text-sm text-gray-500">
               {channel.memberCount} member{channel.memberCount !== 1 ? 's' : ''} • {channel.type}
             </p>
           </div>
         </div>
         
         <div className="flex items-center space-x-2">
-          <button className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted-foreground/10">
+          <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
             <MoreVertical className="w-5 h-5" />
           </button>
           {onClose && (
             <button 
               onClick={onClose}
-              className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted-foreground/10"
+              className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
             >
               ×
             </button>
@@ -175,11 +175,11 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {isLoading ? (
           <div className="flex items-center justify-center h-32">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            <span className="ml-2 text-muted-foreground">Loading messages...</span>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <span className="ml-2 text-gray-500">Loading messages...</span>
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
+          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
             <p>No messages yet</p>
             <p className="text-sm">Be the first to start the conversation!</p>
           </div>
@@ -198,8 +198,8 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
                 <div className={`flex max-w-xs lg:max-w-md ${isMe ? 'flex-row-reverse' : 'flex-row'}`}>
                   {/* Avatar */}
                   {showAvatar && !isMe && (
-                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-                      <span className="text-primary-foreground text-xs font-semibold">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                      <span className="text-white text-xs font-semibold">
                         {message.senderName.charAt(0).toUpperCase()}
                       </span>
                     </div>
@@ -209,7 +209,7 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
                   <div className={`${showAvatar && !isMe ? '' : 'ml-10'} ${isMe ? 'mr-2' : ''}`}>
                     {/* Sender Name (only for others' messages and when showing avatar) */}
                     {showAvatar && !isMe && (
-                      <div className="text-xs text-muted-foreground mb-1 ml-1">
+                      <div className="text-xs text-gray-500 mb-1 ml-1">
                         {message.senderName}
                       </div>
                     )}
@@ -218,8 +218,8 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
                     <div
                       className={`px-4 py-2 rounded-lg ${
                         isMe
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-foreground'
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                          : 'bg-gray-100 text-gray-900'
                       } ${
                         isMe ? 'rounded-br-sm' : 'rounded-bl-sm'
                       }`}
@@ -227,7 +227,7 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
                       <p className="text-sm whitespace-pre-wrap">{message.message}</p>
                       
                       {/* Timestamp */}
-                      <div className={`text-xs mt-1 ${isMe ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                      <div className={`text-xs mt-1 ${isMe ? 'text-blue-100' : 'text-gray-500'}`}>
                         {formatTimestamp(message.timestamp)}
                         {message.edited && <span className="ml-1">(edited)</span>}
                       </div>
@@ -242,12 +242,12 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
       </div>
 
       {/* Message Input */}
-      <div className="p-4 border-t border-border bg-muted">
+      <div className="p-4 border-t border-gray-200 bg-gray-50">
         <form onSubmit={handleSendMessage} className="flex items-center space-x-2">
           {/* Attachment Buttons */}
           <button
             type="button"
-            className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted-foreground/10 transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
             title="Attach Image"
           >
             <Image className="w-5 h-5" />
@@ -255,7 +255,7 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
           
           <button
             type="button"
-            className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted-foreground/10 transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
             title="Attach File"
           >
             <Paperclip className="w-5 h-5" />
@@ -268,14 +268,14 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={`Message #${channel.name}...`}
-              className="w-full px-4 py-2 border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none bg-background text-foreground"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               disabled={isSending}
               maxLength={1000}
             />
             
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground rounded"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 rounded"
               title="Add Emoji"
             >
               <Smile className="w-4 h-4" />
@@ -288,13 +288,13 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
             disabled={!newMessage.trim() || isSending}
             className={`p-2 rounded-lg transition-colors ${
               newMessage.trim() && !isSending
-                ? 'bg-primary text-primary-foreground hover:bg-primary-hover'
-                : 'bg-muted-foreground/30 text-muted-foreground cursor-not-allowed'
+                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
             title="Send Message"
           >
             {isSending ? (
-              <div className="w-5 h-5 animate-spin rounded-full border-2 border-muted-foreground border-t-primary"></div>
+              <div className="w-5 h-5 animate-spin rounded-full border-2 border-gray-300 border-t-white"></div>
             ) : (
               <Send className="w-5 h-5" />
             )}
@@ -303,7 +303,7 @@ const ChannelChat: React.FC<ChannelChatProps> = ({
         
         {/* Character Count */}
         {newMessage.length > 800 && (
-          <div className="text-xs text-muted-foreground mt-1 text-right">
+          <div className="text-xs text-gray-500 mt-1 text-right">
             {newMessage.length}/1000
           </div>
         )}
