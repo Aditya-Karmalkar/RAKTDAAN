@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Project Documentation
+    url: https://raktdaanorg.netlify.app/
+    about: Read docs, FAQs, myths & facts before filing an issue.
+  - name: 💬 Community Support / Discussions
+    url: https://github.com/Aditya-Karmalkar/RAKTDAAN/discussions
+    about: Report issues or request features here.
