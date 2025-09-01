@@ -16,11 +16,9 @@ export function Gallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isAutoPlay, setIsAutoPlay] = useState(true);
-
-  // NEW: search + date filters
   const [searchTerm, setSearchTerm] = useState('');
-  const [startDate, setStartDate] = useState<string>(''); // yyyy-mm-dd
-  const [endDate, setEndDate] = useState<string>('');     // yyyy-mm-dd
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
 
   const allPhotos = useQuery(api.gallery.getPublicPhotos) as GalleryImage[] | undefined;
 
@@ -30,7 +28,6 @@ export function Gallery() {
     return ['all', ...Array.from(categorySet)];
   }, [allPhotos]);
 
-  // helpers to convert yyyy-mm-dd -> Date boundaries (local)
   const toStartOfDay = (d: string) => {
     const [y, m, dd] = d.split('-').map(Number);
     return new Date(y, (m ?? 1) - 1, dd ?? 1, 0, 0, 0, 0).getTime();
@@ -40,28 +37,24 @@ export function Gallery() {
     return new Date(y, (m ?? 1) - 1, dd ?? 1, 23, 59, 59, 999).getTime();
   };
 
-  // Filter photos by: category chip → search term (title/desc/category) → date range
   const filteredPhotos = React.useMemo(() => {
     if (!allPhotos) return [];
 
-    // 1) category chip
     let result =
       selectedCategory === 'all'
         ? allPhotos
         : allPhotos.filter(p => p.category === selectedCategory);
 
-    // 2) search term: title/description/category
     const q = searchTerm.trim().toLowerCase();
     if (q) {
       result = result.filter(p => {
         const title = p.title?.toLowerCase() ?? '';
         const desc = p.description?.toLowerCase() ?? '';
-        const cat  = p.category?.toLowerCase() ?? '';
+        const cat = p.category?.toLowerCase() ?? '';
         return title.includes(q) || desc.includes(q) || cat.includes(q);
       });
     }
 
-    // 3) date range on uploadedAt (epoch ms)
     if (startDate) {
       const minTs = toStartOfDay(startDate);
       result = result.filter(p => p.uploadedAt >= minTs);
@@ -74,12 +67,10 @@ export function Gallery() {
     return result;
   }, [allPhotos, selectedCategory, searchTerm, startDate, endDate]);
 
-  // Reset slide when any filter changes
   useEffect(() => {
     setCurrentSlide(0);
   }, [selectedCategory, searchTerm, startDate, endDate]);
 
-  // Auto-play
   useEffect(() => {
     if (!isAutoPlay || filteredPhotos.length <= 1) return;
     const t = setInterval(() => {
@@ -94,13 +85,13 @@ export function Gallery() {
 
   if (!allPhotos || allPhotos.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 py-16">
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-8">📸 Photo Gallery</h1>
-            <div className="bg-white rounded-xl shadow-lg p-12 text-gray-500">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">📸 Photo Gallery</h1>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-12 text-gray-500 dark:text-gray-300">
               <p>No photos available yet.</p>
-              <p className="text-sm text-gray-400 mt-2">Photos will appear here once they're uploaded.</p>
+              <p className="text-sm text-gray-400 dark:text-gray-400 mt-2">Photos will appear here once they're uploaded.</p>
             </div>
           </div>
         </div>
@@ -109,30 +100,29 @@ export function Gallery() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 py-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">📸 Photo Gallery</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">📸 Photo Gallery</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Explore our collection of moments from blood donation drives, awareness campaigns, and community events.
           </p>
         </div>
 
-        {/* Filters Row: Category chips + Search + Date range */}
+        {/* Filters */}
         <div className="mb-8 grid gap-4 md:grid-cols-3">
-          {/* Category Chips */}
-          <div className="md:col-span-2 bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter by Category</h3>
+          <div className="md:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Filter by Category</h3>
             <div className="flex flex-wrap gap-3">
-              {categories.map((category) => (
+              {categories.map(category => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category
                       ? 'bg-red-600 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
                   {category === 'all' ? 'All Photos' : category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -141,46 +131,44 @@ export function Gallery() {
             </div>
           </div>
 
-          {/* Search + Date range */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <label htmlFor="gallery-search" className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <label htmlFor="gallery-search" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Search photos
             </label>
             <input
               id="gallery-search"
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               placeholder="Search photos by title, description, or category…"
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-red-500"
-              aria-label="Search photos"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
             />
 
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="start-date" className="block text-xs text-gray-600 mb-1">Start date</label>
+                <label htmlFor="start-date" className="block text-xs text-gray-600 dark:text-gray-300 mb-1">Start date</label>
                 <input
                   id="start-date"
                   type="date"
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500"
+                  onChange={e => setStartDate(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <div>
-                <label htmlFor="end-date" className="block text-xs text-gray-600 mb-1">End date</label>
+                <label htmlFor="end-date" className="block text-xs text-gray-600 dark:text-gray-300 mb-1">End date</label>
                 <input
                   id="end-date"
                   type="date"
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500"
+                  onChange={e => setEndDate(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
                 />
               </div>
             </div>
 
             {(searchTerm || startDate || endDate) && (
-              <div className="mt-3 text-xs text-gray-500">
+              <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
                 Showing {filteredPhotos.length} result{filteredPhotos.length !== 1 ? 's' : ''}{' '}
                 {searchTerm && <>for “{searchTerm}” </>}
                 {startDate && <>from {startDate} </>}
@@ -190,22 +178,22 @@ export function Gallery() {
           </div>
         </div>
 
-        {/* Auto-play toggle */}
+        {/* Auto-play */}
         <div className="mb-6 flex justify-center">
           <button
             onClick={() => setIsAutoPlay(!isAutoPlay)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-              isAutoPlay ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+              isAutoPlay ? 'bg-green-600 text-white' : 'bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
             }`}
           >
             {isAutoPlay ? '⏸️ Pause Auto-play' : '▶️ Auto-play'}
           </button>
         </div>
 
+        {/* Carousel */}
         {filteredPhotos.length > 0 ? (
           <>
-            {/* Main Carousel */}
-            <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden mb-8">
               <div className="relative">
                 <div className="aspect-video w-full overflow-hidden">
                   <img
@@ -215,7 +203,6 @@ export function Gallery() {
                   />
                 </div>
 
-                {/* Arrows */}
                 {filteredPhotos.length > 1 && (
                   <>
                     <button
@@ -239,7 +226,6 @@ export function Gallery() {
                   </>
                 )}
 
-                {/* Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
                   <h3 className="text-white text-xl font-bold mb-2">{filteredPhotos[currentSlide]?.title}</h3>
                   {filteredPhotos[currentSlide]?.description && (
@@ -256,15 +242,16 @@ export function Gallery() {
                 </div>
               </div>
 
-              {/* Dots */}
               {filteredPhotos.length > 1 && (
-                <div className="flex justify-center space-x-2 p-4 bg-gray-50">
+                <div className="flex justify-center space-x-2 p-4 bg-gray-50 dark:bg-gray-700">
                   {filteredPhotos.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => goToSlide(index)}
                       className={`w-3 h-3 rounded-full transition-all ${
-                        index === currentSlide ? 'bg-red-600 scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                        index === currentSlide
+                          ? 'bg-red-600 scale-125'
+                          : 'bg-gray-300 dark:bg-gray-400 hover:bg-gray-400 dark:hover:bg-gray-500'
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
                     />
@@ -274,15 +261,17 @@ export function Gallery() {
             </div>
 
             {/* Thumbnails */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">All Photos ({filteredPhotos.length})</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">All Photos ({filteredPhotos.length})</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {filteredPhotos.map((photo, index) => (
                   <div
                     key={photo._id}
                     onClick={() => goToSlide(index)}
                     className={`relative cursor-pointer rounded-lg overflow-hidden transition-all hover:scale-105 ${
-                      index === currentSlide ? 'ring-4 ring-red-500 shadow-lg' : 'hover:shadow-md'
+                      index === currentSlide
+                        ? 'ring-4 ring-red-500 shadow-lg'
+                        : 'hover:shadow-md'
                     }`}
                   >
                     <div className="aspect-square">
@@ -295,25 +284,25 @@ export function Gallery() {
             </div>
           </>
         ) : (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center text-gray-600">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-12 text-center text-gray-600 dark:text-gray-300">
             No photos match your filters.
           </div>
         )}
 
         {/* Stats */}
-        <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
+        <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-red-600 mb-2">{allPhotos.length}</div>
-              <div className="text-gray-600">Total Photos</div>
+              <div className="text-gray-600 dark:text-gray-300">Total Photos</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-red-600 mb-2">{categories.length - 1}</div>
-              <div className="text-gray-600">Categories</div>
+              <div className="text-gray-600 dark:text-gray-300">Categories</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-red-600 mb-2">{filteredPhotos.length}</div>
-              <div className="text-gray-600">
+              <div className="text-gray-600 dark:text-gray-300">
                 {selectedCategory === 'all' ? 'All Photos' : 'In Category'}
               </div>
             </div>
