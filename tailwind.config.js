@@ -1,7 +1,9 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
+  darkMode: "class", // 🌙 Dark mode ko enable kiya (class based)
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -21,7 +23,7 @@ module.exports = {
         primary: {
           DEFAULT: "#dc2626",   // 🔴 Red (base)
           hover: "#b91c1c",     // 🔴 Dark Red (hover)
-          light: "#fca5a5",     // 🔴 Light Red (optional)
+          light: "#fca5a5",     // 🔴 Light Red
         },
         secondary: {
           DEFAULT: "#6B7280",
@@ -30,6 +32,11 @@ module.exports = {
         accent: {
           DEFAULT: "#8B5CF6",
           hover: "#7C3AED",
+        },
+        dark: {
+          bg: "#0f172a",   // 🌙 Dark background
+          card: "#1e293b", // 🌙 Dark card
+          text: "#f1f5f9", // 🌙 Light text
         },
       },
       spacing: {
@@ -43,4 +50,5 @@ module.exports = {
       boxShadow: ["hover", "active"],
     },
   },
+  plugins: [],
 };

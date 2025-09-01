@@ -6,7 +6,7 @@ import SimpleImageUpload from "./SimpleImageUpload";
 import FirebaseImageUpload from "./FirebaseImageUpload";
 import { useNotifications } from "../hooks/useNotifications";
 import { 
-  subscribeToChannels, 
+  subscribeToChannels,  
   createChatChannel, 
   sendMessage,
   subscribeToChannelMessages,

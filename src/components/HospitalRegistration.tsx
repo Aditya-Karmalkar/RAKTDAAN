@@ -48,64 +48,59 @@ export function HospitalRegistration() {
 
   if (currentHospital) {
     return (
-      <div className="min-h-screen bg-gray-50 py-20">
+      <div className="min-h-screen bg-gray-50 dark:bg-dark-bg py-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-            <div className={`w-20 h-20 ${currentHospital.verified ? 'bg-green-100' : 'bg-yellow-100'} rounded-full flex items-center justify-center mx-auto mb-6`}>
+          <div className="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-8 text-center">
+            <div className={`w-20 h-20 ${currentHospital.verified ? 'bg-green-100 dark:bg-green-900' : 'bg-yellow-100 dark:bg-yellow-900'} rounded-full flex items-center justify-center mx-auto mb-6`}>
               {currentHospital.verified ? (
-                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               ) : (
-                <svg className="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               )}
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               {currentHospital.verified ? "Hospital Verified!" : "Registration Pending"}
             </h1>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
               {currentHospital.verified 
                 ? `Welcome ${currentHospital.name}! You can now create SOS alerts.`
-                : `Thank you for registering ${currentHospital.name}. Your hospital is pending verification.`
-              }
+                : `Thank you for registering ${currentHospital.name}. Your hospital is pending verification.`}
             </p>
-            <div className="bg-gray-50 rounded-lg p-6 mb-6">
+            <div className="bg-gray-50 dark:bg-dark-input rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-600">
               <div className="grid grid-cols-1 gap-4 text-sm">
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-700">Hospital Name:</span>
-                  <span>{currentHospital.name}</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Hospital Name:</span>
+                  <span className="dark:text-gray-100">{currentHospital.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-700">Hospital ID:</span>
-                  <span>{currentHospital.hospitalId}</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Hospital ID:</span>
+                  <span className="dark:text-gray-100">{currentHospital.hospitalId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-700">Location:</span>
-                  <span>{currentHospital.location}</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Location:</span>
+                  <span className="dark:text-gray-100">{currentHospital.location}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-700">Contact Person:</span>
-                  <span>{currentHospital.contactPerson}</span>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Contact Person:</span>
+                  <span className="dark:text-gray-100">{currentHospital.contactPerson}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-700">Status:</span>
-                  <span className={currentHospital.verified ? 'text-green-600' : 'text-yellow-600'}>
+                  <span className="font-semibold text-gray-700 dark:text-gray-300">Status:</span>
+                  <span className={currentHospital.verified ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}>
                     {currentHospital.verified ? 'Verified' : 'Pending Verification'}
                   </span>
                 </div>
               </div>
             </div>
-            {currentHospital.verified ? (
-              <p className="text-gray-600">
-                You can now create SOS alerts and manage blood requests through your dashboard.
-              </p>
-            ) : (
-              <p className="text-gray-600">
-                Our team will verify your hospital details within 24-48 hours. You'll be notified once approved.
-              </p>
-            )}
+            <p className="text-gray-600 dark:text-gray-300">
+              {currentHospital.verified 
+                ? "You can now create SOS alerts and manage blood requests through your dashboard."
+                : "Our team will verify your hospital details within 24-48 hours. You'll be notified once approved."}
+            </p>
           </div>
         </div>
       </div>
@@ -113,108 +108,45 @@ export function HospitalRegistration() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg py-20">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-blue-600 dark:bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Hospital <span className="text-blue-600">Registration</span>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Hospital <span className="text-blue-600 dark:text-blue-400">Registration</span>
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-gray-300">
             Join our network to get immediate access to blood donors in emergencies
           </p>
         </div>
 
         {/* Registration Form */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {["name","hospitalId","contactPerson","phone","location"].map((field) => (
+              <div key={field}>
+                <label htmlFor={field} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 capitalize">
+                  {field.replace(/([A-Z])/g, ' $1')} *
+                </label>
+                <input
+                  type={field === "phone" ? "tel" : "text"}
+                  id={field}
+                  name={field}
+                  required
+                  value={formData[field as keyof typeof formData]}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-dark-input focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                  placeholder={`Enter ${field.replace(/([A-Z])/g, ' $1')}`}
+                />
+              </div>
+            ))}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Hospital Name *
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                placeholder="Enter hospital name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="hospitalId" className="block text-sm font-medium text-gray-700 mb-2">
-                Hospital Registration ID *
-              </label>
-              <input
-                type="text"
-                id="hospitalId"
-                name="hospitalId"
-                required
-                value={formData.hospitalId}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                placeholder="Official hospital registration number"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="contactPerson" className="block text-sm font-medium text-gray-700 mb-2">
-                Contact Person *
-              </label>
-              <input
-                type="text"
-                id="contactPerson"
-                name="contactPerson"
-                required
-                value={formData.contactPerson}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                placeholder="Name of authorized person"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                Contact Number *
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                required
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                placeholder="+1 (555) 123-4567"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
-                City/Location *
-              </label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                required
-                value={formData.location}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                placeholder="City, State"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Complete Address *
               </label>
               <textarea
@@ -224,14 +156,14 @@ export function HospitalRegistration() {
                 rows={3}
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-dark-input focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
                 placeholder="Complete hospital address with landmarks"
               />
             </div>
 
-            <div className="bg-blue-50 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-800 mb-2">Verification Process:</h3>
-              <ul className="text-sm text-blue-700 space-y-1">
+            <div className="bg-blue-50 dark:bg-blue-900 rounded-lg p-4">
+              <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">Verification Process:</h3>
+              <ul className="text-sm text-blue-700 dark:text-blue-200 space-y-1">
                 <li>• Your hospital details will be verified within 24-48 hours</li>
                 <li>• You'll receive an email confirmation once approved</li>
                 <li>• Only verified hospitals can create SOS blood alerts</li>
@@ -242,7 +174,7 @@ export function HospitalRegistration() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? "Registering..." : "Register Hospital"}
             </button>
@@ -251,35 +183,21 @@ export function HospitalRegistration() {
 
         {/* Benefits */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg p-6 text-center shadow-sm">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+          {[
+            { title: "Instant Access", desc: "Send SOS alerts to nearby donors immediately", iconPath: "M13 10V3L4 14h7v7l9-11h-7z" },
+            { title: "Dashboard", desc: "Track and manage all blood requests efficiently", iconPath: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
+            { title: "Verified Network", desc: "Connect with verified donors in your area", iconPath: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+          ].map((item) => (
+            <div key={item.title} className="bg-white dark:bg-dark-card rounded-lg p-6 text-center shadow-sm hover:bg-gray-50 dark:hover:bg-dark-input transition-colors">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6 text-blue-600 dark:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.iconPath} />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{item.title}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">{item.desc}</p>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Instant Access</h3>
-            <p className="text-sm text-gray-600">Send SOS alerts to nearby donors immediately</p>
-          </div>
-
-          <div className="bg-white rounded-lg p-6 text-center shadow-sm">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Dashboard</h3>
-            <p className="text-sm text-gray-600">Track and manage all blood requests efficiently</p>
-          </div>
-
-          <div className="bg-white rounded-lg p-6 text-center shadow-sm">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Verified Network</h3>
-            <p className="text-sm text-gray-600">Connect with verified donors in your area</p>
-          </div>
+          ))}
         </div>
       </div>
     </div>
