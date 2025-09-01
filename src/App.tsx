@@ -21,6 +21,8 @@ import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
 import AddToggle from "./components/AddToggle"; // ✅ toggle import
 
+
+
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);

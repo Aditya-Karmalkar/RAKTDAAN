@@ -123,7 +123,8 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Register yourself as a blood donor and give the gift of life.
               </p>
-              <button className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
+              <button onClick={()=>onNavigate("donor-registration")}
+              className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
                 Register Now
               </button>
             </div>
@@ -135,7 +136,8 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Need urgent blood? Post a request and find nearby donors.
               </p>
-              <button className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
+              <button onClick={()=> onNavigate("contact")}
+              className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
                 Request Now
               </button>
             </div>
@@ -147,7 +149,8 @@ export function Home({ onNavigate }: HomeProps) {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Help us reach more people by sharing and educating others.
               </p>
-              <button className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
+              <button onClick={()=> onNavigate("mission")}
+               className="bg-red-500 dark:bg-red-600 text-white dark:text-gray-100 px-5 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition">
                 Share Now
               </button>
             </div>
