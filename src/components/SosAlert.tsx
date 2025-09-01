@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { api } from "../../convex/_generated/api";
 
 export function SosAlert() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     bloodGroup: "",
     urgency: "",
@@ -72,9 +75,12 @@ export function SosAlert() {
             <p className="text-lg text-gray-600 mb-6">
               You need to register as a hospital to create SOS alerts.
             </p>
-            <button className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
-              Register Hospital
-            </button>
+            <button
+                  onClick={() => navigate("/hospital-registration")}
+                  className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-600 hover:text-white transition-all duration-200"
+                >
+                  Hospital Registration
+                </button>
           </div>
         </div>
       </div>

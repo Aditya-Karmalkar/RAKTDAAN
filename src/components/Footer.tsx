@@ -1,4 +1,14 @@
-export function Footer() {
+interface FooterProps {
+  onNavigate?: (screen: string) => void;
+}
+
+export function Footer({ onNavigate }: FooterProps) {
+  const handleNavigation = (screen: string) => {
+    if (onNavigate) {
+      onNavigate(screen);
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,11 +57,46 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="text-gray-300 hover:text-white transition-colors">Home</a></li>
-              <li><a href="/Mission" className="text-gray-300 hover:text-white transition-colors">Our Mission</a></li>
-              <li><a href="/HowItWorks" className="text-gray-300 hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="/DonorRegistration" className="text-gray-300 hover:text-white transition-colors">Become a Donor</a></li>
-              <li><a href="/HospitalRegistration" className="text-gray-300 hover:text-white transition-colors">Hospital Registration</a></li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('home')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('mission')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Our Mission
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('how-it-works')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  How It Works
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('donor-registration')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Become a Donor
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('hospital-registration')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Hospital Registration
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -59,9 +104,30 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('contact')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Contact Us
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('faq')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  FAQ
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNavigation('privacy-policy')}
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                >
+                  Privacy Policy
+                </button>
+              </li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Emergency Hotline</a></li>
             </ul>
