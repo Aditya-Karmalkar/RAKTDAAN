@@ -2,16 +2,31 @@ import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "sonner";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { required, phone, minLength } from "../lib/validation";
+
+// Define validation rules for the hospital registration form.
+const hospitalValidationRules = {
+  name: required,
+  hospitalId: required,
+  location: required,
+  phone: phone,
+  contactPerson: required,
+  address: minLength(10),
+};
 
 export function HospitalRegistration() {
-  const [formData, setFormData] = useState({
-    name: "",
-    hospitalId: "",
-    location: "",
-    phone: "",
-    contactPerson: "",
-    address: "",
-  });
+   const { formData, errors, handleChange, validate, resetForm } = useFormValidation(
+    {
+      name: "",
+      hospitalId: "",
+      location: "",
+      phone: "",
+      contactPerson: "",
+      address: "",
+    },
+    hospitalValidationRules
+  );
 
   const registerHospital = useMutation(api.hospitals.registerHospital);
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
@@ -19,31 +34,21 @@ export function HospitalRegistration() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) {
+      toast.error("Please correct the errors before submitting.");
+      return;
+    }
     setIsSubmitting(true);
 
     try {
       await registerHospital(formData);
       toast.success("Registration successful! Your hospital is pending verification.");
-      setFormData({
-        name: "",
-        hospitalId: "",
-        location: "",
-        phone: "",
-        contactPerson: "",
-        address: "",
-      });
+      resetForm();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Registration failed");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   if (currentHospital) {
@@ -141,12 +146,20 @@ export function HospitalRegistration() {
                 type="text"
                 id="name"
                 name="name"
-                required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.name
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.name && !errors.name
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Enter hospital name"
               />
+              {errors.name && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.name}</p>}
             </div>
 
             <div>
@@ -157,12 +170,20 @@ export function HospitalRegistration() {
                 type="text"
                 id="hospitalId"
                 name="hospitalId"
-                required
                 value={formData.hospitalId}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.hospitalId
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.hospitalId && !errors.hospitalId
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Official hospital registration number"
               />
+              {errors.hospitalId && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.hospitalId}</p>}
             </div>
 
             <div>
@@ -173,12 +194,20 @@ export function HospitalRegistration() {
                 type="text"
                 id="contactPerson"
                 name="contactPerson"
-                required
                 value={formData.contactPerson}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.contactPerson
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.contactPerson && !errors.contactPerson
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Name of authorized person"
               />
+              {errors.contactPerson && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.contactPerson}</p>}
             </div>
 
             <div>
@@ -189,15 +218,23 @@ export function HospitalRegistration() {
                 type="tel"
                 id="phone"
                 name="phone"
-                required
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.phone && !errors.phone
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="+1 (555) 123-4567"
               />
+              {errors.phone && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.phone}</p>}
             </div>
 
-            <div>
+          <div>
               <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
                 City/Location *
               </label>
@@ -205,12 +242,20 @@ export function HospitalRegistration() {
                 type="text"
                 id="location"
                 name="location"
-                required
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.location
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.location && !errors.location
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="City, State"
               />
+              {errors.location && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.location}</p>}
             </div>
 
             <div>
@@ -220,13 +265,21 @@ export function HospitalRegistration() {
               <textarea
                 id="address"
                 name="address"
-                required
                 rows={3}
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
+                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors resize-none ${
+                  errors.address
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.address && !errors.address
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Complete hospital address with landmarks"
               />
+              {errors.address && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.address}</p>}
             </div>
 
             <div className="bg-blue-50 rounded-lg p-4">

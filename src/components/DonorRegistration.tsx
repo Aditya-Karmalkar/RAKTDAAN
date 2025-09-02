@@ -2,15 +2,32 @@ import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "sonner";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { required, phone } from "../lib/validation";
+
+// Define validation rules for the donor registration form.
+const donorValidationRules = {
+  name: required,
+  bloodGroup: required,
+  location: required,
+  phone: phone,
+  emergencyContact: (value: string) => {
+    if (!value) return ""; // Not required, so no error if empty
+    return phone(value); // But if a value is entered, it must be a valid phone number
+  },
+};
 
 export function DonorRegistration() {
-  const [formData, setFormData] = useState({
-    name: "",
-    bloodGroup: "",
-    location: "",
-    phone: "",
-    emergencyContact: "",
-  });
+  const { formData, errors, handleChange, validate, resetForm } = useFormValidation(
+    {
+      name: "",
+      bloodGroup: "",
+      location: "",
+      phone: "",
+      emergencyContact: "",
+    },
+    donorValidationRules
+  );
 
   const registerDonor = useMutation(api.donors.registerDonor);
   const currentDonor = useQuery(api.donors.getCurrentDonor);
@@ -20,25 +37,20 @@ export function DonorRegistration() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    if (!validate()) {
+      toast.error("Please correct the errors before submitting.");
+      return;
+    }
+  setIsSubmitting(true);
 
     try {
       await registerDonor({
-        name: formData.name,
-        bloodGroup: formData.bloodGroup,
-        location: formData.location,
-        phone: formData.phone,
+        ...formData,
         emergencyContact: formData.emergencyContact || undefined,
       });
       
       toast.success("Registration successful! You're now a registered donor.");
-      setFormData({
-        name: "",
-        bloodGroup: "",
-        location: "",
-        phone: "",
-        emergencyContact: "",
-      });
+     resetForm();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Registration failed");
     } finally {
@@ -46,14 +58,7 @@ export function DonorRegistration() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  if (currentDonor) {
+    if (currentDonor) {
     return (
       <div className="min-h-screen bg-gray-50 py-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,7 +123,7 @@ export function DonorRegistration() {
 
         {/* Registration Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name *
@@ -127,12 +132,20 @@ export function DonorRegistration() {
                 type="text"
                 id="name"
                 name="name"
-                required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${
+                errors.name 
+                ? 'border-red-500 ring-red-500' 
+                 : formData.name && !errors.name
+                ? "border-green-500 focus:ring-green-500"
+                : "border-gray-300 focus:ring-red-500"
+               }`}
                 placeholder="Enter your full name"
-              />
+             />
+               {errors.name && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.name}</p>}
             </div>
 
             <div>
@@ -142,10 +155,15 @@ export function DonorRegistration() {
               <select
                 id="bloodGroup"
                 name="bloodGroup"
-                required
                 value={formData.bloodGroup}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.bloodGroup
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.bloodGroup && !errors.bloodGroup
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
               >
                 <option value="">Select your blood group</option>
                 {bloodGroups.map((group) => (
@@ -154,9 +172,13 @@ export function DonorRegistration() {
                   </option>
                 ))}
               </select>
+                {errors.bloodGroup && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.bloodGroup}</p>}
             </div>
 
             <div>
+      
               <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
                 Location *
               </label>
@@ -164,12 +186,20 @@ export function DonorRegistration() {
                 type="text"
                 id="location"
                 name="location"
-                required
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
-                placeholder="City, State"
+                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.location
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.location && !errors.location
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
+                  placeholder="City, State"
               />
+                 {errors.location && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.location}</p>}
             </div>
 
             <div>
@@ -180,12 +210,20 @@ export function DonorRegistration() {
                 type="tel"
                 id="phone"
                 name="phone"
-                required
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.phone && !errors.phone
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="+1 (555) 123-4567"
               />
+              {errors.phone && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.phone}</p>}
             </div>
 
             <div>
@@ -198,9 +236,18 @@ export function DonorRegistration() {
                 name="emergencyContact"
                 value={formData.emergencyContact}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.emergencyContact
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.emergencyContact && !errors.emergencyContact
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="+1 (555) 987-6543"
               />
+              {errors.emergencyContact && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.emergencyContact}</p>}
             </div>
 
             <div className="bg-red-50 rounded-lg p-4">
@@ -257,5 +304,6 @@ export function DonorRegistration() {
         </div>
       </div>
     </div>
-  );
-}
+              );
+ }
+            
