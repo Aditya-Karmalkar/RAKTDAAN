@@ -3,15 +3,28 @@
  * @param value - The value to check.
  * @returns - An error message if the value is empty, otherwise an empty string.
  */
-export const required = (value: string) => (value ? "" : "This field is required");
+export const required = (value: string) => {
+  if (!value) {
+    return "This field is required";
+  }
+  if (value.length < 2) {
+    return "Must be at least 2 characters long";
+  }
+  return "";
+};
 
 /**
- * Validates a 10-digit phone number.
- * @param phone - The phone number to validate.
- * @returns - An error message if the phone number is invalid, otherwise an empty string.
+ * Validates a phone number.
+ * @param value - The phone number to validate.
+ * @returns - An error message if the value is empty, otherwise an empty string.
  */
-export const phone = (phone: string) =>
-  /^\d{10}$/.test(phone) ? "" : "Phone number must be 10 digits";
+export const phone = (value: string) => {
+  if (!value) {
+    return "This field is required";
+  }
+  return "";
+};
+
 
 /**
  * Validates an email address.

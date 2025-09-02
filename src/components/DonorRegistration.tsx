@@ -11,7 +11,10 @@ const donorValidationRules = {
   bloodGroup: required,
   location: required,
   phone: phone,
-  emergencyContact: (value: string) => (value ? phone(value) : ""),
+  emergencyContact: (value: string) => {
+    if (!value) return ""; // Not required, so no error if empty
+    return phone(value); // But if a value is entered, it must be a valid phone number
+  },
 };
 
 export function DonorRegistration() {
@@ -131,10 +134,18 @@ export function DonorRegistration() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.name ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.name
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.name && !errors.name
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="Enter your full name"
               />
-              {errors.name && <p className="error-message">{errors.name}</p>}
+              {errors.name && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.name}</p>}
             </div>
 
             <div>
@@ -146,7 +157,13 @@ export function DonorRegistration() {
                 name="bloodGroup"
                 value={formData.bloodGroup}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.bloodGroup ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.bloodGroup
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.bloodGroup && !errors.bloodGroup
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
               >
                 <option value="">Select your blood group</option>
                 {bloodGroups.map((group) => (
@@ -155,7 +172,9 @@ export function DonorRegistration() {
                   </option>
                 ))}
               </select>
-              {errors.bloodGroup && <p className="error-message">{errors.bloodGroup}</p>}
+              {errors.bloodGroup && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.bloodGroup}</p>}
             </div>
 
             <div>
@@ -168,10 +187,18 @@ export function DonorRegistration() {
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.location ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.location
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.location && !errors.location
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="City, State"
               />
-              {errors.location && <p className="error-message">{errors.location}</p>}
+              {errors.location && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.location}</p>}
             </div>
 
             <div>
@@ -184,10 +211,18 @@ export function DonorRegistration() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.phone ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.phone && !errors.phone
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="+1 (555) 123-4567"
               />
-              {errors.phone && <p className="error-message">{errors.phone}</p>}
+              {errors.phone && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.phone}</p>}
             </div>
 
             <div>
@@ -200,10 +235,18 @@ export function DonorRegistration() {
                 name="emergencyContact"
                 value={formData.emergencyContact}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.emergencyContact ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.emergencyContact
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.emergencyContact && !errors.emergencyContact
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-red-500"
+                }`}
                 placeholder="+1 (555) 987-6543"
               />
-              {errors.emergencyContact && <p className="error-message">{errors.emergencyContact}</p>}
+              {errors.emergencyContact && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.emergencyContact}</p>}
             </div>
 
             <div className="bg-red-50 rounded-lg p-4">

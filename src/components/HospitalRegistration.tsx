@@ -148,10 +148,18 @@ export function HospitalRegistration() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.name ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.name
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.name && !errors.name
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Enter hospital name"
               />
-              {errors.name && <p className="error-message">{errors.name}</p>}
+              {errors.name && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.name}</p>}
             </div>
 
             <div>
@@ -164,10 +172,18 @@ export function HospitalRegistration() {
                 name="hospitalId"
                 value={formData.hospitalId}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.hospitalId ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.hospitalId
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.hospitalId && !errors.hospitalId
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Official hospital registration number"
               />
-              {errors.hospitalId && <p className="error-message">{errors.hospitalId}</p>}
+              {errors.hospitalId && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.hospitalId}</p>}
             </div>
 
             <div>
@@ -180,10 +196,18 @@ export function HospitalRegistration() {
                 name="contactPerson"
                 value={formData.contactPerson}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.contactPerson ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.contactPerson
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.contactPerson && !errors.contactPerson
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Name of authorized person"
               />
-              {errors.contactPerson && <p className="error-message">{errors.contactPerson}</p>}
+              {errors.contactPerson && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.contactPerson}</p>}
             </div>
 
             <div>
@@ -196,10 +220,18 @@ export function HospitalRegistration() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.phone ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.phone && !errors.phone
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="+1 (555) 123-4567"
               />
-              {errors.phone && <p className="error-message">{errors.phone}</p>}
+              {errors.phone && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.phone}</p>}
             </div>
 
             <div>
@@ -212,10 +244,18 @@ export function HospitalRegistration() {
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.location ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors ${
+                  errors.location
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.location && !errors.location
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="City, State"
               />
-              {errors.location && <p className="error-message">{errors.location}</p>}
+              {errors.location && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.location}</p>}
             </div>
 
             <div>
@@ -228,10 +268,18 @@ export function HospitalRegistration() {
                 rows={3}
                 value={formData.address}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none ${errors.address ? "error-input" : ""}`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 outline-none transition-colors resize-none ${
+                  errors.address
+                    ? "border-red-500 focus:ring-red-500"
+                    : formData.address && !errors.address
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Complete hospital address with landmarks"
               />
-              {errors.address && <p className="error-message">{errors.address}</p>}
+              {errors.address && <p className="error-message flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>{errors.address}</p>}
             </div>
 
             <div className="bg-blue-50 rounded-lg p-4">
