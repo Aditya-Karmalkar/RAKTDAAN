@@ -68,3 +68,13 @@ body {
   @apply w-full px-4 py-3 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
+/* Styles for input fields with validation errors */
+.error-input {
+  @apply border-red-500 ring-red-500;
+}
+
+/* Styles for error message text */
+.error-message {
+  @apply text-red-500 text-sm mt-1;
+}
+

@@ -2,43 +2,48 @@ import { useMutation } from "convex/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { api } from "../../convex/_generated/api";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { required, email, minLength } from "../lib/validation";
+
+// Define validation rules for the contact form.
+const contactValidationRules = {
+  name: required,
+  email: email,
+  subject: required,
+  message: minLength(10),
+};
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const { formData, errors, handleChange, validate, resetForm } = useFormValidation(
+    {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+    contactValidationRules
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitContactMessage = useMutation(api.contact.submitContactMessage);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) {
+      toast.error("Please correct the errors before submitting.");
+      return;
+    }
     setIsSubmitting(true);
 
     try {
       await submitContactMessage(formData);
       toast.success("Message sent successfully! We'll get back to you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      resetForm();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to send message");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -58,8 +63,8 @@ export function Contact() {
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
+
+            <form onSubmit={handleSubmit} noValidate className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name *
@@ -68,12 +73,12 @@ export function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.name ? "error-input" : ""}`}
                   placeholder="Enter your full name"
                 />
+                {errors.name && <p className="error-message">{errors.name}</p>}
               </div>
 
               <div>
@@ -84,12 +89,12 @@ export function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.email ? "error-input" : ""}`}
                   placeholder="your.email@example.com"
                 />
+                {errors.email && <p className="error-message">{errors.email}</p>}
               </div>
 
               <div>
@@ -99,10 +104,9 @@ export function Contact() {
                 <select
                   id="subject"
                   name="subject"
-                  required
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.subject ? "error-input" : ""}`}
                 >
                   <option value="">Select a subject</option>
                   <option value="General Inquiry">General Inquiry</option>
@@ -113,6 +117,7 @@ export function Contact() {
                   <option value="Feedback">Feedback</option>
                   <option value="Other">Other</option>
                 </select>
+                {errors.subject && <p className="error-message">{errors.subject}</p>}
               </div>
 
               <div>
@@ -122,13 +127,13 @@ export function Contact() {
                 <textarea
                   id="message"
                   name="message"
-                  required
                   rows={6}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors resize-none"
+                  className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors resize-none ${errors.message ? "error-input" : ""}`}
                   placeholder="Please describe your inquiry in detail..."
                 />
+                {errors.message && <p className="error-message">{errors.message}</p>}
               </div>
 
               <button
@@ -146,7 +151,7 @@ export function Contact() {
             {/* Contact Details */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
@@ -193,7 +198,7 @@ export function Contact() {
             {/* FAQ */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">How do I register as a donor?</h3>

@@ -2,15 +2,29 @@ import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "sonner";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { required, phone } from "../lib/validation";
+
+// Define validation rules for the donor registration form.
+const donorValidationRules = {
+  name: required,
+  bloodGroup: required,
+  location: required,
+  phone: phone,
+  emergencyContact: (value: string) => (value ? phone(value) : ""),
+};
 
 export function DonorRegistration() {
-  const [formData, setFormData] = useState({
-    name: "",
-    bloodGroup: "",
-    location: "",
-    phone: "",
-    emergencyContact: "",
-  });
+  const { formData, errors, handleChange, validate, resetForm } = useFormValidation(
+    {
+      name: "",
+      bloodGroup: "",
+      location: "",
+      phone: "",
+      emergencyContact: "",
+    },
+    donorValidationRules
+  );
 
   const registerDonor = useMutation(api.donors.registerDonor);
   const currentDonor = useQuery(api.donors.getCurrentDonor);
@@ -20,37 +34,25 @@ export function DonorRegistration() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) {
+      toast.error("Please correct the errors before submitting.");
+      return;
+    }
     setIsSubmitting(true);
 
     try {
       await registerDonor({
-        name: formData.name,
-        bloodGroup: formData.bloodGroup,
-        location: formData.location,
-        phone: formData.phone,
+        ...formData,
         emergencyContact: formData.emergencyContact || undefined,
       });
-      
+
       toast.success("Registration successful! You're now a registered donor.");
-      setFormData({
-        name: "",
-        bloodGroup: "",
-        location: "",
-        phone: "",
-        emergencyContact: "",
-      });
+      resetForm();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Registration failed");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   if (currentDonor) {
@@ -118,7 +120,7 @@ export function DonorRegistration() {
 
         {/* Registration Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name *
@@ -127,12 +129,12 @@ export function DonorRegistration() {
                 type="text"
                 id="name"
                 name="name"
-                required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.name ? "error-input" : ""}`}
                 placeholder="Enter your full name"
               />
+              {errors.name && <p className="error-message">{errors.name}</p>}
             </div>
 
             <div>
@@ -142,10 +144,9 @@ export function DonorRegistration() {
               <select
                 id="bloodGroup"
                 name="bloodGroup"
-                required
                 value={formData.bloodGroup}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.bloodGroup ? "error-input" : ""}`}
               >
                 <option value="">Select your blood group</option>
                 {bloodGroups.map((group) => (
@@ -154,6 +155,7 @@ export function DonorRegistration() {
                   </option>
                 ))}
               </select>
+              {errors.bloodGroup && <p className="error-message">{errors.bloodGroup}</p>}
             </div>
 
             <div>
@@ -164,12 +166,12 @@ export function DonorRegistration() {
                 type="text"
                 id="location"
                 name="location"
-                required
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.location ? "error-input" : ""}`}
                 placeholder="City, State"
               />
+              {errors.location && <p className="error-message">{errors.location}</p>}
             </div>
 
             <div>
@@ -180,12 +182,12 @@ export function DonorRegistration() {
                 type="tel"
                 id="phone"
                 name="phone"
-                required
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.phone ? "error-input" : ""}`}
                 placeholder="+1 (555) 123-4567"
               />
+              {errors.phone && <p className="error-message">{errors.phone}</p>}
             </div>
 
             <div>
@@ -198,9 +200,10 @@ export function DonorRegistration() {
                 name="emergencyContact"
                 value={formData.emergencyContact}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-colors ${errors.emergencyContact ? "error-input" : ""}`}
                 placeholder="+1 (555) 987-6543"
               />
+              {errors.emergencyContact && <p className="error-message">{errors.emergencyContact}</p>}
             </div>
 
             <div className="bg-red-50 rounded-lg p-4">

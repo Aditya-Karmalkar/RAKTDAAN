@@ -2,16 +2,31 @@ import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "sonner";
+import { useFormValidation } from "../hooks/useFormValidation";
+import { required, phone, minLength } from "../lib/validation";
+
+// Define validation rules for the hospital registration form.
+const hospitalValidationRules = {
+  name: required,
+  hospitalId: required,
+  location: required,
+  phone: phone,
+  contactPerson: required,
+  address: minLength(10),
+};
 
 export function HospitalRegistration() {
-  const [formData, setFormData] = useState({
-    name: "",
-    hospitalId: "",
-    location: "",
-    phone: "",
-    contactPerson: "",
-    address: "",
-  });
+  const { formData, errors, handleChange, validate, resetForm } = useFormValidation(
+    {
+      name: "",
+      hospitalId: "",
+      location: "",
+      phone: "",
+      contactPerson: "",
+      address: "",
+    },
+    hospitalValidationRules
+  );
 
   const registerHospital = useMutation(api.hospitals.registerHospital);
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
@@ -19,31 +34,21 @@ export function HospitalRegistration() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) {
+      toast.error("Please correct the errors before submitting.");
+      return;
+    }
     setIsSubmitting(true);
 
     try {
       await registerHospital(formData);
       toast.success("Registration successful! Your hospital is pending verification.");
-      setFormData({
-        name: "",
-        hospitalId: "",
-        location: "",
-        phone: "",
-        contactPerson: "",
-        address: "",
-      });
+      resetForm();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Registration failed");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   if (currentHospital) {
@@ -66,7 +71,7 @@ export function HospitalRegistration() {
               {currentHospital.verified ? "Hospital Verified!" : "Registration Pending"}
             </h1>
             <p className="text-lg text-gray-600 mb-6">
-              {currentHospital.verified 
+              {currentHospital.verified
                 ? `Welcome ${currentHospital.name}! You can now create SOS alerts.`
                 : `Thank you for registering ${currentHospital.name}. Your hospital is pending verification.`
               }
@@ -132,7 +137,7 @@ export function HospitalRegistration() {
 
         {/* Registration Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} noValidate className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Hospital Name *
@@ -141,12 +146,12 @@ export function HospitalRegistration() {
                 type="text"
                 id="name"
                 name="name"
-                required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.name ? "error-input" : ""}`}
                 placeholder="Enter hospital name"
               />
+              {errors.name && <p className="error-message">{errors.name}</p>}
             </div>
 
             <div>
@@ -157,12 +162,12 @@ export function HospitalRegistration() {
                 type="text"
                 id="hospitalId"
                 name="hospitalId"
-                required
                 value={formData.hospitalId}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.hospitalId ? "error-input" : ""}`}
                 placeholder="Official hospital registration number"
               />
+              {errors.hospitalId && <p className="error-message">{errors.hospitalId}</p>}
             </div>
 
             <div>
@@ -173,12 +178,12 @@ export function HospitalRegistration() {
                 type="text"
                 id="contactPerson"
                 name="contactPerson"
-                required
                 value={formData.contactPerson}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.contactPerson ? "error-input" : ""}`}
                 placeholder="Name of authorized person"
               />
+              {errors.contactPerson && <p className="error-message">{errors.contactPerson}</p>}
             </div>
 
             <div>
@@ -189,12 +194,12 @@ export function HospitalRegistration() {
                 type="tel"
                 id="phone"
                 name="phone"
-                required
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.phone ? "error-input" : ""}`}
                 placeholder="+1 (555) 123-4567"
               />
+              {errors.phone && <p className="error-message">{errors.phone}</p>}
             </div>
 
             <div>
@@ -205,12 +210,12 @@ export function HospitalRegistration() {
                 type="text"
                 id="location"
                 name="location"
-                required
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${errors.location ? "error-input" : ""}`}
                 placeholder="City, State"
               />
+              {errors.location && <p className="error-message">{errors.location}</p>}
             </div>
 
             <div>
@@ -220,13 +225,13 @@ export function HospitalRegistration() {
               <textarea
                 id="address"
                 name="address"
-                required
                 rows={3}
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none ${errors.address ? "error-input" : ""}`}
                 placeholder="Complete hospital address with landmarks"
               />
+              {errors.address && <p className="error-message">{errors.address}</p>}
             </div>
 
             <div className="bg-blue-50 rounded-lg p-4">
