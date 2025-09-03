@@ -1,8 +1,9 @@
 import { 
   ref, 
-  uploadBytesResumable, 
+  uploadBytes, 
   getDownloadURL, 
   deleteObject,
+  uploadBytesResumable,
   UploadTaskSnapshot 
 } from 'firebase/storage';
 import { 
@@ -78,31 +79,29 @@ export const uploadImage = async (
           console.error('Upload error:', error);
           reject(error);
         },
-        () => {
-          (async () => {
-            try {
-              // Get download URL
-              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              
-              // Save metadata to Firestore
-              const galleryRef = collection(db, 'galleryImages');
-              const docRef = await addDoc(galleryRef, {
-                ...metadata,
-                imageUrl: downloadURL,
-                uploadedAt: serverTimestamp(),
-                isActive: true,
-                likes: 0,
-                views: 0,
-                fileSize: file.size,
-                fileName: file.name,
-                mimeType: file.type,
-              });
-              
-              resolve(docRef.id);
-            } catch (error) {
-              reject(error);
-            }
-          })();
+        async () => {
+          try {
+            // Get download URL
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            
+            // Save metadata to Firestore
+            const galleryRef = collection(db, 'galleryImages');
+            const docRef = await addDoc(galleryRef, {
+              ...metadata,
+              imageUrl: downloadURL,
+              uploadedAt: serverTimestamp(),
+              isActive: true,
+              likes: 0,
+              views: 0,
+              fileSize: file.size,
+              fileName: file.name,
+              mimeType: file.type,
+            });
+            
+            resolve(docRef.id);
+          } catch (error) {
+            reject(error);
+          }
         }
       );
     });
