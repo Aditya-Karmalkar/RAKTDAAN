@@ -1,10 +1,11 @@
-import { Authenticated, Unauthenticated } from "convex/react"; 
-import { SignInForm } from "./src/SignInForm";
- import { useNavigate } from "react-router-dom"; 
+import { Authenticated, Unauthenticated } from "convex/react";
+import { SignInForm } from "../SignInForm";
 
-export function Home() {
-  const navigate = useNavigate(); // React Router का navigate function
+interface HomeProps {
+  onNavigate: (screen: string) => void;
+}
 
+export function Home({ onNavigate }: HomeProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-white">
       {/* Hero Section */}
@@ -29,12 +30,12 @@ export function Home() {
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
               <span className="text-red-600">Rakt</span>Daan
             </h1>
-
+            
             {/* Tagline */}
             <p className="text-2xl md:text-3xl text-gray-700 mb-4 font-light">
               Where You Bond By Blood
             </p>
-
+            
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               Connecting hospitals, blood donors, and recipients for a fast, seamless, 
@@ -45,20 +46,19 @@ export function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Authenticated>
                 <button
-                  onClick={() => navigate("/donor-registration")}
-                  className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-out shadow-lg hover:bg-red-700 hover:scale-105 hover:shadow-xl hover:shadow-red-300/50 active:scale-95"
-                >
-                  Become a Lifesaver
+                  onClick={() => onNavigate("donor-registration")}
+                    className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-out shadow-lg hover:bg-red-700 hover:scale-105 hover:shadow-xl hover:shadow-red-300/50 active:scale-95">
+                      Become a Lifesaver
                 </button>
 
                 <button
-                  onClick={() => navigate("/hospital-registration")}
-                  className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-out hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-md hover:shadow-red-200/50 active:scale-95"
-                >
-                  Hospital Registration
+                  onClick={() => onNavigate("hospital-registration")}
+                    className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-out hover:bg-red-600 hover:text-white hover:scale-105 hover:shadow-md hover:shadow-red-200/50 active:scale-95">
+                    Hospital Registration
                 </button>
-              </Authenticated>
 
+              </Authenticated>
+              
               <Unauthenticated>
                 <div className="w-full max-w-md">
                   <SignInForm />
@@ -105,7 +105,7 @@ export function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <button
-              onClick={() => navigate("/mission")}
+              onClick={() => onNavigate("mission")}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center group"
             >
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-red-200 transition-colors">
@@ -118,7 +118,7 @@ export function Home() {
             </button>
 
             <button
-              onClick={() => navigate("/how-it-works")}
+              onClick={() => onNavigate("how-it-works")}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center group"
             >
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-red-200 transition-colors">
@@ -131,7 +131,7 @@ export function Home() {
             </button>
 
             <button
-              onClick={() => navigate("/testimonials")}
+              onClick={() => onNavigate("testimonials")}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center group"
             >
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-red-200 transition-colors">
@@ -144,7 +144,7 @@ export function Home() {
             </button>
 
             <button
-              onClick={() => navigate("/contact")}
+              onClick={() => onNavigate("contact")}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center group"
             >
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-red-200 transition-colors">
