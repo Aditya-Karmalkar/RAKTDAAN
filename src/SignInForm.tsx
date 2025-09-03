@@ -1,3 +1,4 @@
+ fix-clickable-text
 "use client";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
@@ -8,29 +9,37 @@ export function SignInForm() {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [submitting, setSubmitting] = useState(false);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    formData.set("flow", flow);
+
+    try {
+      await signIn("password", formData);
+    } catch (error: any) {
+      let toastTitle = "";
+      if (error.message.includes("Invalid password")) {
+        toastTitle = "Invalid password. Please try again.";
+      } else {
+        toastTitle =
+          flow === "signIn"
+            ? "Could not sign in, did you mean to sign up?"
+            : "Could not sign up, did you mean to sign in?";
+      }
+      // Show toast notification using toast from sonner
+      toast(toastTitle);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full">
       <form
         className="flex flex-col gap-form-field"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitting(true);
-          const formData = new FormData(e.target as HTMLFormElement);
-          formData.set("flow", flow);
-          void signIn("password", formData).catch((error) => {
-            let toastTitle = "";
-            if (error.message.includes("Invalid password")) {
-              toastTitle = "Invalid password. Please try again.";
-            } else {
-              toastTitle =
-                flow === "signIn"
-                  ? "Could not sign in, did you mean to sign up?"
-                  : "Could not sign up, did you mean to sign in?";
-            }
-            toast.error(toastTitle);
-            setSubmitting(false);
-          });
-        }}
+        onSubmit={(e) => { void handleSubmit(e); }}
       >
         <input
           className="auth-input-field"
@@ -46,7 +55,11 @@ export function SignInForm() {
           placeholder="Password"
           required
         />
-        <button className="auth-button" type="submit" disabled={submitting}>
+        <button
+          className="auth-button"
+          type="submit"
+          disabled={submitting}
+        >
           {flow === "signIn" ? "Sign in" : "Sign up"}
         </button>
         <div className="text-center text-sm text-secondary">
@@ -69,9 +82,13 @@ export function SignInForm() {
         <span className="mx-4 text-secondary">or</span>
         <hr className="my-4 grow border-gray-200" />
       </div>
-      <button className="auth-button" onClick={() => void signIn("anonymous")}>
+      <button
+        className="auth-button"
+        onClick={() => void signIn("anonymous")}
+      >
         Sign in anonymously
       </button>
     </div>
   );
 }
+
