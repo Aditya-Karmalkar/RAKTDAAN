@@ -6,6 +6,7 @@ import { AdminDashboard } from "./components/AdminDashboard";
 import { Contact } from "./components/Contact";
 import { Dashboard } from "./components/Dashboard";
 import { DonorRegistration } from "./components/DonorRegistration";
+import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { Gallery } from "./components/Gallery";
 import { Home } from "./components/Home";
@@ -13,11 +14,13 @@ import { HospitalRegistration } from "./components/HospitalRegistration";
 import { HowItWorks } from "./components/HowItWorks";
 import { LiveDonorAlert } from "./components/LiveDonorAlert";
 import { Mission } from "./components/Mission";
+import NotificationPopup from "./components/NotificationPopup";
+import { PrivacyPolicy } from "./components/PrivacyPolicy";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import { SosAlert } from "./components/SosAlert";
 import { Testimonials } from "./components/Testimonials";
-import { SignOutButton } from "./SignOutButton";
 import { useNotifications } from "./hooks/useNotifications";
-import NotificationPopup from "./components/NotificationPopup";
+import { SignOutButton } from "./SignOutButton";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -71,11 +74,16 @@ export default function App() {
         return <Testimonials />;
       case "contact":
         return <Contact />;
+      case "faq":
+        return <FAQ />;
+      case "privacy-policy":
+        return <PrivacyPolicy />;
       default:
         return <Home onNavigate={setCurrentScreen} />;
     }
   };
 
+  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sticky Navigation */}
@@ -210,7 +218,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onNavigate={setCurrentScreen} />
 
       <Toaster />
       
@@ -222,6 +230,9 @@ export default function App() {
           onClose={hideNotification}
         />
       ))}
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
   );
 }
