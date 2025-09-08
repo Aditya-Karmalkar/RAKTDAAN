@@ -19,6 +19,7 @@ import { SignOutButton } from "./SignOutButton";
 import { useNotifications } from "./hooks/useNotifications";
 import NotificationPopup from "./components/NotificationPopup";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import AddToggle from "./components/AddToggle"; // 🌙 Dark mode toggle
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -27,8 +28,7 @@ export default function App() {
   const currentDonor = useQuery(api.donors.getCurrentDonor);
   const currentHospital = useQuery(api.hospitals.getCurrentHospital);
   const isAdmin = useQuery(api.admin.isCurrentUserAdmin);
-  
-  // Notification system
+
   const { notifications, hideNotification } = useNotifications();
 
   const screens = [
@@ -78,13 +78,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg dark:text-dark-text transition-colors duration-500">
       {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100 shadow-sm">
+      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-dark-card backdrop-blur-sm border-b border-red-100 dark:border-gray-700 shadow-sm transition-colors duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div 
+            <div
               className="flex items-center cursor-pointer"
               onClick={() => setCurrentScreen("home")}
             >
@@ -100,38 +100,39 @@ export default function App() {
                 <button
                   key={screen.id}
                   onClick={() => setCurrentScreen(screen.id)}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-300 ${
                     currentScreen === screen.id
                       ? "text-red-600 border-b-2 border-red-600"
-                      : "text-gray-700 hover:text-red-600"
+                      : "text-gray-700 dark:text-gray-300 hover:text-red-600"
                   }`}
                 >
                   {screen.label}
                 </button>
               ))}
-              
+
               <Authenticated>
                 <div className="flex items-center space-x-4">
-                  {currentDonor !== undefined && currentDonor && (
+                  <AddToggle /> {/* 🌙 Dark mode toggle */}
+                  {currentDonor && (
                     <button
                       onClick={() => setCurrentScreen("live-alerts")}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      className="bg-red-600 text-white dark:bg-red-700 dark:text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
                     >
                       Live Alerts
                     </button>
                   )}
-                  {currentHospital !== undefined && currentHospital && (
+                  {currentHospital && (
                     <button
                       onClick={() => setCurrentScreen("dashboard")}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      className="bg-red-600 text-white dark:bg-red-700 dark:text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
                     >
                       Dashboard
                     </button>
                   )}
-                  {isAdmin === true && (
+                  {isAdmin && (
                     <button
                       onClick={() => setCurrentScreen("admin")}
-                      className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                      className="bg-purple-600 text-white dark:bg-purple-700 dark:text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                     >
                       Admin Dashboard
                     </button>
@@ -143,7 +144,7 @@ export default function App() {
               <Unauthenticated>
                 <button
                   onClick={() => setCurrentScreen("home")}
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  className="bg-red-600 text-white dark:bg-red-700 dark:text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Sign In
                 </button>
@@ -154,10 +155,20 @@ export default function App() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-red-600"
+                className="text-gray-700 dark:text-gray-300 hover:text-red-600 transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>
@@ -165,7 +176,7 @@ export default function App() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
               <div className="flex flex-col space-y-2">
                 {screens.map((screen) => (
                   <button
@@ -174,16 +185,16 @@ export default function App() {
                       setCurrentScreen(screen.id);
                       setIsMenuOpen(false);
                     }}
-                    className={`text-left px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`text-left px-3 py-2 text-sm font-medium transition-colors duration-300 ${
                       currentScreen === screen.id
-                        ? "text-red-600 bg-red-50"
-                        : "text-gray-700 hover:text-red-600"
+                        ? "text-red-600 bg-red-50 dark:bg-gray-800"
+                        : "text-gray-700 dark:text-gray-300 hover:text-red-600"
                     }`}
                   >
                     {screen.label}
                   </button>
                 ))}
-                <div className="pt-2 border-t border-gray-200">
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
                   <Authenticated>
                     <SignOutButton />
                   </Authenticated>
@@ -193,7 +204,7 @@ export default function App() {
                         setCurrentScreen("home");
                         setIsMenuOpen(false);
                       }}
-                      className="w-full text-left bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      className="w-full text-left bg-red-600 text-white dark:bg-red-700 dark:text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
                     >
                       Sign In
                     </button>
@@ -206,23 +217,23 @@ export default function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="transition-all duration-500 ease-in-out">
+      <main className="transition-all duration-500 ease-in-out bg-gray-50 dark:bg-dark-bg dark:text-dark-text">
         {renderScreen()}
       </main>
 
       {/* Footer */}
       <Footer onNavigate={setCurrentScreen} />
 
+      {/* Notifications */}
       <Toaster />
-      
-      {/* Notification Popups */}
-      {notifications.map(notification => (
+      {notifications.map((notification) => (
         <NotificationPopup
           key={notification.id}
           notification={notification}
           onClose={hideNotification}
         />
       ))}
+
       <ScrollToTopButton />
     </div>
   );
