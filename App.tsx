@@ -222,7 +222,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onNavigate={setCurrentScreen} />
 
       {/* Notifications */}
       <Toaster />
